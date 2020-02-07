@@ -1,0 +1,34 @@
+{
+  "name": "chooser",
+  "views": [
+    {
+      "name": "default",
+      "columns": [
+        {
+          "rows": [
+            {
+              "keys": [
+                {
+                  "caption": "US - QWERTY",
+                  "action": "keyboard:us"
+                }
+              ]
+            },
+            {
+              "keys": [
+                {
+                  "caption": "DE - QWERTZ",
+                  "action": "keyboard:de"
+                }
+              ]
+            },
+            {
+            },
+            {
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

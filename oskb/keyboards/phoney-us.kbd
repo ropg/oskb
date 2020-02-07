@@ -1,0 +1,1119 @@
+{
+  "name": "us",
+  "setxkbmap": "us",
+  "views": [
+    {
+      "name": "default",
+      "columns": [
+        {
+          "rows": [
+            {
+              "keys": [
+                {
+                  "caption": "q",
+                  "action": "send:16"
+                },
+                {
+                  "caption": "w",
+                  "action": "send:17"
+                },
+                {
+                  "caption": "e",
+                  "action": "send:18"
+                },
+                {
+                  "caption": "r",
+                  "action": "send:19"
+                },
+                {
+                  "caption": "t",
+                  "action": "send:20"
+                },
+                {
+                  "caption": "y",
+                  "action": "send:21"
+                },
+                {
+                  "caption": "u",
+                  "action": "send:22"
+                },
+                {
+                  "caption": "i",
+                  "action": "send:23"
+                },
+                {
+                  "caption": "o",
+                  "action": "send:24"
+                },
+                {
+                  "caption": "p",
+                  "action": "send:25"
+                }
+              ]
+            },
+            {
+              "keys": [
+                {
+                  "type": "spacer",
+                  "width": "0.5"
+                },
+                {
+                  "caption": "a",
+                  "action": "send:30"
+                },
+                {
+                  "caption": "s",
+                  "action": "send:31"
+                },
+                {
+                  "caption": "d",
+                  "action": "send:32"
+                },
+                {
+                  "caption": "f",
+                  "action": "send:33"
+                },
+                {
+                  "caption": "g",
+                  "action": "send:34"
+                },
+                {
+                  "caption": "h",
+                  "action": "send:35"
+                },
+                {
+                  "caption": "j",
+                  "action": "send:36"
+                },
+                {
+                  "caption": "k",
+                  "action": "send:37"
+                },
+                {
+                  "caption": "l",
+                  "action": "send:38"
+                },
+                {
+                  "type": "spacer",
+                  "width": "0.5"
+                }
+              ]
+            },
+            {
+              "keys": [
+                {
+                  "caption": "⇧",
+                  "action": "view:shifted",
+                  "longpress": "view:capslock",
+                  "width": "1.3"
+                },
+                {
+                  "type": "spacer",
+                  "width": "0.2"
+                },
+                {
+                  "caption": "z",
+                  "action": "send:44"
+                },
+                {
+                  "caption": "x",
+                  "action": "send:45"
+                },
+                {
+                  "caption": "c",
+                  "action": "send:46"
+                },
+                {
+                  "caption": "v",
+                  "action": "send:47"
+                },
+                {
+                  "caption": "b",
+                  "action": "send:48"
+                },
+                {
+                  "caption": "n",
+                  "action": "send:49"
+                },
+                {
+                  "caption": "m",
+                  "action": "send:50"
+                },
+                {
+                  "type": "spacer",
+                  "width": "0.2"
+                },
+                {
+                  "caption": "⌫",
+                  "style": ".key { font-size: 65%; }",
+                  "width": "1.3",
+                  "action": "send:14"
+                }
+              ]
+            },
+            {
+              "style": ".key { font-size: 65%; }",
+              "keys": [
+                {
+                  "caption": "123",
+                  "action": "view:numbers",
+                  "longpress": "keyboard:chooser",
+                  "width": "1.3"
+                },
+                {
+                  "width": "0.75",
+                  "style": ".key { font-size: 40%; }",
+                  "caption": "c\nt\nl",
+                  "action": "modifier:29"               
+                },
+                {
+                  "width": "0.75",
+                  "style": ".key { font-size: 40%; }",
+                  "caption": "a\nl\nt",
+                  "action": "modifier:56"               
+                },
+                {
+                  "caption": "space",
+                  "width": "5.2",
+                  "action": "send:57"
+                },
+                {
+                  "width": "2",
+                  "caption": "return",
+                  "action": "send:28"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "shifted",
+      "flipback": "default",
+      "columns": [
+        {
+          "rows": [
+            {
+              "keys": [
+                {
+                  "caption": "Q",
+                  "action": "send:42+16"
+                },
+                {
+                  "caption": "W",
+                  "action": "send:42+17"
+                },
+                {
+                  "caption": "E",
+                  "action": "send:42+18"
+                },
+                {
+                  "caption": "R",
+                  "action": "send:42+19"
+                },
+                {
+                  "caption": "T",
+                  "action": "send:42+20"
+                },
+                {
+                  "caption": "Y",
+                  "action": "send:42+21"
+                },
+                {
+                  "caption": "U",
+                  "action": "send:42+22"
+                },
+                {
+                  "caption": "I",
+                  "action": "send:42+23"
+                },
+                {
+                  "caption": "O",
+                  "action": "send:42+24"
+                },
+                {
+                  "caption": "P",
+                  "action": "send:42+25"
+                }
+              ]
+            },
+            {
+              "keys": [
+                {
+                  "type": "spacer",
+                  "width": "0.5"
+                },
+                {
+                  "caption": "A",
+                  "action": "send:42+30"
+                },
+                {
+                  "caption": "S",
+                  "action": "send:42+31"
+                },
+                {
+                  "caption": "D",
+                  "action": "send:42+32"
+                },
+                {
+                  "caption": "F",
+                  "action": "send:42+33"
+                },
+                {
+                  "caption": "G",
+                  "action": "send:42+34"
+                },
+                {
+                  "caption": "H",
+                  "action": "send:42+35"
+                },
+                {
+                  "caption": "J",
+                  "action": "send:42+36"
+                },
+                {
+                  "caption": "K",
+                  "action": "send:42+37"
+                },
+                {
+                  "caption": "L",
+                  "action": "send:42+38"
+                },
+                {
+                  "type": "spacer",
+                  "width": "0.5"
+                }
+              ]
+            },
+            {
+              "keys": [
+                {
+                  "caption": "⇧",
+                  "action": "view:default",
+                  "longpress": "view:capslock",
+                  "width": "1.3",
+                  "class": "held"
+                },
+                {
+                  "type": "spacer",
+                  "width": "0.2"
+                },
+                {
+                  "caption": "Z",
+                  "action": "send:42+44"
+                },
+                {
+                  "caption": "X",
+                  "action": "send:42+45"
+                },
+                {
+                  "caption": "C",
+                  "action": "send:42+46"
+                },
+                {
+                  "caption": "V",
+                  "action": "send:42+47"
+                },
+                {
+                  "caption": "B",
+                  "action": "send:42+48"
+                },
+                {
+                  "caption": "N",
+                  "action": "send:42+49"
+                },
+                {
+                  "caption": "M",
+                  "action": "send:42+50"
+                },
+                {
+                  "type": "spacer",
+                  "width": "0.2"
+                },
+                {
+                  "caption": "⌫",
+                  "style": ".key { font-size: 65%; }",
+                  "width": "1.3",
+                  "action": "send:14"
+                }
+              ]
+            },
+            {
+              "style": ".key { font-size: 65%; }",
+              "keys": [
+                {
+                  "caption": "123",
+                  "action": "view:numbers",
+                  "longpress": "keyboard:chooser",
+                  "width": "1.3"
+                },
+                {
+                  "width": "0.75",
+                  "style": ".key { font-size: 40%; }",
+                  "caption": "c\nt\nl",
+                  "action": "modifier:29"               
+                },
+                {
+                  "width": "0.75",
+                  "style": ".key { font-size: 40%; }",
+                  "caption": "a\nl\nt",
+                  "action": "modifier:56"               
+                },
+                {
+                  "caption": "space",
+                  "width": "5.2",
+                  "action": "send:57"
+                },
+                {
+                  "width": "2",
+                  "caption": "return",
+                  "action": "send:28"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "capslock",
+      "columns": [
+        {
+          "rows": [
+            {
+              "keys": [
+                {
+                  "caption": "Q",
+                  "action": "send:42+16"
+                },
+                {
+                  "caption": "W",
+                  "action": "send:42+17"
+                },
+                {
+                  "caption": "E",
+                  "action": "send:42+18"
+                },
+                {
+                  "caption": "R",
+                  "action": "send:42+19"
+                },
+                {
+                  "caption": "T",
+                  "action": "send:42+20"
+                },
+                {
+                  "caption": "Y",
+                  "action": "send:42+21"
+                },
+                {
+                  "caption": "U",
+                  "action": "send:42+22"
+                },
+                {
+                  "caption": "I",
+                  "action": "send:42+23"
+                },
+                {
+                  "caption": "O",
+                  "action": "send:42+24"
+                },
+                {
+                  "caption": "P",
+                  "action": "send:42+25"
+                }
+              ]
+            },
+            {
+              "keys": [
+                {
+                  "type": "spacer",
+                  "width": "0.5"
+                },
+                {
+                  "caption": "A",
+                  "action": "send:42+30"
+                },
+                {
+                  "caption": "S",
+                  "action": "send:42+31"
+                },
+                {
+                  "caption": "D",
+                  "action": "send:42+32"
+                },
+                {
+                  "caption": "F",
+                  "action": "send:42+33"
+                },
+                {
+                  "caption": "G",
+                  "action": "send:42+34"
+                },
+                {
+                  "caption": "H",
+                  "action": "send:42+35"
+                },
+                {
+                  "caption": "J",
+                  "action": "send:42+36"
+                },
+                {
+                  "caption": "K",
+                  "action": "send:42+37"
+                },
+                {
+                  "caption": "L",
+                  "action": "send:42+38"
+                },
+                {
+                  "type": "spacer",
+                  "width": "0.5"
+                }
+              ]
+            },
+            {
+              "keys": [
+                {
+                  "caption": "⇧",
+                  "action": "view:default",
+                  "longpress": "view:capslock",
+                  "width": "1.3",
+                  "class": "locked"
+                },
+                {
+                  "type": "spacer",
+                  "width": "0.2"
+                },
+                {
+                  "caption": "Z",
+                  "action": "send:42+44"
+                },
+                {
+                  "caption": "X",
+                  "action": "send:42+45"
+                },
+                {
+                  "caption": "C",
+                  "action": "send:42+46"
+                },
+                {
+                  "caption": "V",
+                  "action": "send:42+47"
+                },
+                {
+                  "caption": "B",
+                  "action": "send:42+48"
+                },
+                {
+                  "caption": "N",
+                  "action": "send:42+49"
+                },
+                {
+                  "caption": "M",
+                  "action": "send:42+50"
+                },
+                {
+                  "type": "spacer",
+                  "width": "0.2"
+                },
+                {
+                  "caption": "⌫",
+                  "style": ".key { font-size: 65%; }",
+                  "width": "1.3",
+                  "action": "send:14"
+                }
+              ]
+            },
+            {
+              "style": ".key { font-size: 65%; }",
+              "keys": [
+                {
+                  "caption": "123",
+                  "action": "view:numbers",
+                  "longpress": "keyboard:chooser",
+                  "width": "1.3"
+                },
+                {
+                  "width": "0.75",
+                  "style": ".key { font-size: 40%; }",
+                  "caption": "c\nt\nl",
+                  "action": "modifier:29"               
+                },
+                {
+                  "width": "0.75",
+                  "style": ".key { font-size: 40%; }",
+                  "caption": "a\nl\nt",
+                  "action": "modifier:56"               
+                },
+                {
+                  "caption": "space",
+                  "width": "5.2",
+                  "action": "send:57"
+                },
+                {
+                  "width": "2",
+                  "caption": "return",
+                  "action": "send:28"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "numbers",
+      "columns": [
+        {
+          "rows": [
+            {
+              "keys": [
+                {
+                  "caption": "1",
+                  "action": "send:2"
+                },
+                {
+                  "caption": "2",
+                  "action": "send:3"
+                },
+                {
+                  "caption": "3",
+                  "action": "send:4"
+                },
+                {
+                  "caption": "4",
+                  "action": "send:5"
+                },
+                {
+                  "caption": "5",
+                  "action": "send:6"
+                },
+                {
+                  "caption": "6",
+                  "action": "send:7"
+                },
+                {
+                  "caption": "7",
+                  "action": "send:8"
+                },
+                {
+                  "caption": "8",
+                  "action": "send:9"
+                },
+                {
+                  "caption": "9",
+                  "action": "send:10"
+                },
+                {
+                  "caption": "0",
+                  "action": "send:11"
+                }
+              ]
+            },
+            {
+              "keys": [
+                {
+                  "caption": "-",
+                  "action": "send:12"
+                },
+                {
+                  "caption": "/",
+                  "action": "send:53"
+                },
+                {
+                  "caption": ":",
+                  "action": "send:42+39"
+                },
+                {
+                  "caption": ";",
+                  "action": "send:39"
+                },
+                {
+                  "caption": "(",
+                  "action": "send:42+10"
+                },
+                {
+                  "caption": ")",
+                  "action": "send:42+11"
+                },
+                {
+                  "caption": "$",
+                  "action": "send:42+5"
+                },
+                {
+                  "caption": "&&",
+                  "action": "send:42+8"
+                },
+                {
+                  "caption": "@",
+                  "action": "send:42+3"
+                },
+                {
+                  "caption": "\"",
+                  "action": "send:42+40"
+                }
+              ]
+            },
+            {
+              "keys": [
+                {
+                  "style": ".key { font-size: 65%; }",
+                  "caption": "#+=",
+                  "action": "view:symbols",
+                  "width": "1.3"
+                },
+                {
+                  "type": "spacer",
+                  "width": "0.2"
+                },
+                {
+                  "caption": ".",
+                  "width": "1.4",
+                  "action": "send:52"
+                },
+                {
+                  "caption": ",",
+                  "width": "1.4",
+                  "action": "send:51"
+                },
+                {
+                  "caption": "?",
+                  "width": "1.4",
+                  "action": "send:42+53"
+                },
+                {
+                  "caption": "!",
+                  "width": "1.4",
+                  "action": "send:42+2"
+                },
+                {
+                  "caption": "'",
+                  "width": "1.4",
+                  "action": "send:40"
+                },
+                {
+                  "type": "spacer",
+                  "width": "0.2"
+                },
+                {
+                  "caption": "⌫",
+                  "style": ".key { font-size: 65%; }",
+                  "width": "1.3",
+                  "action": "send:14"
+                }
+              ]
+            },
+            {
+              "style": ".key { font-size: 65%; }",
+              "keys": [
+                {
+                  "caption": "ABC",
+                  "longpress": "keyboard:chooser",
+                  "action": "view:default",
+                  "width": "1.3"
+                },
+                {
+                  "width": "0.75",
+                  "style": ".key { font-size: 40%; }",
+                  "caption": "c\nt\nl",
+                  "action": "modifier:29"               
+                },
+                {
+                  "width": "0.75",
+                  "style": ".key { font-size: 40%; }",
+                  "caption": "a\nl\nt",
+                  "action": "modifier:56"               
+                },
+                {
+                  "caption": "space",
+                  "width": "5.2",
+                  "action": "send:57",
+                  "flipback": "default"
+                },
+                {
+                  "width": "2",
+                  "caption": "return",
+                  "action": "send:28"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "symbols",
+      "columns": [
+        {
+          "rows": [
+            {
+              "keys": [
+                {
+                  "caption": "[",
+                  "action": "send:26"
+                },
+                {
+                  "caption": "]",
+                  "action": "send:27"
+                },
+                {
+                  "caption": "{",
+                  "action": "send:42+26"
+                },
+                {
+                  "caption": "}",
+                  "action": "send:42+27"
+                },
+                {
+                  "caption": "#",
+                  "action": "send:42+4"
+                },
+                {
+                  "caption": "%",
+                  "action": "send:42+6"
+                },
+                {
+                  "caption": "^",
+                  "action": "send:42+7"
+                },
+                {
+                  "caption": "*",
+                  "action": "send:42+9"
+                },
+                {
+                  "caption": "+",
+                  "action": "send:42+13"
+                },
+                {
+                  "caption": "=",
+                  "action": "send:13"
+                }
+              ]
+            },
+            {
+              "keys": [
+                {
+                  "caption": "_",
+                  "action": "send:42+12"
+                },
+                {
+                  "caption": "\\",
+                  "action": "send:43"
+                },
+                {
+                  "caption": "|",
+                  "action": "send:42+43"
+                },
+                {
+                  "caption": "~",
+                  "action": "send:42+41"
+                },
+                {
+                  "caption": "<",
+                  "action": "send:42+51"
+                },
+                {
+                  "caption": ">",
+                  "action": "send:42+52"
+                },
+                {
+                  "caption": "`",
+                  "action": "send:41"
+                },
+                {
+                  "type": "spacer",
+                  "width": "3"
+                }
+              ]
+            },
+            {
+              "keys": [
+                {
+                  "style": ".key { font-size: 65%; }",
+                  "caption": "→↑↓",
+                  "action": "view:arrows",
+                  "width": "1.3"
+                },
+                {
+                  "type": "spacer",
+                  "width": "0.2"
+                },
+                {
+                  "caption": ".",
+                  "width": "1.4",
+                  "action": "send:52"
+                },
+                {
+                  "caption": ",",
+                  "width": "1.4",
+                  "action": "send:51"
+                },
+                {
+                  "caption": "?",
+                  "width": "1.4",
+                  "action": "send:42+53"
+                },
+                {
+                  "caption": "!",
+                  "width": "1.4",
+                  "action": "send:42+2"
+                },
+                {
+                  "caption": "'",
+                  "width": "1.4",
+                  "action": "send:40"
+                },
+                {
+                  "type": "spacer",
+                  "width": "0.2"
+                },
+                {
+                  "caption": "⌫",
+                  "style": ".key { font-size: 65%; }",
+                  "width": "1.3",
+                  "action": "send:14"
+                }
+              ]
+            },
+            {
+              "style": ".key { font-size: 65%; }",
+              "keys": [
+                {
+                  "caption": "ABC",
+                  "longpress": "keyboard:chooser",
+                  "action": "view:default",
+                  "width": "1.3"
+                },
+                {
+                  "width": "0.75",
+                  "style": ".key { font-size: 40%; }",
+                  "caption": "c\nt\nl",
+                  "action": "modifier:29"               
+                },
+                {
+                  "width": "0.75",
+                  "style": ".key { font-size: 40%; }",
+                  "caption": "a\nl\nt",
+                  "action": "modifier:56"               
+                },
+                {
+                  "caption": "space",
+                  "width": "5.2",
+                  "action": "send:57",
+                  "flipback": "default"
+                },
+                {
+                  "width": "2",
+                  "caption": "return",
+                  "action": "send:28"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "arrows",
+      "columns": [
+        {
+          "rows": [
+            {
+              "style": ".key { font-size: 60%; }",
+              "keys": [
+                {
+                  "width": "1.2",
+                  "caption": "Esc",
+                  "action": "send:1"
+                },
+                {
+                  "caption": "F1",
+                  "action": "send:59"
+                },
+                {
+                  "caption": "F2",
+                  "action": "send:60"
+                },
+                {
+                  "caption": "F3",
+                  "action": "send:61"
+                },
+                {
+                  "caption": "F4",
+                  "action": "send:62"
+                },
+                {
+                  "caption": "F5",
+                  "action": "send:63"
+                },
+                {
+                  "caption": "F6",
+                  "action": "send:64"
+                },
+                {
+                  "caption": "F7",
+                  "action": "send:65"
+                },
+                {
+                  "caption": "F8",
+                  "action": "send:66"
+                },
+                {
+                  "caption": "F9",
+                  "action": "send:67"
+                },
+                {
+                  "width": "1.2",
+                  "caption": "F10",
+                  "action": "send:68"
+                }
+              ]
+            },
+            {
+              "MeasureStdKeyWidthHere": "1",
+              "keys": [
+                {
+                  "style": ".key { font-size: 65%; }",
+                  "caption": "Tab",
+                  "action": "send:15",
+                  "width": "2"
+                },
+                {
+                  "type": "spacer",
+                  "width": "1.1"
+                },
+                {
+                  "style": ".key { font-size: 65%; }",
+                  "caption": "Ins",
+                  "action": "send:110"
+                },
+                {
+                  "style": ".key { font-size: 65%; }",
+                  "caption": "⇱",
+                  "action": "send:102"
+                },
+                {
+                  "style": ".key { font-size: 65%; }",
+                  "caption": "⇞",
+                  "action": "send:104"
+                },
+                {
+                  "type": "spacer",
+                  "width": "0.2"
+                },
+                {
+                  "style": ".key { font-size: 65%; }",
+                  "caption": "⭠",
+                  "action": "send:105"
+                },
+                {
+                  "style": ".key { font-size: 65%; }",
+                  "caption": "⭡",
+                  "action": "send:103"
+                },
+                {
+                  "style": ".key { font-size: 65%; }",
+                  "caption": "⭢",
+                  "action": "send:106"
+                },
+                {
+                  "type": "spacer",
+                  "width": "0.7"
+                }
+              ]
+            },
+            {
+              "keys": [
+                {
+                  "style": ".key { font-size: 65%; }",
+                  "caption": "123",
+                  "action": "view:numbers",
+                  "width": "1.3"
+                },
+                {
+                  "caption": "⇧",
+                  "action": "modifier:24",
+                  "width": "1.5"
+                },
+                {
+                  "type": "spacer",
+                  "width": "0.3"
+                },
+                {
+                  "style": ".key { font-size: 65%; }",
+                  "caption": "Del",
+                  "action": "send:111"
+                },
+                {
+                  "style": ".key { font-size: 65%; }",
+                  "caption": "⇲",
+                  "action": "send:107"
+                },
+                {
+                  "style": ".key { font-size: 65%; }",
+                  "caption": "⇟",
+                  "action": "send:109"
+                },
+                {
+                  "type": "spacer",
+                  "width": "1.2"
+                },
+                {
+                  "style": ".key { font-size: 65%; }",
+                  "caption": "⭣",
+                  "action": "send:108"
+                },
+                {
+                  "type": "spacer",
+                  "width": "0.4"
+                },
+                {
+                  "caption": "⌫",
+                  "style": ".key { font-size: 65%; }",
+                  "width": "1.3",
+                  "action": "send:14"
+                }
+              ]
+            },
+            {
+              "style": ".key { font-size: 65%; }",
+              "keys": [
+                {
+                  "caption": "ABC",
+                  "longpress": "keyboard:chooser",
+                  "action": "view:default",
+                  "width": "1.3"
+                },
+                {
+                  "width": "0.75",
+                  "style": ".key { font-size: 40%; }",
+                  "caption": "c\nt\nl",
+                  "action": "modifier:29"               
+                },
+                {
+                  "width": "0.75",
+                  "style": ".key { font-size: 40%; }",
+                  "caption": "a\nl\nt",
+                  "action": "modifier:56"               
+                },
+                {
+                  "caption": "space",
+                  "width": "5.2",
+                  "action": "send:57",
+                  "flipback": "default"
+                },
+                {
+                  "width": "2",
+                  "caption": "return",
+                  "action": "send:28"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
