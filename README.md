@@ -14,10 +14,10 @@ Screenshots, more documentation, all will show up soon. Consider this a very ear
 
 ## Tips
 
-* Since the current default keyboard is a phone layout, you might get a better feel for it if you type `oskb --width 480`
+* Since the current default keyboard is a phone layout meant for small portrait screens, you might get a better feel for it if you type `oskb --width 480`
 
 * `oskb --off` turns the keyboard off again
 
 * `oskb -h` gives you a list of command line options
 
-* Try `oskb phoney-us phoney-de chooser` and long-pressing the '123/ABC' key on the bottom left. The "chooser" keyboard will eventually be internally generated based on the keyboards you load.
+* Try `oskb phoney-us phoney-de` and long-pressing the '123/ABC' key on the bottom left.
