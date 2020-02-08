@@ -1,6 +1,6 @@
 {
-  "name": "us",
-  "setxkbmap": "us",
+  "description": "DE - QWERTZ",
+  "setxkbmap": "de",
   "views": [
     {
       "name": "default",
@@ -30,7 +30,7 @@
                   "action": "send:20"
                 },
                 {
-                  "caption": "y",
+                  "caption": "z",
                   "action": "send:21"
                 },
                 {
@@ -48,15 +48,15 @@
                 {
                   "caption": "p",
                   "action": "send:25"
+                },
+                {
+                  "caption": "ü",
+                  "action": "send:26"
                 }
               ]
             },
             {
               "keys": [
-                {
-                  "type": "spacer",
-                  "width": "0.5"
-                },
                 {
                   "caption": "a",
                   "action": "send:30"
@@ -94,8 +94,12 @@
                   "action": "send:38"
                 },
                 {
-                  "type": "spacer",
-                  "width": "0.5"
+                  "caption": "ö",
+                  "action": "send:39"
+                },
+                {
+                  "caption": "ä",
+                  "action": "send:40"
                 }
               ]
             },
@@ -112,7 +116,7 @@
                   "width": "0.2"
                 },
                 {
-                  "caption": "z",
+                  "caption": "y",
                   "action": "send:44"
                 },
                 {
@@ -144,6 +148,10 @@
                   "width": "0.2"
                 },
                 {
+                  "caption": "ß",
+                  "action": "send:12"
+                },
+                {
                   "caption": "⌫",
                   "style": ".key { font-size: 65%; }",
                   "width": "1.3",
@@ -156,8 +164,8 @@
               "keys": [
                 {
                   "caption": "123",
+                  "longpress": "keyboard:",
                   "action": "view:numbers",
-                  "longpress": "keyboard:chooser",
                   "width": "1.3"
                 },
                 {
@@ -217,7 +225,7 @@
                   "action": "send:42+20"
                 },
                 {
-                  "caption": "Y",
+                  "caption": "Z",
                   "action": "send:42+21"
                 },
                 {
@@ -235,15 +243,15 @@
                 {
                   "caption": "P",
                   "action": "send:42+25"
+                },
+                {
+                  "caption": "Ü",
+                  "action": "send:42+26"
                 }
               ]
             },
             {
               "keys": [
-                {
-                  "type": "spacer",
-                  "width": "0.5"
-                },
                 {
                   "caption": "A",
                   "action": "send:42+30"
@@ -281,8 +289,12 @@
                   "action": "send:42+38"
                 },
                 {
-                  "type": "spacer",
-                  "width": "0.5"
+                  "caption": "Ö",
+                  "action": "send:42+39"
+                },
+                {
+                  "caption": "Ä",
+                  "action": "send:42+40"
                 }
               ]
             },
@@ -300,7 +312,7 @@
                   "width": "0.2"
                 },
                 {
-                  "caption": "Z",
+                  "caption": "Y",
                   "action": "send:42+44"
                 },
                 {
@@ -332,6 +344,10 @@
                   "width": "0.2"
                 },
                 {
+                  "caption": "ẞ",
+                  "action": "send:42+100+31"
+                },
+                {
                   "caption": "⌫",
                   "style": ".key { font-size: 65%; }",
                   "width": "1.3",
@@ -344,8 +360,8 @@
               "keys": [
                 {
                   "caption": "123",
+                  "longpress": "keyboard:",
                   "action": "view:numbers",
-                  "longpress": "keyboard:chooser",
                   "width": "1.3"
                 },
                 {
@@ -404,7 +420,7 @@
                   "action": "send:42+20"
                 },
                 {
-                  "caption": "Y",
+                  "caption": "Z",
                   "action": "send:42+21"
                 },
                 {
@@ -422,15 +438,15 @@
                 {
                   "caption": "P",
                   "action": "send:42+25"
+                },
+                {
+                  "caption": "Ü",
+                  "action": "send:42+26"
                 }
               ]
             },
             {
               "keys": [
-                {
-                  "type": "spacer",
-                  "width": "0.5"
-                },
                 {
                   "caption": "A",
                   "action": "send:42+30"
@@ -468,8 +484,12 @@
                   "action": "send:42+38"
                 },
                 {
-                  "type": "spacer",
-                  "width": "0.5"
+                  "caption": "Ö",
+                  "action": "send:42+39"
+                },
+                {
+                  "caption": "Ä",
+                  "action": "send:42+40"
                 }
               ]
             },
@@ -487,7 +507,7 @@
                   "width": "0.2"
                 },
                 {
-                  "caption": "Z",
+                  "caption": "Y",
                   "action": "send:42+44"
                 },
                 {
@@ -519,6 +539,10 @@
                   "width": "0.2"
                 },
                 {
+                  "caption": "ẞ",
+                  "action": "send:42+100+31"
+                },
+                {
                   "caption": "⌫",
                   "style": ".key { font-size: 65%; }",
                   "width": "1.3",
@@ -531,8 +555,8 @@
               "keys": [
                 {
                   "caption": "123",
+                  "longpress": "keyboard:",
                   "action": "view:numbers",
-                  "longpress": "keyboard:chooser",
                   "width": "1.3"
                 },
                 {
@@ -616,43 +640,43 @@
               "keys": [
                 {
                   "caption": "-",
-                  "action": "send:12"
-                },
-                {
-                  "caption": "/",
                   "action": "send:53"
                 },
                 {
-                  "caption": ":",
-                  "action": "send:42+39"
-                },
-                {
-                  "caption": ";",
-                  "action": "send:39"
-                },
-                {
-                  "caption": "(",
-                  "action": "send:42+10"
-                },
-                {
-                  "caption": ")",
-                  "action": "send:42+11"
-                },
-                {
-                  "caption": "$",
-                  "action": "send:42+5"
-                },
-                {
-                  "caption": "&&",
+                  "caption": "/",
                   "action": "send:42+8"
                 },
                 {
+                  "caption": ":",
+                  "action": "send:42+52"
+                },
+                {
+                  "caption": ";",
+                  "action": "send:42+51"
+                },
+                {
+                  "caption": "(",
+                  "action": "send:42+9"
+                },
+                {
+                  "caption": ")",
+                  "action": "send:42+10"
+                },
+                {
+                  "caption": "€",
+                  "action": "send:100+18"
+                },
+                {
+                  "caption": "&&",
+                  "action": "send:42+7"
+                },
+                {
                   "caption": "@",
-                  "action": "send:42+3"
+                  "action": "send:100+16"
                 },
                 {
                   "caption": "\"",
-                  "action": "send:42+40"
+                  "action": "send:42+3"
                 }
               ]
             },
@@ -681,7 +705,7 @@
                 {
                   "caption": "?",
                   "width": "1.4",
-                  "action": "send:42+53"
+                  "action": "send:42+12"
                 },
                 {
                   "caption": "!",
@@ -691,7 +715,7 @@
                 {
                   "caption": "'",
                   "width": "1.4",
-                  "action": "send:40"
+                  "action": "send:42+43"
                 },
                 {
                   "type": "spacer",
@@ -710,7 +734,7 @@
               "keys": [
                 {
                   "caption": "ABC",
-                  "longpress": "keyboard:chooser",
+                  "longpress": "keyboard:",
                   "action": "view:default",
                   "width": "1.3"
                 },
@@ -752,23 +776,23 @@
               "keys": [
                 {
                   "caption": "[",
-                  "action": "send:26"
+                  "action": "send:100+9"
                 },
                 {
                   "caption": "]",
-                  "action": "send:27"
+                  "action": "send:100+10"
                 },
                 {
                   "caption": "{",
-                  "action": "send:42+26"
+                  "action": "send:100+8"
                 },
                 {
                   "caption": "}",
-                  "action": "send:42+27"
+                  "action": "send:100+11"
                 },
                 {
                   "caption": "#",
-                  "action": "send:42+4"
+                  "action": "send:43"
                 },
                 {
                   "caption": "%",
@@ -776,19 +800,19 @@
                 },
                 {
                   "caption": "^",
-                  "action": "send:42+7"
+                  "action": "none"
                 },
                 {
                   "caption": "*",
-                  "action": "send:42+9"
+                  "action": "send:42+27"
                 },
                 {
                   "caption": "+",
-                  "action": "send:42+13"
+                  "action": "send:27"
                 },
                 {
                   "caption": "=",
-                  "action": "send:13"
+                  "action": "send:42+11"
                 }
               ]
             },
@@ -796,31 +820,31 @@
               "keys": [
                 {
                   "caption": "_",
-                  "action": "send:42+12"
+                  "action": "send:42+53"
                 },
                 {
                   "caption": "\\",
-                  "action": "send:43"
+                  "action": "send:100+12"
                 },
                 {
                   "caption": "|",
-                  "action": "send:42+43"
+                  "action": "send:100+86"
                 },
                 {
                   "caption": "~",
-                  "action": "send:42+41"
+                  "action": "send:100+27"
                 },
                 {
                   "caption": "<",
-                  "action": "send:42+51"
+                  "action": "send:86"
                 },
                 {
                   "caption": ">",
-                  "action": "send:42+52"
+                  "action": "send:42+86"
                 },
                 {
-                  "caption": "`",
-                  "action": "send:41"
+                  "caption": "$",
+                  "action": "send:42+5"
                 },
                 {
                   "type": "spacer",
@@ -853,7 +877,7 @@
                 {
                   "caption": "?",
                   "width": "1.4",
-                  "action": "send:42+53"
+                  "action": "send:42+12"
                 },
                 {
                   "caption": "!",
@@ -863,7 +887,7 @@
                 {
                   "caption": "'",
                   "width": "1.4",
-                  "action": "send:40"
+                  "action": "send:42+43"
                 },
                 {
                   "type": "spacer",
@@ -882,7 +906,7 @@
               "keys": [
                 {
                   "caption": "ABC",
-                  "longpress": "keyboard:chooser",
+                  "longpress": "keyboard:",
                   "action": "view:default",
                   "width": "1.3"
                 },
@@ -1082,7 +1106,7 @@
               "keys": [
                 {
                   "caption": "ABC",
-                  "longpress": "keyboard:chooser",
+                  "longpress": "keyboard:",
                   "action": "view:default",
                   "width": "1.3"
                 },
