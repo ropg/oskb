@@ -1,17 +1,16 @@
 import setuptools
+import re
 from distutils.core import setup
 
 # read the contents of your README file
 from os import path
 this_directory = path.abspath(path.dirname(__file__))
-with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
-    long_description = f.read()
 
 setup(
     name = 'oskb',
     version = '0.0.3',
     description = 'On-Screen KeyBoard for Linux',
-    long_description = long_description,
+    long_description = 'I disliked the on-screen keyboards for Linux I tried. So I wrote a new one. Brand new but maturing fast... Please check the website for screenshots and instructions',
     url = 'https://github.com/ropg/oskb',
     author = 'Rop Gonggrijp',
     license = 'MIT',
