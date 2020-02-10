@@ -1,6 +1,7 @@
 import os, re, json, subprocess
 from functools import partial
 import pkg_resources
+import evdev
 
 from PyQt5.QtCore import QTimer, QRect
 from PyQt5.QtWidgets import QWidget, QPushButton
@@ -16,7 +17,12 @@ class Keyboard(QWidget):
         self.keytimer = None
 
         self.kbds = []
-        self.keypipe = None
+        self.view = None
+        self.kbd = None
+        self.uinput = None
+
+    def sendToUInput(self):
+        self.uinput = evdev.UInput(name='oskb')
 
     def setKeypipe(self, fn):
         self.keypipe = fn
@@ -36,21 +42,17 @@ class Keyboard(QWidget):
                 raise FileNotFoundError('Could not find ' + kbdfile)
         if len(self.kbds) > 1:
             self.kbds.append(self.makeChooser())
-        self.insertDefaults()
-        self.kbd = self.kbds[0]
-        self.setView('default')
 
     def makeChooser(self):
         chooser = { "name": "chooser", "views": [ { "name": "default", "columns": [ { "rows": [] } ] } ] }
         for k in self.kbds:
-            rows = chooser['views'][0]['columns'][0]['rows']
-            rows.append( { 'keys': [ {'caption': k['description'], 'action': 'keyboard:' + k['name'] } ] } )
+            rows = chooser['views'][0]['columns'][0].get('rows')
+            rows.append( { 'keys': [ {'caption': k.get('description'), 'action': 'keyboard:' + k.get('name') } ] } )
         return chooser
 
 
     def defaultStyleSheet(self):
         return """
-
             QWidget {
                 background-color: #cccccc;
             }
@@ -67,68 +69,25 @@ class Keyboard(QWidget):
             .key.locked {
                 background-color: #cc9999;
             }
-
         """
 
-    def insertDefaults(self):
-        # I don't want various defaults to be mandatory in config files. But I do like to iterate with 'for' and
-        # python offers no easy 'isset()' or similar, so it would mean ugly try/except stuff everywhere instead
-        # of just here. So this sticks in the various defaults.
-        for kbd in self.kbds:
-            try: kbd['style']
-            except KeyError: kbd['style'] = self.defaultStyleSheet()
-            for view in kbd['views']:
-                try: view['style']
-                except KeyError: view['style'] = ''
-                for column in view['columns']:
-                    try: column['style']
-                    except KeyError: column['style'] = ''
-                    try: column['class']
-                    except KeyError: column['class'] = ''
-                    try: column['width']
-                    except KeyError: column['width'] = '1'           # Set default width to '1' for each column
-                    try: column['rows']
-                    except KeyError: column['rows'] = []    # add empty 'rows' to each empty column
-                    for row in column['rows']:
-                        try: row['style']
-                        except KeyError: row['style'] = ''
-                        try: row['class']
-                        except KeyError: row['class'] = ''
-                        try: row['height']
-                        except KeyError: row['height'] = '1'         # Set default height to '1' for each rows
-                        try: row['keys']
-                        except KeyError: row['keys'] = []   # add empty 'keys' to each empty row
-                        for keydata in row['keys']:
-                            try: keydata['style']
-                            except KeyError: keydata['style'] = ''
-                            try: keydata['class']
-                            except KeyError: keydata['class'] = ''
-                            try: keydata['width']
-                            except KeyError: keydata['width'] = '1'  # Set default width to '1' for each key
-                            try: keydata['type']
-                            except KeyError: keydata['type'] = 'key' # Set each key's type to 'key' if unset (i.e. not 'spacer')
-                            try: c = 'send:' + keydata['caption']
-                            except KeyError: c = 'none'
-                            try: keydata['action']
-                            except KeyError: keydata['action'] = c
-
-    def setKeyboard(self, kbdname):
+    def showKeyboard(self, kbdname = None):
+        if not kbdname:
+            # cannot be default because calling context may not have self
+            kbdname = self.kbds[0]['name']
         for k in self.kbds:
-            if k['name'] == kbdname:
+            if k.get('name') == kbdname:
                 self.releaseModifiers()
                 self.deleteKeyboard()
                 self.kbd = k
-                try:
-                    cmd = ['setxkbmap']
-                    cmd += (k['setxkbmap'].split(' '))
+                if k.get('setxkbmap'):
+                    cmd = ['setxkbmap'] + k['setxkbmap'].split(' ')
                     subprocess.check_output( cmd )
-                except KeyError:
-                    pass
                 self.setView('default')
 
     def setView(self, viewname):
-        for view in self.kbd['views']:
-            if view['name'] == viewname:
+        for view in self.kbd.get('views'):
+            if view.get('name') == viewname:
                 self.deleteKeyboard()
                 self.view = view
                 self.initKeyboard()
@@ -153,18 +112,18 @@ class Keyboard(QWidget):
         # by 4, and give the column with weight 2 half the budget and the other two a quarter
         totalweight = 0
         for member in members:
-            if member[property][-2:] == 'px':
-                budget -= int( member[property][:-2] )
-            elif member[property] == 'remainder':
-                pass
+            val = member.get(property, '1')
+            if val[-2:] == 'px':
+                budget -= int( val[:-2] )
             else:
-                totalweight += float(member[property])
+                totalweight += float(val)
         begin = 0
         for member in members:
-            if member[property][-2:] == 'px':
-                thisone = int( member[property][:-2] )
+            val = member.get(property, '1')
+            if val[-2:] == 'px':
+                thisone = int( val[:-2] )
             else:
-                weight = float(member[property])
+                weight = float(val)
                 thisone = int( (budget / totalweight) * weight )
                 totalweight -= weight
                 budget -= thisone
@@ -180,18 +139,15 @@ class Keyboard(QWidget):
         # If the first row on any keyboard has odd-sized keys you can specify any other row by giving it
         # "MeasureStdKeyWidthHere" with value "1" in the JSON file.
         unit = 0
-        for column in self.view['columns']:
-            for row in column['rows']:
-                try:
-                    row['MeasureStdKeyWidthHere']
+        for column in self.view.get('columns', []):
+            for row in column.get('rows', []):
+                if row.get('MeasureStdKeyWidthHere'):
                     unit = 0
-                except KeyError:
-                    pass
-                if unit == 0 and len(row['keys']):
+                if len(row.get('keys', [])):
                     totalweight = 0
                     budget = column['calcWidth']
-                    for keydata in row['keys']:
-                        w = keydata['width']
+                    for keydata in row.get('keys', []):
+                        w = keydata.get('width', '1')
                         if w[-2:] == 'px':
                             budget -= int(w[:-2])
                         else:
@@ -203,9 +159,9 @@ class Keyboard(QWidget):
         unit = 0
         totalweight = 0
         budget = self.height()
-        for column in self.view['columns']:
-            for row in column['rows']:
-                h = row['height']
+        for column in self.view.get('columns', []):
+            for row in column.get('rows', []):
+                h = row.get('height', '1')
                 if h[-2:] == 'px':
                     budget -= int(h[:-2])
                 else:
@@ -215,54 +171,48 @@ class Keyboard(QWidget):
                 unit = thisunit
         return unit
 
+    def deleteKeyboard(self):
+        if self.view:
+            for column in self.view.get('columns', []):
+                for row in column.get('rows', []):
+                    for keydata in row.get('keys', []):
+                        if keydata.get('QWidget'):
+                            # Make sure it's not a spacer, they have no QWidget
+                            keydata['QWidget'].deleteLater()
+                    row['QWidget'].deleteLater()
+                column['QWidget'].deleteLater()
+            self.view = None
 
     def calcKeyboard(self):
-        self.divideSpace(self.width(), self.view['columns'], 'width')
-        for column in self.view['columns']:
-            self.divideSpace(self.height(), column['rows'], 'height')
+        self.divideSpace(self.width(), self.view.get('columns', []), 'width')
+        for column in self.view.get('columns', []):
+            self.divideSpace(self.height(), column.get('rows', []), 'height')
             self.stdKeyWidth = self.findStdKeyWidth()
             self.stdRowHeight = self.findStdRowHeight()
-            for row in column['rows']:
-                self.divideSpace(column['calcWidth'], row['keys'], 'width')
-
-    def deleteKeyboard(self):
-        try:
-            self.view['columns']
-        except:
-            return
-        for column in self.view['columns']:
-            for row in column['rows']:
-                for keydata in row['keys']:
-                    try: keydata['QWidget']
-                    except KeyError: continue
-                    keydata['QWidget'].deleteLater()
-                row['QWidget'].deleteLater()
-            column['QWidget'].deleteLater()
+            for row in column.get('rows', []):
+                self.divideSpace(column['calcWidth'], row.get('keys', []), 'width')
 
     def initKeyboard(self):
         self.calcKeyboard()
-        self.setStyleSheet(self.kbd['style'] + ' ' + self.view['style'])
-        for column in self.view['columns']:
+        for column in self.view.get('columns', []):
             c = QWidget(self)
-            c.setProperty('class', 'column ' + column['class'])
+            c.setProperty('class', 'column ' + column.get('class', ''))
             column['QWidget'] = c
-            for row in column['rows']:
+            for row in column.get('rows', []):
                 r = QWidget(c)
-                r.setProperty('class', 'row ' + row['class'])
-                r.setStyleSheet(row['style'])
+                r.setProperty('class', 'row ' + row.get('class', ''))
                 row['QWidget'] = r
-                for keydata in row['keys']:
-                    if keydata['type'] == 'key':
+                for keydata in row.get('keys', []):
+                    if keydata.get('type', 'key') == 'key':
                         k = QPushButton(r)
-                        k.setProperty('class', 'key ' + keydata['class'])
-                        k.setText(keydata['caption'])
+                        k.setProperty('class', 'key ' + keydata.get('class', ''))
+                        k.setText(keydata.get('caption', ''))
                         k.data = keydata
                         k.pressed.connect(partial(self.pressedButton, k))
                         k.released.connect(partial(self.releasedButton, k))
-                        k.setStyleSheet(keydata['style'])
                         # See if the key is a modifier, and create that modifier and set it to 0
                         # if it didn't exist yet
-                        act, arg = self.parseAction(keydata['action'])
+                        act, arg = self.parseAction(keydata.get('action', 'none'))
                         if act == 'modifier':
                             try:
                                 self.modifiers[arg]
@@ -272,47 +222,48 @@ class Keyboard(QWidget):
         self.updateModifiers()
         self.positionEverything()
 
+    def positionEverything(self):
+        fontsize = int(min(self.stdKeyWidth / 1.5, self.stdRowHeight / 2))
+        margin = min( int( (self.width() - 100) / 100), 6 )
+        self.setStyleSheet(self.defaultStyleSheet() + ' ' + self.kbd.get('style', '') + ' ' + self.view.get('style', '') + ' .key { font-size: ' + str(fontsize) + 'px; margin: ' + str(margin) + 'px; border-radius: ' + str(margin * 2) + 'px }')
+        for column in self.view.get('columns', []):
+            column['QWidget'].setGeometry(QRect(column['calcBegin'], 0, column['calcWidth'],  self.height()))
+            column['QWidget'].setVisible(True)      # No idea why this is needed for subsequent view draws. But hey...
+            column['QWidget'].setStyleSheet(self.fixStyleSheet(column.get('style', ''), fontsize))
+            for row in column.get('rows', []):
+                row['QWidget'].setGeometry(QRect(0, row['calcBegin'], column['calcWidth'], row['calcHeight']))
+                row['QWidget'].setStyleSheet(self.fixStyleSheet(row.get('style', ''), fontsize))
+                for keydata in row.get('keys', []):
+                    try:
+                        keydata['QWidget'].setGeometry(QRect(keydata['calcBegin'], 0, keydata['calcWidth'],  row['calcHeight']))
+                        keydata['QWidget'].setStyleSheet(self.fixStyleSheet(keydata.get('style', ''), fontsize))
+                    except KeyError:
+                        pass
+        self.show()
+
     def updateModifiers(self):
-        for column in self.view['columns']:
-            for row in column['rows']:
-                for keydata in row['keys']:
-                    act, arg = self.parseAction(keydata['action'])
+        for column in self.view.get('columns', []):
+            for row in column.get('rows', []):
+                for keydata in row.get('keys', []):
+                    act, arg = self.parseAction(keydata.get('action', 'none'))
                     if act == 'modifier':
                         s = self.modifiers[arg]
                         if s == 0:
                             addclass = ''
                         elif s == 1:
-                            addclass = ' held'
+                            addclass = 'held'
                         else:
-                            addclass = ' locked'
-                        keydata['QWidget'].setProperty('class', 'key ' + keydata['class'] + addclass)
+                            addclass = 'locked'
+                        keydata['QWidget'].setProperty('class', 'key ' + keydata.get('class', '') + ' ' + addclass)
         self.positionEverything()
 
     def releaseModifiers(self):
-        for modifier, state in self.modifiers.items():
-            if self.modifiers[modifier] == 1:
-                self.injectKeys(modifier, 0)
-                self.modifiers[modifier] = 0
-        self.updateModifiers()
-
-    def positionEverything(self):
-        fontsize = int(min(self.stdKeyWidth / 1.5, self.stdRowHeight / 2))
-        margin = min( int( (self.width() - 100) / 100), 6 )
-        self.setStyleSheet(self.kbd['style'] + ' ' + self.view['style'] + ' .key { font-size: ' + str(fontsize) + 'px; margin: ' + str(margin) + 'px; border-radius: ' + str(margin * 2) + 'px }')
-        for column in self.view['columns']:
-            column['QWidget'].setGeometry(QRect(column['calcBegin'], 0, column['calcWidth'],  self.height()))
-            column['QWidget'].setVisible(True)      # No idea why this is needed for subsequent view draws. But hey...
-            column['QWidget'].setStyleSheet(self.fixStyleSheet(column['style'], fontsize))
-            for row in column['rows']:
-                row['QWidget'].setGeometry(QRect(0, row['calcBegin'], column['calcWidth'], row['calcHeight']))
-                row['QWidget'].setStyleSheet(self.fixStyleSheet(row['style'], fontsize))
-                for keydata in row['keys']:
-                    try:
-                        keydata['QWidget'].setGeometry(QRect(keydata['calcBegin'], 0, keydata['calcWidth'],  row['calcHeight']))
-                        keydata['QWidget'].setStyleSheet(self.fixStyleSheet(keydata['style'], fontsize))
-                    except KeyError:
-                        pass
-        self.show()
+        if self.view:
+            for modifier, state in self.modifiers.items():
+                if self.modifiers[modifier] == 1:
+                    self.injectKeys(modifier, 0)
+                    self.modifiers[modifier] = 0
+            self.updateModifiers()
 
     def fixStyleSheet(self, stylesheet, fontsize):
         if stylesheet == '': return stylesheet
@@ -394,24 +345,27 @@ class Keyboard(QWidget):
             self.updateModifiers()
         if c == 'keyboard' and down:
             if not a == "":
-                self.setKeyboard(a)
+                self.showKeyboard(a)
             elif len(self.kbds) > 1:
-                self.setKeyboard('chooser')
+                self.showKeyboard('chooser')
 
     # From buttons to keypresses
 
     def injectKeys(self, keystr, down):
-        if self.keypipe:
-            inject = open(self.keypipe, 'wb', 0)
-            keylist = keystr.split("+")
-            if down:
-                for keycode in keylist:
-                    inject.write( keycode.encode() + ' 1\n'.encode())
-            else:
-                for keycode in reversed(keylist):
-                    inject.write( keycode.encode() + ' 0\n'.encode())
-            inject.flush()
-            inject.close()
+
+        keylist = keystr.split("+")
+        if down:
+            for keycode in keylist:
+                self.sendkey(int(keycode), 1)
+        else:
+            for keycode in reversed(keylist):
+                self.sendkey(int(keycode), 0)
+
+
+    def sendkey(self, keycode, down):
+        if self.uinput:
+            self.uinput.write(evdev.ecodes.EV_KEY, keycode, down)
+            self.uinput.syn()
 
 
 if __name__ == '__main__':

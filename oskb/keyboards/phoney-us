@@ -145,7 +145,7 @@
                 },
                 {
                   "caption": "⌫",
-                  "style": ".key { font-size: 65%; }",
+                  "style": ".key { font-size: 65%; background-color: #aaaaaa; }",
                   "width": "1.3",
                   "action": "send:14"
                 }
@@ -156,6 +156,7 @@
               "keys": [
                 {
                   "caption": "123",
+                  "style": ".key { background-color: #aaaaaa; }",
                   "action": "view:numbers",
                   "longpress": "keyboard:",
                   "width": "1.3"
@@ -180,6 +181,7 @@
                 {
                   "width": "2",
                   "caption": "return",
+                  "style": ".key { background-color: #aaaaaa; }",
                   "action": "send:28"
                 }
               ]
@@ -333,7 +335,7 @@
                 },
                 {
                   "caption": "⌫",
-                  "style": ".key { font-size: 65%; }",
+                  "style": ".key { font-size: 65%; background-color: #aaaaaa; }",
                   "width": "1.3",
                   "action": "send:14"
                 }
@@ -344,6 +346,7 @@
               "keys": [
                 {
                   "caption": "123",
+                  "style": ".key { background-color: #aaaaaa; }",
                   "action": "view:numbers",
                   "longpress": "keyboard:",
                   "width": "1.3"
@@ -368,6 +371,7 @@
                 {
                   "width": "2",
                   "caption": "return",
+                  "style": ".key { background-color: #aaaaaa; }",
                   "action": "send:28"
                 }
               ]
@@ -520,7 +524,7 @@
                 },
                 {
                   "caption": "⌫",
-                  "style": ".key { font-size: 65%; }",
+                  "style": ".key { font-size: 65%; background-color: #aaaaaa; }",
                   "width": "1.3",
                   "action": "send:14"
                 }
@@ -531,6 +535,7 @@
               "keys": [
                 {
                   "caption": "123",
+                  "style": ".key { background-color: #aaaaaa; }",
                   "action": "view:numbers",
                   "longpress": "keyboard:",
                   "width": "1.3"
@@ -555,6 +560,7 @@
                 {
                   "width": "2",
                   "caption": "return",
+                  "style": ".key {background-color: #aaaaaa; }",
                   "action": "send:28"
                 }
               ]
@@ -659,8 +665,8 @@
             {
               "keys": [
                 {
-                  "style": ".key { font-size: 65%; }",
                   "caption": "#+=",
+                  "style": ".key { font-size: 65%; background-color: #aaaaaa; }",
                   "action": "view:symbols",
                   "width": "1.3"
                 },
@@ -699,7 +705,7 @@
                 },
                 {
                   "caption": "⌫",
-                  "style": ".key { font-size: 65%; }",
+                  "style": ".key { font-size: 65%; background-color: #aaaaaa; }",
                   "width": "1.3",
                   "action": "send:14"
                 }
@@ -710,6 +716,7 @@
               "keys": [
                 {
                   "caption": "ABC",
+                  "style": ".key { background-color: #aaaaaa; }",
                   "longpress": "keyboard:",
                   "action": "view:default",
                   "width": "1.3"
@@ -735,6 +742,7 @@
                 {
                   "width": "2",
                   "caption": "return",
+                  "style": ".key { background-color: #aaaaaa; }",
                   "action": "send:28"
                 }
               ]
@@ -831,8 +839,8 @@
             {
               "keys": [
                 {
-                  "style": ".key { font-size: 65%; }",
                   "caption": "→↑↓",
+                  "style": ".key { font-size: 60%; background-color: #aaaaaa; }",
                   "action": "view:arrows",
                   "width": "1.3"
                 },
@@ -871,7 +879,7 @@
                 },
                 {
                   "caption": "⌫",
-                  "style": ".key { font-size: 65%; }",
+                  "style": ".key { font-size: 65%; background-color: #aaaaaa; }",
                   "width": "1.3",
                   "action": "send:14"
                 }
@@ -882,6 +890,7 @@
               "keys": [
                 {
                   "caption": "ABC",
+                  "style": ".key { background-color: #aaaaaa; }",
                   "longpress": "keyboard:",
                   "action": "view:default",
                   "width": "1.3"
@@ -907,6 +916,7 @@
                 {
                   "width": "2",
                   "caption": "return",
+                  "style": ".key { background-color: #aaaaaa; }",
                   "action": "send:28"
                 }
               ]
@@ -1027,7 +1037,7 @@
             {
               "keys": [
                 {
-                  "style": ".key { font-size: 65%; }",
+                  "style": ".key { font-size: 65%; background-color: #aaaaaa; }",
                   "caption": "123",
                   "action": "view:numbers",
                   "width": "1.3"
@@ -1071,7 +1081,7 @@
                 },
                 {
                   "caption": "⌫",
-                  "style": ".key { font-size: 65%; }",
+                  "style": ".key { font-size: 65%; background-color: #aaaaaa; }",
                   "width": "1.3",
                   "action": "send:14"
                 }
@@ -1082,6 +1092,7 @@
               "keys": [
                 {
                   "caption": "ABC",
+                  "style": ".key { background-color: #aaaaaa; }",
                   "longpress": "keyboard:",
                   "action": "view:default",
                   "width": "1.3"
@@ -1107,6 +1118,7 @@
                 {
                   "width": "2",
                   "caption": "return",
+                  "style": ".key { background-color: #aaaaaa; }",
                   "action": "send:28"
                 }
               ]
