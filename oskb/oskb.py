@@ -66,12 +66,13 @@ class Keyboard(QWidget):
                 background-color: #999999;
             }
 
-            .key.locked {
+            .view .key.pseudomodifier, .key.locked {
                 background-color: #cc9999;
             }
         """
 
     def showKeyboard(self, kbdname = None):
+        self.flipback = None
         if not kbdname:
             # cannot be default because calling context may not have self
             kbdname = self.kbds[0]['name']
@@ -92,12 +93,6 @@ class Keyboard(QWidget):
                 self.view = view
                 self.initKeyboard()
                 return
-        if viewname == 'default':
-            self.deleteKeyboard()
-            self.view = self.kbd['views'][0]
-            self.initKeyboard()
-            return
-        self.setView('default')
 
     def divideSpace(self, budget, members, property):
         # This may be a bit of a complicated one to wrap your head around at first, but it's kinda cool
@@ -225,7 +220,7 @@ class Keyboard(QWidget):
     def positionEverything(self):
         fontsize = int(min(self.stdKeyWidth / 1.5, self.stdRowHeight / 2))
         margin = min( int( (self.width() - 100) / 100), 6 )
-        self.setStyleSheet(self.defaultStyleSheet() + ' ' + self.kbd.get('style', '') + ' ' + self.view.get('style', '') + ' .key { font-size: ' + str(fontsize) + 'px; margin: ' + str(margin) + 'px; border-radius: ' + str(margin * 2) + 'px }')
+        self.setStyleSheet(self.defaultStyleSheet() + ' .key { font-size: ' + str(fontsize) + 'px; margin: ' + str(margin) + 'px; border-radius: ' + str(margin * 2) + 'px }' + self.fixStyleSheet( self.kbd.get('style', '') + ' ' + self.view.get('style', ''), fontsize))
         for column in self.view.get('columns', []):
             column['QWidget'].setGeometry(QRect(column['calcBegin'], 0, column['calcWidth'],  self.height()))
             column['QWidget'].setVisible(True)      # No idea why this is needed for subsequent view draws. But hey...
@@ -321,20 +316,21 @@ class Keyboard(QWidget):
 
     def doAction(self, action, button, down):
         c, a = self.parseAction(action)
-        if c == 'view':
-            if down:
-                self.setView(a)
+        if (c == 'view' or c == 'oneview') and down:
+            oldview = self.view.get('name')
+            if c == 'oneview':
+                self.flipback = oldview
+                self.setProperty('class', self.view.get('class', '') + ' oneview')
+            else:
+                self.setProperty('class', self.view.get('class', '') + ' view')
+            self.setView(a)
         if c == 'send':
             self.injectKeys(a, down)
             if not down:
                 self.releaseModifiers()
-                try:
-                    self.setView(button.data['flipback'])
-                except KeyError:
-                    try:
-                        self.setView(self.view['flipback'])
-                    except KeyError:
-                        pass
+                if self.flipback:
+                    self.setView(self.flipback)
+                    self.flipback = None
         if c == 'modifier' and down:
             if self.modifiers[a] == 0:
                 self.modifiers[a] = 1

@@ -1,6 +1,7 @@
 {
   "description": "US - QWERTY",
   "setxkbmap": "us",
+  "style": ".grey { background-color: #aaaaaa; }",
   "views": [
     {
       "name": "default",
@@ -103,8 +104,8 @@
               "keys": [
                 {
                   "caption": "⇧",
-                  "action": "view:shifted",
-                  "longpress": "view:capslock",
+                  "action": "oneview:shifted",
+                  "longpress": "view:shifted",
                   "width": "1.3"
                 },
                 {
@@ -145,7 +146,8 @@
                 },
                 {
                   "caption": "⌫",
-                  "style": ".key { font-size: 65%; background-color: #aaaaaa; }",
+                  "style": ".key { font-size: 65%;  }",
+                  "class": "grey",
                   "width": "1.3",
                   "action": "send:14"
                 }
@@ -156,7 +158,7 @@
               "keys": [
                 {
                   "caption": "123",
-                  "style": ".key { background-color: #aaaaaa; }",
+                  "class": "grey",
                   "action": "view:numbers",
                   "longpress": "keyboard:",
                   "width": "1.3"
@@ -181,7 +183,7 @@
                 {
                   "width": "2",
                   "caption": "return",
-                  "style": ".key { background-color: #aaaaaa; }",
+                  "class": "grey",
                   "action": "send:28"
                 }
               ]
@@ -192,7 +194,6 @@
     },
     {
       "name": "shifted",
-      "flipback": "default",
       "columns": [
         {
           "rows": [
@@ -293,9 +294,9 @@
                 {
                   "caption": "⇧",
                   "action": "view:default",
-                  "longpress": "view:capslock",
+                  "longpress": "view:shifted",
                   "width": "1.3",
-                  "class": "held"
+                  "class": "pseudomodifier"
                 },
                 {
                   "type": "spacer",
@@ -335,7 +336,8 @@
                 },
                 {
                   "caption": "⌫",
-                  "style": ".key { font-size: 65%; background-color: #aaaaaa; }",
+                  "style": ".key { font-size: 65%; }",
+                  "class": "grey",
                   "width": "1.3",
                   "action": "send:14"
                 }
@@ -346,7 +348,7 @@
               "keys": [
                 {
                   "caption": "123",
-                  "style": ".key { background-color: #aaaaaa; }",
+                                    "class": "grey",
                   "action": "view:numbers",
                   "longpress": "keyboard:",
                   "width": "1.3"
@@ -371,196 +373,7 @@
                 {
                   "width": "2",
                   "caption": "return",
-                  "style": ".key { background-color: #aaaaaa; }",
-                  "action": "send:28"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "capslock",
-      "columns": [
-        {
-          "rows": [
-            {
-              "keys": [
-                {
-                  "caption": "Q",
-                  "action": "send:42+16"
-                },
-                {
-                  "caption": "W",
-                  "action": "send:42+17"
-                },
-                {
-                  "caption": "E",
-                  "action": "send:42+18"
-                },
-                {
-                  "caption": "R",
-                  "action": "send:42+19"
-                },
-                {
-                  "caption": "T",
-                  "action": "send:42+20"
-                },
-                {
-                  "caption": "Y",
-                  "action": "send:42+21"
-                },
-                {
-                  "caption": "U",
-                  "action": "send:42+22"
-                },
-                {
-                  "caption": "I",
-                  "action": "send:42+23"
-                },
-                {
-                  "caption": "O",
-                  "action": "send:42+24"
-                },
-                {
-                  "caption": "P",
-                  "action": "send:42+25"
-                }
-              ]
-            },
-            {
-              "keys": [
-                {
-                  "type": "spacer",
-                  "width": "0.5"
-                },
-                {
-                  "caption": "A",
-                  "action": "send:42+30"
-                },
-                {
-                  "caption": "S",
-                  "action": "send:42+31"
-                },
-                {
-                  "caption": "D",
-                  "action": "send:42+32"
-                },
-                {
-                  "caption": "F",
-                  "action": "send:42+33"
-                },
-                {
-                  "caption": "G",
-                  "action": "send:42+34"
-                },
-                {
-                  "caption": "H",
-                  "action": "send:42+35"
-                },
-                {
-                  "caption": "J",
-                  "action": "send:42+36"
-                },
-                {
-                  "caption": "K",
-                  "action": "send:42+37"
-                },
-                {
-                  "caption": "L",
-                  "action": "send:42+38"
-                },
-                {
-                  "type": "spacer",
-                  "width": "0.5"
-                }
-              ]
-            },
-            {
-              "keys": [
-                {
-                  "caption": "⇧",
-                  "action": "view:default",
-                  "longpress": "view:capslock",
-                  "width": "1.3",
-                  "class": "locked"
-                },
-                {
-                  "type": "spacer",
-                  "width": "0.2"
-                },
-                {
-                  "caption": "Z",
-                  "action": "send:42+44"
-                },
-                {
-                  "caption": "X",
-                  "action": "send:42+45"
-                },
-                {
-                  "caption": "C",
-                  "action": "send:42+46"
-                },
-                {
-                  "caption": "V",
-                  "action": "send:42+47"
-                },
-                {
-                  "caption": "B",
-                  "action": "send:42+48"
-                },
-                {
-                  "caption": "N",
-                  "action": "send:42+49"
-                },
-                {
-                  "caption": "M",
-                  "action": "send:42+50"
-                },
-                {
-                  "type": "spacer",
-                  "width": "0.2"
-                },
-                {
-                  "caption": "⌫",
-                  "style": ".key { font-size: 65%; background-color: #aaaaaa; }",
-                  "width": "1.3",
-                  "action": "send:14"
-                }
-              ]
-            },
-            {
-              "style": ".key { font-size: 65%; }",
-              "keys": [
-                {
-                  "caption": "123",
-                  "style": ".key { background-color: #aaaaaa; }",
-                  "action": "view:numbers",
-                  "longpress": "keyboard:",
-                  "width": "1.3"
-                },
-                {
-                  "width": "0.75",
-                  "style": ".key { font-size: 40%; }",
-                  "caption": "c\nt\nl",
-                  "action": "modifier:29"               
-                },
-                {
-                  "width": "0.75",
-                  "style": ".key { font-size: 40%; }",
-                  "caption": "a\nl\nt",
-                  "action": "modifier:56"               
-                },
-                {
-                  "caption": "space",
-                  "width": "5.2",
-                  "action": "send:57"
-                },
-                {
-                  "width": "2",
-                  "caption": "return",
-                  "style": ".key {background-color: #aaaaaa; }",
+                  "class": "grey",
                   "action": "send:28"
                 }
               ]
@@ -666,7 +479,8 @@
               "keys": [
                 {
                   "caption": "#+=",
-                  "style": ".key { font-size: 65%; background-color: #aaaaaa; }",
+                  "style": ".key { font-size: 65%; }",
+                  "class": "grey",
                   "action": "view:symbols",
                   "width": "1.3"
                 },
@@ -705,7 +519,8 @@
                 },
                 {
                   "caption": "⌫",
-                  "style": ".key { font-size: 65%; background-color: #aaaaaa; }",
+                  "style": ".key { font-size: 65%; }",
+                  "class": "grey",
                   "width": "1.3",
                   "action": "send:14"
                 }
@@ -716,7 +531,7 @@
               "keys": [
                 {
                   "caption": "ABC",
-                  "style": ".key { background-color: #aaaaaa; }",
+                  "class": "grey",
                   "longpress": "keyboard:",
                   "action": "view:default",
                   "width": "1.3"
@@ -742,7 +557,7 @@
                 {
                   "width": "2",
                   "caption": "return",
-                  "style": ".key { background-color: #aaaaaa; }",
+                  "class": "grey",
                   "action": "send:28"
                 }
               ]
@@ -840,7 +655,8 @@
               "keys": [
                 {
                   "caption": "→↑↓",
-                  "style": ".key { font-size: 60%; background-color: #aaaaaa; }",
+                  "style": ".key { font-size: 60%; }",
+                  "class": "grey",
                   "action": "view:arrows",
                   "width": "1.3"
                 },
@@ -879,7 +695,8 @@
                 },
                 {
                   "caption": "⌫",
-                  "style": ".key { font-size: 65%; background-color: #aaaaaa; }",
+                  "style": ".key { font-size: 65%; }",
+                  "class": "grey",
                   "width": "1.3",
                   "action": "send:14"
                 }
@@ -890,7 +707,7 @@
               "keys": [
                 {
                   "caption": "ABC",
-                  "style": ".key { background-color: #aaaaaa; }",
+                  "class": "grey",
                   "longpress": "keyboard:",
                   "action": "view:default",
                   "width": "1.3"
@@ -916,7 +733,7 @@
                 {
                   "width": "2",
                   "caption": "return",
-                  "style": ".key { background-color: #aaaaaa; }",
+                  "class": "grey",
                   "action": "send:28"
                 }
               ]
@@ -1037,14 +854,15 @@
             {
               "keys": [
                 {
-                  "style": ".key { font-size: 65%; background-color: #aaaaaa; }",
+                  "style": ".key { font-size: 65%; }",
+                  "class": "grey",
                   "caption": "123",
                   "action": "view:numbers",
                   "width": "1.3"
                 },
                 {
                   "caption": "⇧",
-                  "action": "modifier:24",
+                  "action": "modifier:42",
                   "width": "1.5"
                 },
                 {
@@ -1081,7 +899,8 @@
                 },
                 {
                   "caption": "⌫",
-                  "style": ".key { font-size: 65%; background-color: #aaaaaa; }",
+                  "style": ".key { font-size: 65%; }",
+                  "class": "grey",
                   "width": "1.3",
                   "action": "send:14"
                 }
@@ -1092,7 +911,7 @@
               "keys": [
                 {
                   "caption": "ABC",
-                  "style": ".key { background-color: #aaaaaa; }",
+                  "class": "grey",
                   "longpress": "keyboard:",
                   "action": "view:default",
                   "width": "1.3"
@@ -1118,7 +937,7 @@
                 {
                   "width": "2",
                   "caption": "return",
-                  "style": ".key { background-color: #aaaaaa; }",
+                  "class": "grey",
                   "action": "send:28"
                 }
               ]
