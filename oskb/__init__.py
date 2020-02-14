@@ -1,1 +1,3 @@
-from oskb.oskb import Keyboard
+import pkg_resources
+
+from oskb.oskb import *

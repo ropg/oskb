@@ -1,10 +1,12 @@
 import os, re, json, subprocess
 from functools import partial
 import pkg_resources
-import evdev
 
-from PyQt5.QtCore import QTimer, QRect
-from PyQt5.QtWidgets import QWidget, QPushButton
+from PyQt5.QtCore import QTimer, QRect, QSysInfo
+from PyQt5.QtWidgets import QWidget, QPushButton, QMainWindow
+
+RELEASED = 0
+PRESSED = 1
 
 
 class Keyboard(QWidget):
@@ -19,13 +21,13 @@ class Keyboard(QWidget):
         self.kbds = []
         self.view = None
         self.kbd = None
-        self.uinput = None
+        self.sendkeysobject = None
 
-    def sendToUInput(self):
-        self.uinput = evdev.UInput(name='oskb')
-
-    def setKeypipe(self, fn):
-        self.keypipe = fn
+    def sendKeys(self, object):
+        if getattr(object, "receiveKeys", None) and callable(object.receiveKeys):
+            self.sendkeysobject = object
+            return True
+        return False
 
     def readKeyboards(self, kbdfiles):
         for kbdfile in kbdfiles:
@@ -81,9 +83,12 @@ class Keyboard(QWidget):
                 self.releaseModifiers()
                 self.deleteKeyboard()
                 self.kbd = k
-                if k.get('setxkbmap'):
+                if QSysInfo().kernelType() == 'linux' and k.get('setxkbmap'):
                     cmd = ['setxkbmap'] + k['setxkbmap'].split(' ')
-                    subprocess.check_output( cmd )
+                    try:
+                        subprocess.check_output( cmd )
+                    except:
+                        pass
                 self.setView('default')
 
     def setView(self, viewname):
@@ -286,8 +291,7 @@ class Keyboard(QWidget):
     # Button handling
 
     def pressedButton(self, button):
-        try:
-            button.data['longpress']
+        if button.data.get('longpress'):
             self.longpresswait = True
             if self.keytimer:
                 self.keytimer.stop()
@@ -296,8 +300,8 @@ class Keyboard(QWidget):
             self.keytimer.setSingleShot(True)
             self.keytimer.timeout.connect(partial(self.longPress, button))
             self.keytimer.start(500)
-        except KeyError:
-            self.doAction(button.data['action'], button, 1)
+        else:
+            self.doAction(button.data.get('action', 'none'), button, 1)
 
     def releasedButton(self, button):
         if self.keytimer:
@@ -352,16 +356,15 @@ class Keyboard(QWidget):
         keylist = keystr.split("+")
         if down:
             for keycode in keylist:
-                self.sendkey(int(keycode), 1)
+                self.sendkey(int(keycode), PRESSED)
         else:
             for keycode in reversed(keylist):
-                self.sendkey(int(keycode), 0)
+                self.sendkey(int(keycode), RELEASED)
 
 
-    def sendkey(self, keycode, down):
-        if self.uinput:
-            self.uinput.write(evdev.ecodes.EV_KEY, keycode, down)
-            self.uinput.syn()
+    def sendkey(self, keycode, keyevent):
+        if self.sendkeysobject:
+            self.sendkeysobject.receiveKeys(keycode, keyevent)
 
 
 if __name__ == '__main__':

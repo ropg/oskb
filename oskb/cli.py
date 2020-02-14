@@ -5,6 +5,7 @@ from PyQt5.QtCore import Qt, QTimer
 import pkg_resources
 
 import oskb
+from oskb import im
 
 def main():
 
@@ -32,6 +33,7 @@ def main():
         choices=['left', 'center', 'right'], default='right')
     ap.add_argument('--toggle', help='toggles oskb on and off', action='store_true')
     ap.add_argument('--off', help='turns oskb off', action='store_true')
+    ap.add_argument('--justshow', help='show keyboard, do not send keys to OS', action='store_true')
     ap.add_argument('--version', '-v', help='print version number and exit', action='store_true')
     cmdline = ap.parse_args()
 
@@ -56,14 +58,16 @@ def main():
     myparent = os.getppid()
     myname = 'oskb'
     for proc in psutil.process_iter(attrs=(['pid'])):
-        if not proc.pid == mypid and not proc.pid == myparent:
-            itsname = os.path.basename( proc.name() )
-            if re.match('^python\d*$', itsname) and len(proc.cmdline()) > 1:
-                itsname = os.path.basename( proc.cmdline()[1] )
-            if itsname == myname:
-                proc.send_signal(9)
-                ikilled = True
-
+        try:
+            if not proc.pid == mypid and not proc.pid == myparent:
+                itsname = os.path.basename( proc.name() )
+                if re.match('^[Pp]ython\d*$', itsname) and len(proc.cmdline()) > 1:
+                    itsname = os.path.basename( proc.cmdline()[1] )
+                if itsname == myname:
+                    proc.send_signal(9)
+                    ikilled = True
+        except:
+            pass
     if ( ikilled and cmdline.toggle ) or cmdline.off:
         sys.exit()
 
@@ -100,22 +104,37 @@ def main():
     # quickly make sure X doesn't make a window frame etc.
     #
 
-    # Qt.X11BypassWindowManagerHint     : No WM border or title and no application focus
-    keyboard.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.X11BypassWindowManagerHint)
+    # Qt.X11BypassWindowManagerHint     : No WM border or title, no application focus, not in taskbar
+
+    keyboard.setWindowFlags( Qt.WindowStaysOnTopHint | Qt.X11BypassWindowManagerHint)
+#    keyboard.setWindowFlags( Qt.WindowStaysOnTopHint | Qt.WindowDoesNotAcceptFocus | Qt.FramelessWindowHint)
+    keyboard.setWindowTitle('On-Screen Keyboard')
 
 
     #
-    # Tell keyboard to send the keypresses to UInput
+    # Tell keyboard to send the keypresses to the default handler for OS
     #
 
-    try:
-        keyboard.sendToUInput()
-    except:
-        sys.stderr.write("Could not open /dev/uinput.\n"
-            "Try 'sudo setfacl -m m::rw -m u:<username>:rw /dev/uinput'\n"
-            "(replacing <username> with your username).\n"
-            "See the oskb documentation for more information.\n")
-        sys.exit(-1)
+    if not cmdline.justshow:
+
+        plugged = False
+        try:
+            plugged = keyboard.sendKeys(im.default())
+        except:
+            raise
+            sys.stderr.write("Could not set up the virtual keyboard.\n")
+
+        if not plugged:
+            if sys.platform.startswith('linux'):
+                sys.stderr.write(
+                    "Try 'sudo setfacl -m m::rw -m u:<username>:rw /dev/uinput'\n"
+                    "(replacing <username> with your username).\n"
+                    "See the oskb documentation for more information.\n")
+            else:
+                sys.stderr.write(
+                    "Your platform is not yet supported by oskd. Try --justshow if\n"
+                    "you just want to see how pretty oskb is.\n")
+            sys.exit(-1)
 
 
     #
@@ -129,24 +148,29 @@ def main():
     # Figure out where and how big we're going to be on the screen
     #
 
-    try:
-        # See if xprop will give us the workarea minus taskbar and such.
-        out = subprocess.check_output(['xprop','-root','_NET_WORKAREA'])
-        workarea = re.split('=|,',out.decode())
-        screenleft = int( workarea[1] )
-        screentop = int( workarea[2] )
-        screenwidth = int( workarea[3] )
-        screenheight = int( workarea[4] )
-    except:
-        # If not, use the screen dimensions
-        desktop = app.desktop()
-        screen = desktop.screenGeometry()
-        screenleft = 0
-        screentop = 0
-        screenwidth = screen.width()
-        screenheight = screen.height()
+    # First take the screen dimensions
+    desktop = app.desktop()
+    screen = desktop.screenGeometry()
+    screenleft = 0
+    screentop = 0
+    screenwidth = screen.width()
+    screenheight = screen.height()
+
+    # On Linux see if we can improve on that with xprop, giving us the workarea minus taskbar and such.
+    if sys.platform.startswith('linux'):
+        try:
+            # See if xprop will give us the workarea minus taskbar and such.
+            out = subprocess.check_output(['xprop','-root','_NET_WORKAREA'])
+            workarea = re.split('=|,',out.decode())
+            screenleft = int( workarea[1] )
+            screentop = int( workarea[2] )
+            screenwidth = int( workarea[3] )
+            screenheight = int( workarea[4] )
+        except:
+            pass
+
     # set width and height from arguments, defaulting to screen width and quarter of screen height resp.
-    w = cmdline.width if cmdline.width else screenwidth
+    w = cmdline.width if cmdline.width else min(screenwidth, 1024)
     h = cmdline.height if cmdline.height else max(250, int( screenheight / 4 ))
     # Vertical position
     if cmdline.top:
