@@ -24,6 +24,9 @@ def main():
     )
     ap.add_argument("--start", help="start with keyboard", metavar="<kbdname>")
     ap.add_argument("--list", help="list built-in keyboards", action="store_true")
+    ap.add_argument(
+        "--dump", help="dumps built-in keyboard to stdout", action="store_true"
+    )
     ap.add_argument("-x", help="window absolute position x", metavar="<x>", type=int)
     ap.add_argument("-y", help="window absolute position y", metavar="<y>", type=int)
     ap.add_argument("--width", help="window width", metavar="<width>", type=int)
@@ -59,6 +62,24 @@ def main():
     if cmdline.list:
         for k in pkg_resources.resource_listdir("oskb", "keyboards"):
             print(k)
+        sys.exit(0)
+
+    if cmdline.dump:
+        if len(cmdline.keyboards) != 1:
+            sys.stderr.write("Must specify exactly one built-in keyboard to dump.\n")
+            sys.exit(-1)
+        if not pkg_resources.resource_exists(
+            "oskb", "keyboards/" + cmdline.keyboards[0]
+        ):
+            sys.stderr.write(
+                "Built-in keyboard '" + cmdline.keyboards[0] + "' not found.\n"
+            )
+            sys.exit(-1)
+        print(
+            pkg_resources.resource_string(
+                "oskb", "keyboards/" + cmdline.keyboards[0]
+            ).decode("utf-8")
+        )
         sys.exit(0)
 
     #
