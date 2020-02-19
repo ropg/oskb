@@ -1,7 +1,7 @@
 {
   "description": "DE - QWERTZ",
   "setxkbmap": "de",
-  "style": ".grey { background-color: #aaaaaa; }",
+  "style": ".grey { background-color: #aaaaaa; } .key.row4 { font-size: 65%; } .lpsymbol { font-size: 50%; color: blue; qproperty-alignment: 'AlignTop | AlignRight'; }",
   "views": [
     {
       "name": "default",
@@ -12,47 +12,102 @@
               "keys": [
                 {
                   "caption": "q",
-                  "action": "send:16"
+                  "single": {                    
+                    "send": {
+                      "name": "q",
+                      "keycode": "16"
+                    }
+                  }
                 },
                 {
                   "caption": "w",
-                  "action": "send:17"
+                  "single": {
+                    "send": {
+                      "name": "w",
+                      "keycode": "17"
+                    }
+                  }
                 },
                 {
                   "caption": "e",
-                  "action": "send:18"
+                  "single": {
+                    "send": {
+                      "name": "e",
+                      "keycode": "18"
+                    }
+                  }
                 },
                 {
                   "caption": "r",
-                  "action": "send:19"
+                  "single": {
+                    "send": {
+                      "name": "r",
+                      "keycode": "19"
+                    }
+                  }
                 },
                 {
                   "caption": "t",
-                  "action": "send:20"
+                  "single": {
+                    "send": {
+                      "name": "t",
+                      "keycode": "20"
+                    }
+                  }
                 },
                 {
                   "caption": "z",
-                  "action": "send:21"
+                  "single": {
+                    "send": {
+                      "name": "z",
+                      "keycode": "21"
+                    }
+                  }
                 },
                 {
                   "caption": "u",
-                  "action": "send:22"
+                  "single": {
+                    "send": {
+                      "name": "u",
+                      "keycode": "22"
+                    }
+                  }
                 },
                 {
                   "caption": "i",
-                  "action": "send:23"
+                  "single": {
+                    "send": {
+                      "name": "i",
+                      "keycode": "23"
+                    }
+                  }
                 },
                 {
                   "caption": "o",
-                  "action": "send:24"
+                  "single": {
+                    "send": {
+                      "name": "o",
+                      "keycode": "24"
+                    }
+                  }
                 },
                 {
                   "caption": "p",
-                  "action": "send:25"
+                  "single": {
+                    "send": {
+                      "name": "p",
+                      "keycode": "25"
+                    }
+                  }
                 },
                 {
                   "caption": "ü",
-                  "action": "send:26"
+                  "single": {
+                    "send": {
+                      "name": "ü",
+                      "keycode": "26"
+                    }
+                  }
                 }
               ]
             },
@@ -60,47 +115,102 @@
               "keys": [
                 {
                   "caption": "a",
-                  "action": "send:30"
+                  "single": {
+                    "send": {
+                      "name": "a",
+                      "keycode": "30"
+                    }
+                  }
                 },
                 {
                   "caption": "s",
-                  "action": "send:31"
+                  "single": {
+                    "send": {
+                      "name": "s",
+                      "keycode": "31"
+                    }
+                  }
                 },
                 {
                   "caption": "d",
-                  "action": "send:32"
+                  "single": {
+                    "send": {
+                      "name": "d",
+                      "keycode": "32"
+                    }
+                  }
                 },
                 {
                   "caption": "f",
-                  "action": "send:33"
+                  "single": {
+                    "send": {
+                      "name": "f",
+                      "keycode": "33"
+                    }
+                  }
                 },
                 {
                   "caption": "g",
-                  "action": "send:34"
+                  "single": {
+                    "send": {
+                      "name": "g",
+                      "keycode": "34"
+                    }
+                  }
                 },
                 {
                   "caption": "h",
-                  "action": "send:35"
+                  "single": {
+                    "send": {
+                      "name": "h",
+                      "keycode": "35"
+                    }
+                  }
                 },
                 {
                   "caption": "j",
-                  "action": "send:36"
+                  "single": {
+                    "send": {
+                      "name": "j",
+                      "keycode": "36"
+                    }
+                  }
                 },
                 {
                   "caption": "k",
-                  "action": "send:37"
+                  "single": {
+                    "send": {
+                      "name": "k",
+                      "keycode": "37"
+                    }
+                  }
                 },
                 {
                   "caption": "l",
-                  "action": "send:38"
+                  "single": {
+                    "send": {
+                      "name": "l",
+                      "keycode": "38"
+                    }
+                  }
                 },
                 {
                   "caption": "ö",
-                  "action": "send:39"
+                  "single": {
+                    "send": {
+                      "name": "ö",
+                      "keycode": "39"
+                    }
+                  }
                 },
                 {
                   "caption": "ä",
-                  "action": "send:40"
+                  "single": {
+                    "send": {
+                      "name": "ä",
+                      "keycode": "40"
+                    }
+                  }
                 }
               ]
             },
@@ -108,8 +218,18 @@
               "keys": [
                 {
                   "caption": "⇧",
-                  "action": "oneview:shifted",
-                  "longpress": "view:shifted",
+                  "single": {
+                    "view": {
+                      "name": "shifted",
+                      "until": ".",
+                      "thenview": "default"
+                    }
+                  },
+                  "long": {
+                    "view": {
+                      "name": "shifted"
+                    }
+                  },
                   "width": "1.3"
                 },
                 {
@@ -118,31 +238,66 @@
                 },
                 {
                   "caption": "y",
-                  "action": "send:44"
+                  "single": {
+                    "send": {
+                      "name": "y",
+                      "keycode": "44"
+                    }
+                  }
                 },
                 {
                   "caption": "x",
-                  "action": "send:45"
+                  "single": {
+                    "send": {
+                      "name": "x",
+                      "keycode": "45"
+                    }
+                  }
                 },
                 {
                   "caption": "c",
-                  "action": "send:46"
+                  "single": {
+                    "send": {
+                      "name": "c",
+                      "keycode": "46"
+                    }
+                  }
                 },
                 {
                   "caption": "v",
-                  "action": "send:47"
+                  "single": {
+                    "send": {
+                      "name": "v",
+                      "keycode": "47"
+                    }
+                  }
                 },
                 {
                   "caption": "b",
-                  "action": "send:48"
+                  "single": {
+                    "send": {
+                      "name": "b",
+                      "keycode": "48"
+                    }
+                  }
                 },
                 {
                   "caption": "n",
-                  "action": "send:49"
+                  "single": {
+                    "send": {
+                      "name": "n",
+                      "keycode": "49"
+                    }
+                  }
                 },
                 {
                   "caption": "m",
-                  "action": "send:50"
+                  "single": {
+                    "send": {
+                      "name": "m",
+                      "keycode": "50"
+                    }
+                  }
                 },
                 {
                   "type": "spacer",
@@ -150,49 +305,134 @@
                 },
                 {
                   "caption": "ß",
-                  "action": "send:12"
+                  "single": {
+                    "send": {
+                      "name": "ß",
+                      "keycode": "12"
+                    }
+                  }
+                },                
+                {
+                  "type": "spacer",
+                  "width": "0.2"
                 },
                 {
                   "caption": "⌫",
-                  "style": ".key { font-size: 65%; }",
+                  "style": ".key { font-size: 65%;  }",
                   "class": "grey",
                   "width": "1.3",
-                  "action": "send:14"
+                  "single": {
+                    "send": {
+                      "name": "backspace",
+                      "keycode": "14",
+                      "printable": false
+                    }
+                  }
                 }
               ]
             },
             {
-              "style": ".key { font-size: 65%; }",
               "keys": [
                 {
                   "caption": "123",
                   "class": "grey",
-                  "longpress": "keyboard:",
-                  "action": "view:numbers",
-                  "width": "1.3"
+                  "single": {
+                    "view": {
+                      "name": "numbers"
+                    }
+                  },
+                  "long": {
+                    "keyboard": {
+                      "name": "chooser"
+                    }
+                  },
+                  "width": "1.3",
+                  "extracaptions": {
+                    "lpsymbol": "🌐"
+                  }
                 },
                 {
                   "width": "0.75",
                   "style": ".key { font-size: 40%; }",
                   "caption": "c\nt\nl",
-                  "action": "modifier:29"               
+                  "single": {
+                    "modifier": {
+                      "name": "ctrl",
+                      "keycode": "29",
+                      "printable": false,
+                      "action": "toggle"
+                    }
+                  },
+                  "long": {
+                    "modifier": {
+                      "name": "ctrl",
+                      "keycode": "29",
+                      "printable": false,
+                      "action": "lock"
+                    }
+                  }               
                 },
                 {
                   "width": "0.75",
                   "style": ".key { font-size: 40%; }",
                   "caption": "a\nl\nt",
-                  "action": "modifier:56"               
+                  "single": {
+                    "modifier": {
+                      "name": "alt",
+                      "keycode": "56",
+                      "printable": false,
+                      "action": "toggle"
+                    }
+                  },
+                  "long": {
+                    "modifier": {
+                      "name": "alt",
+                      "keycode": "56",
+                      "printable": false,
+                      "action": "lock"
+                    }
+                  }               
                 },
                 {
                   "caption": "Leerzeichen",
                   "width": "5.2",
-                  "action": "send:57"
+                  "single": {
+                    "send": {
+                      "name": " ",
+                      "keycode": "57"
+                    }
+                  },
+                  "double": {
+                    "send": {
+                      "name": "1",
+                      "keycode": "52;57"
+                    },
+                    "view": {
+                      "name": "shifted",
+                      "until": ".",
+                      "thenview": "default"
+                    }
+                  }
                 },
                 {
                   "width": "2",
                   "caption": "↵",
-                  "style": ".key { background-color: #aaaaaa; font-size: 100%}",
-                  "action": "send:28"
+                  "class": "grey",
+                  "single": {
+                    "send": {
+                      "name": "return",
+                      "keycode": "28",
+                      "printable": false
+                    }
+                  },
+                  "long": {
+                    "keyboard": {
+                      "name": "minimized"
+                    }
+                  },
+                  "extracaptions": {
+                    "lpsymbol": "⌨"
+                  }
                 }
               ]
             }
@@ -209,47 +449,102 @@
               "keys": [
                 {
                   "caption": "Q",
-                  "action": "send:42+16"
+                  "single": {
+                    "send": {
+                      "name": "Q",
+                      "keycode": "42+16"
+                    }
+                  }
                 },
                 {
                   "caption": "W",
-                  "action": "send:42+17"
+                  "single": {
+                    "send": {
+                      "name": "W",
+                      "keycode": "42+17"
+                    }
+                  }
                 },
                 {
                   "caption": "E",
-                  "action": "send:42+18"
+                  "single": {
+                    "send": {
+                      "name": "E",
+                      "keycode": "42+18"
+                    }
+                  }
                 },
                 {
                   "caption": "R",
-                  "action": "send:42+19"
+                  "single": {
+                    "send": {
+                      "name": "R",
+                      "keycode": "42+19"
+                    }
+                  }
                 },
                 {
                   "caption": "T",
-                  "action": "send:42+20"
+                  "single": {
+                    "send": {
+                      "name": "T",
+                      "keycode": "42+20"
+                    }
+                  }
                 },
                 {
                   "caption": "Z",
-                  "action": "send:42+21"
+                  "single": {
+                    "send": {
+                      "name": "Z",
+                      "keycode": "42+21"
+                    }
+                  }
                 },
                 {
                   "caption": "U",
-                  "action": "send:42+22"
+                  "single": {
+                    "send": {
+                      "name": "U",
+                      "keycode": "42+22"
+                    }
+                  }
                 },
                 {
                   "caption": "I",
-                  "action": "send:42+23"
+                  "single": {
+                    "send": {
+                      "name": "I",
+                      "keycode": "42+23"
+                    }
+                  }
                 },
                 {
                   "caption": "O",
-                  "action": "send:42+24"
+                  "single": {
+                    "send": {
+                      "name": "O",
+                      "keycode": "42+24"
+                    }
+                  }
                 },
                 {
                   "caption": "P",
-                  "action": "send:42+25"
+                  "single": {
+                    "send": {
+                      "name": "P",
+                      "keycode": "42+25"
+                    }
+                  }
                 },
                 {
                   "caption": "Ü",
-                  "action": "send:42+26"
+                  "single": {
+                    "send": {
+                      "name": "Ü",
+                      "keycode": "42+26"
+                    }
+                  }
                 }
               ]
             },
@@ -257,47 +552,102 @@
               "keys": [
                 {
                   "caption": "A",
-                  "action": "send:42+30"
+                  "single": {
+                    "send": {
+                      "name": "A",
+                      "keycode": "42+30"
+                    }
+                  }
                 },
                 {
                   "caption": "S",
-                  "action": "send:42+31"
+                  "single": {
+                    "send": {
+                      "name": "S",
+                      "keycode": "42+31"
+                    }
+                  }
                 },
                 {
                   "caption": "D",
-                  "action": "send:42+32"
+                  "single": {
+                    "send": {
+                      "name": "D",
+                      "keycode": "42+32"
+                    }
+                  }
                 },
                 {
                   "caption": "F",
-                  "action": "send:42+33"
+                  "single": {
+                    "send": {
+                      "name": "F",
+                      "keycode": "42+33"
+                    }
+                  }
                 },
                 {
                   "caption": "G",
-                  "action": "send:42+34"
+                  "single": {
+                    "send": {
+                      "name": "G",
+                      "keycode": "42+34"
+                    }
+                  }
                 },
                 {
                   "caption": "H",
-                  "action": "send:42+35"
+                  "single": {
+                    "send": {
+                      "name": "H",
+                      "keycode": "42+35"
+                    }
+                  }
                 },
                 {
                   "caption": "J",
-                  "action": "send:42+36"
+                  "single": {
+                    "send": {
+                      "name": "J",
+                      "keycode": "42+36"
+                    }
+                  }
                 },
                 {
                   "caption": "K",
-                  "action": "send:42+37"
+                  "single": {
+                    "send": {
+                      "name": "K",
+                      "keycode": "42+37"
+                    }
+                  }
                 },
                 {
                   "caption": "L",
-                  "action": "send:42+38"
+                  "single": {
+                    "send": {
+                      "name": "L",
+                      "keycode": "42+38"
+                    }
+                  }
                 },
                 {
                   "caption": "Ö",
-                  "action": "send:42+39"
+                  "single": {
+                    "send": {
+                      "name": "Ö",
+                      "keycode": "42+39"
+                    }
+                  }
                 },
                 {
                   "caption": "Ä",
-                  "action": "send:42+40"
+                  "single": {
+                    "send": {
+                      "name": "Ä",
+                      "keycode": "42+40"
+                    }
+                  }
                 }
               ]
             },
@@ -305,7 +655,16 @@
               "keys": [
                 {
                   "caption": "⇧",
-                  "action": "view:default",
+                  "single": {
+                    "view": {
+                      "name": "default"
+                    }
+                  },
+                  "long": {
+                    "view": {
+                      "name": "shifted"
+                    }
+                  },
                   "width": "1.3",
                   "class": "pseudomodifier"
                 },
@@ -315,31 +674,66 @@
                 },
                 {
                   "caption": "Y",
-                  "action": "send:42+44"
+                  "single": {
+                    "send": {
+                      "name": "Y",
+                      "keycode": "42+44"
+                    }
+                  }
                 },
                 {
                   "caption": "X",
-                  "action": "send:42+45"
+                  "single": {
+                    "send": {
+                      "name": "X",
+                      "keycode": "42+45"
+                    }
+                  }
                 },
                 {
                   "caption": "C",
-                  "action": "send:42+46"
+                  "single": {
+                    "send": {
+                      "name": "C",
+                      "keycode": "42+46"
+                    }
+                  }
                 },
                 {
                   "caption": "V",
-                  "action": "send:42+47"
+                  "single": {
+                    "send": {
+                      "name": "V",
+                      "keycode": "42+47"
+                    }
+                  }
                 },
                 {
                   "caption": "B",
-                  "action": "send:42+48"
+                  "single": {
+                    "send": {
+                      "name": "B",
+                      "keycode": "42+48"
+                    }
+                  }
                 },
                 {
                   "caption": "N",
-                  "action": "send:42+49"
+                  "single": {
+                    "send": {
+                      "name": "N",
+                      "keycode": "42+49"
+                    }
+                  }
                 },
                 {
                   "caption": "M",
-                  "action": "send:42+50"
+                  "single": {
+                    "send": {
+                      "name": "M",
+                      "keycode": "42+50"
+                    }
+                  }
                 },
                 {
                   "type": "spacer",
@@ -347,49 +741,123 @@
                 },
                 {
                   "caption": "ẞ",
-                  "action": "send:42+100+31"
+                  "single": {
+                    "send": {
+                      "name": "ẞ",
+                      "keycode": "42+100+31"
+                    }
+                  }
+                },                
+                {
+                  "type": "spacer",
+                  "width": "0.2"
                 },
                 {
                   "caption": "⌫",
                   "style": ".key { font-size: 65%; }",
                   "class": "grey",
                   "width": "1.3",
-                  "action": "send:14"
+                  "single": {
+                    "send": {
+                      "name": "backspace",
+                      "keycode": "14",
+                      "printable": false
+                    }
+                  }
                 }
               ]
             },
             {
-              "style": ".key { font-size: 65%; }",
               "keys": [
                 {
                   "caption": "123",
                   "class": "grey",
-                  "longpress": "keyboard:",
-                  "action": "view:numbers",
-                  "width": "1.3"
+                  "single": {
+                    "view": {
+                      "name": "numbers"
+                    }
+                  },
+                  "long": {
+                    "keyboard": {
+                      "name": "chooser"
+                    }
+                  },
+                  "width": "1.3",
+                  "extracaptions": {
+                    "lpsymbol": "🌐"
+                  }
                 },
                 {
                   "width": "0.75",
                   "style": ".key { font-size: 40%; }",
                   "caption": "c\nt\nl",
-                  "action": "modifier:29"               
+                  "single": {
+                    "modifier": {
+                      "name": "ctrl",
+                      "keycode": "29",
+                      "printable": false,
+                      "action": "toggle"
+                    }
+                  },
+                  "long": {
+                    "modifier": {
+                      "name": "ctrl",
+                      "keycode": "29",
+                      "printable": false,
+                      "action": "lock"
+                    }
+                  }               
                 },
                 {
                   "width": "0.75",
                   "style": ".key { font-size: 40%; }",
                   "caption": "a\nl\nt",
-                  "action": "modifier:56"               
+                  "single": {
+                    "modifier": {
+                      "name": "alt",
+                      "keycode": "56",
+                      "printable": false,
+                      "action": "toggle"
+                    }
+                  },
+                  "long": {
+                    "modifier": {
+                      "name": "alt",
+                      "keycode": "56",
+                      "printable": false,
+                      "action": "lock"
+                    }
+                  }               
                 },
                 {
                   "caption": "Leerzeichen",
                   "width": "5.2",
-                  "action": "send:57"
+                  "single": {
+                    "send": {
+                      "name": " ",
+                      "keycode": "57"
+                    }
+                  }
                 },
                 {
                   "width": "2",
                   "caption": "↵",
-                  "style": ".key { background-color: #aaaaaa; font-size: 100%}",
-                  "action": "send:28"
+                  "class": "grey",
+                  "single": {
+                    "send": {
+                      "name": "return",
+                      "keycode": "28",
+                      "printable": false
+                    }
+                  },
+                  "long": {
+                    "keyboard": {
+                      "name": "minimized"
+                    }
+                  },
+                  "extracaptions": {
+                    "lpsymbol": "⌨"
+                  }
                 }
               ]
             }
@@ -406,43 +874,93 @@
               "keys": [
                 {
                   "caption": "1",
-                  "action": "send:2"
+                  "single": {
+                    "send": {
+                      "name": "1",
+                      "keycode": "2"
+                    }
+                  }
                 },
                 {
                   "caption": "2",
-                  "action": "send:3"
+                  "single": {
+                    "send": {
+                      "name": "2",
+                      "keycode": "3"
+                    }
+                  }
                 },
                 {
                   "caption": "3",
-                  "action": "send:4"
+                  "single": {
+                    "send": {
+                      "name": "3",
+                      "keycode": "4"
+                    }
+                  }
                 },
                 {
                   "caption": "4",
-                  "action": "send:5"
+                  "single": {
+                    "send": {
+                      "name": "4",
+                      "keycode": "5"
+                    }
+                  }
                 },
                 {
                   "caption": "5",
-                  "action": "send:6"
+                  "single": {
+                    "send": {
+                      "name": "5",
+                      "keycode": "6"
+                    }
+                  }
                 },
                 {
                   "caption": "6",
-                  "action": "send:7"
+                  "single": {
+                    "send": {
+                      "name": "6",
+                      "keycode": "7"
+                    }
+                  }
                 },
                 {
                   "caption": "7",
-                  "action": "send:8"
+                  "single": {
+                    "send": {
+                      "name": "7",
+                      "keycode": "8"
+                    }
+                  }
                 },
                 {
                   "caption": "8",
-                  "action": "send:9"
+                  "single": {
+                    "send": {
+                      "name": "8",
+                      "keycode": "9"
+                    }
+                  }
                 },
                 {
                   "caption": "9",
-                  "action": "send:10"
+                  "single": {
+                    "send": {
+                      "name": "9",
+                      "keycode": "10"
+                    }
+                  }
                 },
                 {
                   "caption": "0",
-                  "action": "send:11"
+                  "single": {
+                    "send": {
+                      "name": "0",
+                      "keycode": "11"
+                    }
+                  }
                 }
               ]
             },
@@ -450,53 +968,107 @@
               "keys": [
                 {
                   "caption": "-",
-                  "action": "send:53"
+                  "single": {
+                    "send": {
+                      "name": "-",
+                      "keycode": "53"
+                    }
+                  }
                 },
                 {
                   "caption": "/",
-                  "action": "send:42+8"
+                  "single": {
+                    "send": {
+                      "name": "/",
+                      "keycode": "42+8"
+                    }
+                  }
                 },
                 {
                   "caption": ":",
-                  "action": "send:42+52"
+                  "single": {
+                    "send": {
+                      "name": ":",
+                      "keycode": "42+52"
+                    }
+                  }
                 },
                 {
                   "caption": ";",
-                  "action": "send:42+51"
+                  "single": {
+                    "send": {
+                      "name": ";",
+                      "keycode": "42+51"
+                    }
+                  }
                 },
                 {
                   "caption": "(",
-                  "action": "send:42+9"
+                  "single": {
+                    "send": {
+                      "name": "(",
+                      "keycode": "42+9"
+                    }
+                  }
                 },
                 {
                   "caption": ")",
-                  "action": "send:42+10"
+                  "single": {
+                    "send": {
+                      "name": ")",
+                      "keycode": "42+01"
+                    }
+                  }
                 },
                 {
                   "caption": "€",
-                  "action": "send:100+18"
+                  "single": {
+                    "send": {
+                      "name": "€",
+                      "keycode": "100+18"
+                    }
+                  }
                 },
                 {
                   "caption": "&&",
-                  "action": "send:42+7"
+                  "single": {
+                    "send": {
+                      "name": "&",
+                      "keycode": "42+7"
+                    }
+                  }
                 },
                 {
                   "caption": "@",
-                  "action": "send:100+16"
+                  "single": {
+                    "send": {
+                      "name": "@",
+                      "keycode": "100+16"
+                    }
+                  }
                 },
                 {
                   "caption": "\"",
-                  "action": "send:42+3"
+                  "single": {
+                    "send": {
+                      "name": "\"",
+                      "keycode": "42+3"
+                    }
+                  }
                 }
               ]
             },
             {
               "keys": [
-                {  
+                {
+                  "caption": "#+=",
                   "style": ".key { font-size: 65%; }",
                   "class": "grey",
-                  "caption": "#+=",
-                  "action": "view:symbols",
+                  "single": {
+                    "view": {
+                      "name": "symbols"
+                    }
+                  },
                   "width": "1.3"
                 },
                 {
@@ -506,27 +1078,52 @@
                 {
                   "caption": ".",
                   "width": "1.4",
-                  "action": "send:52"
+                  "single": {
+                    "send": {
+                      "name": ".",
+                      "keycode": "52"
+                    }
+                  }
                 },
                 {
                   "caption": ",",
                   "width": "1.4",
-                  "action": "send:51"
+                  "single": {
+                    "send": {
+                      "name": ",",
+                      "keycode": "51"
+                    }
+                  }
                 },
                 {
                   "caption": "?",
                   "width": "1.4",
-                  "action": "send:42+12"
+                  "single": {
+                    "send": {
+                      "name": "?",
+                      "keycode": "42+12"
+                    }
+                  }
                 },
                 {
                   "caption": "!",
                   "width": "1.4",
-                  "action": "send:42+2"
+                  "single": {
+                    "send": {
+                      "name": "!",
+                      "keycode": "42+2"
+                    }
+                  }
                 },
                 {
                   "caption": "'",
                   "width": "1.4",
-                  "action": "send:42+43"
+                  "single": {
+                    "send": {
+                      "name": "'",
+                      "keycode": "42+43"
+                    }
+                  }
                 },
                 {
                   "type": "spacer",
@@ -537,43 +1134,107 @@
                   "style": ".key { font-size: 65%; }",
                   "class": "grey",
                   "width": "1.3",
-                  "action": "send:14"
+                  "single": {
+                    "send": {
+                      "name": "backspace",
+                      "keycode": "14",
+                      "printable": false
+                    }
+                  }
                 }
               ]
             },
             {
-              "style": ".key { font-size: 65%; }",
               "keys": [
                 {
                   "caption": "ABC",
                   "class": "grey",
-                  "longpress": "keyboard:",
-                  "action": "view:default",
-                  "width": "1.3"
+                  "long": {
+                    "keyboard": {
+                      "name": "chooser"
+                    }
+                  },
+                  "single": {
+                    "view": {
+                      "name": "default"
+                    }
+                  },
+                  "width": "1.3",
+                  "extracaptions": {
+                    "lpsymbol": "🌐"
+                  }
                 },
                 {
                   "width": "0.75",
                   "style": ".key { font-size: 40%; }",
                   "caption": "c\nt\nl",
-                  "action": "modifier:29"               
+                  "single": {
+                    "modifier": {
+                      "name": "ctrl",
+                      "keycode": "29",
+                      "printable": false,
+                      "action": "toggle"
+                    }
+                  },
+                  "long": {
+                    "modifier": {
+                      "name": "ctrl",
+                      "keycode": "29",
+                      "printable": false,
+                      "action": "lock"
+                    }
+                  }               
                 },
                 {
                   "width": "0.75",
                   "style": ".key { font-size: 40%; }",
                   "caption": "a\nl\nt",
-                  "action": "modifier:56"               
+                  "single": {
+                    "modifier": {
+                      "name": "alt",
+                      "keycode": "56",
+                      "printable": false,
+                      "action": "toggle"
+                    }
+                  },
+                  "long": {
+                    "modifier": {
+                      "name": "alt",
+                      "keycode": "56",
+                      "printable": false,
+                      "action": "lock"
+                    }
+                  }               
                 },
                 {
                   "caption": "Leerzeichen",
                   "width": "5.2",
-                  "action": "send:57",
-                  "flipback": "default"
+                  "single": {
+                    "send": {
+                      "name": " ",
+                      "keycode": "57"
+                    }
+                  }
                 },
                 {
                   "width": "2",
                   "caption": "↵",
-                  "style": ".key { background-color: #aaaaaa; font-size: 100%}",
-                  "action": "send:28"
+                  "class": "grey",
+                  "single": {
+                    "send": {
+                      "name": "return",
+                      "keycode": "28",
+                      "printable": false
+                    }
+                  },
+                  "long": {
+                    "keyboard": {
+                      "name": "minimized"
+                    }
+                  },
+                  "extracaptions": {
+                    "lpsymbol": "⌨"
+                  }
                 }
               ]
             }
@@ -590,43 +1251,93 @@
               "keys": [
                 {
                   "caption": "[",
-                  "action": "send:100+9"
+                  "single": {
+                    "send": {
+                      "name": "[",
+                      "keycode": "100+9"
+                    }
+                  }
                 },
                 {
                   "caption": "]",
-                  "action": "send:100+10"
+                  "single": {
+                    "send": {
+                      "name": "]",
+                      "keycode": "100+10"
+                    }
+                  }
                 },
                 {
                   "caption": "{",
-                  "action": "send:100+8"
+                  "single": {
+                    "send": {
+                      "name": "{",
+                      "keycode": "100+8"
+                    }
+                  }
                 },
                 {
                   "caption": "}",
-                  "action": "send:100+11"
+                  "single": {
+                    "send": {
+                      "name": "}",
+                      "keycode": "100+11"
+                    }
+                  }
                 },
                 {
                   "caption": "#",
-                  "action": "send:43"
+                  "single": {
+                    "send": {
+                      "name": "#",
+                      "keycode": "43"
+                    }
+                  }
                 },
                 {
                   "caption": "%",
-                  "action": "send:42+6"
+                  "single": {
+                    "send": {
+                      "name": "%",
+                      "keycode": "42+6"
+                    }
+                  }
                 },
                 {
                   "caption": "^",
-                  "action": "none"
+                  "single": {
+                    "send": {
+                      "name": "^",
+                      "keycode": "41;41"
+                    }
+                  }
                 },
                 {
                   "caption": "*",
-                  "action": "send:42+27"
+                  "single": {
+                    "send": {
+                      "name": "*",
+                      "keycode": "42+27"
+                    }
+                  }
                 },
                 {
                   "caption": "+",
-                  "action": "send:27"
+                  "single": {
+                    "send": {
+                      "name": "+",
+                      "keycode": "27"
+                    }
+                  }
                 },
                 {
                   "caption": "=",
-                  "action": "send:42+11"
+                  "single": {
+                    "send": {
+                      "name": "=",
+                      "keycode": "42+11"
+                    }
+                  }
                 }
               ]
             },
@@ -634,31 +1345,66 @@
               "keys": [
                 {
                   "caption": "_",
-                  "action": "send:42+53"
+                  "single": {
+                    "send": {
+                      "name": "_",
+                      "keycode": "42+53"
+                    }
+                  }
                 },
                 {
                   "caption": "\\",
-                  "action": "send:100+12"
+                  "single": {
+                    "send": {
+                      "name": "\\",
+                      "keycode": "100+12"
+                    }
+                  }
                 },
                 {
                   "caption": "|",
-                  "action": "send:100+86"
+                  "single": {
+                    "send": {
+                      "name": "|",
+                      "keycode": "100+86"
+                    }
+                  }
                 },
                 {
                   "caption": "~",
-                  "action": "send:100+27"
+                  "single": {
+                    "send": {
+                      "name": "~",
+                      "keycode": "100+27"
+                    }
+                  }
                 },
                 {
                   "caption": "<",
-                  "action": "send:86"
+                  "single": {
+                    "send": {
+                      "name": "<",
+                      "keycode": "86"
+                    }
+                  }
                 },
                 {
                   "caption": ">",
-                  "action": "send:42+86"
+                  "single": {
+                    "send": {
+                      "name": ">",
+                      "keycode": "42+86"
+                    }
+                  }
                 },
                 {
                   "caption": "$",
-                  "action": "send:42+5"
+                  "single": {
+                    "send": {
+                      "name": "$",
+                      "keycode": "42+5"
+                    }
+                  }
                 },
                 {
                   "type": "spacer",
@@ -669,10 +1415,14 @@
             {
               "keys": [
                 {
+                  "caption": "→↑↓",
                   "style": ".key { font-size: 60%; }",
                   "class": "grey",
-                  "caption": "→↑↓",
-                  "action": "view:arrows",
+                  "single": {
+                    "view": {
+                      "name": "arrows"
+                    }
+                  },
                   "width": "1.3"
                 },
                 {
@@ -682,27 +1432,52 @@
                 {
                   "caption": ".",
                   "width": "1.4",
-                  "action": "send:52"
+                  "single": {
+                    "send": {
+                      "name": ".",
+                      "keycode": "52"
+                    }
+                  }
                 },
                 {
                   "caption": ",",
                   "width": "1.4",
-                  "action": "send:51"
+                  "single": {
+                    "send": {
+                      "name": ",",
+                      "keycode": "51"
+                    }
+                  }
                 },
                 {
                   "caption": "?",
                   "width": "1.4",
-                  "action": "send:42+12"
+                  "single": {
+                    "send": {
+                      "name": "?",
+                      "keycode": "42+12"
+                    }
+                  }
                 },
                 {
                   "caption": "!",
                   "width": "1.4",
-                  "action": "send:42+2"
+                  "single": {
+                    "send": {
+                      "name": "!",
+                      "keycode": "42+2"
+                    }
+                  }
                 },
                 {
                   "caption": "'",
                   "width": "1.4",
-                  "action": "send:42+43"
+                  "single": {
+                    "send": {
+                      "name": "'",
+                      "keycode": "42+43"
+                    }
+                  }
                 },
                 {
                   "type": "spacer",
@@ -713,43 +1488,107 @@
                   "style": ".key { font-size: 65%; }",
                   "class": "grey",
                   "width": "1.3",
-                  "action": "send:14"
+                  "single": {
+                    "send": {
+                      "name": "backspace",
+                      "keycode": "14",
+                      "printable": false
+                    }
+                  }
                 }
               ]
             },
             {
-              "style": ".key { font-size: 65%; }",
               "keys": [
                 {
                   "caption": "ABC",
                   "class": "grey",
-                  "longpress": "keyboard:",
-                  "action": "view:default",
-                  "width": "1.3"
+                  "long": {
+                    "keyboard": {
+                      "name": "chooser"
+                    }
+                  },
+                  "single": {
+                    "view": {
+                      "name": "default"
+                    }
+                  },
+                  "width": "1.3",
+                  "extracaptions": {
+                    "lpsymbol": "🌐"
+                  }
                 },
                 {
                   "width": "0.75",
                   "style": ".key { font-size: 40%; }",
                   "caption": "c\nt\nl",
-                  "action": "modifier:29"               
+                  "single": {
+                    "modifier": {
+                      "name": "ctrl",
+                      "keycode": "29",
+                      "printable": false,
+                      "action": "toggle"
+                    }
+                  },
+                  "long": {
+                    "modifier": {
+                      "name": "ctrl",
+                      "keycode": "29",
+                      "printable": false,
+                      "action": "lock"
+                    }
+                  }               
                 },
                 {
                   "width": "0.75",
                   "style": ".key { font-size: 40%; }",
                   "caption": "a\nl\nt",
-                  "action": "modifier:56"               
+                  "single": {
+                    "modifier": {
+                      "name": "alt",
+                      "keycode": "56",
+                      "printable": false,
+                      "action": "toggle"
+                    }
+                  },
+                  "long": {
+                    "modifier": {
+                      "name": "alt",
+                      "keycode": "56",
+                      "printable": false,
+                      "action": "lock"
+                    }
+                  }               
                 },
                 {
                   "caption": "Leerzeichen",
                   "width": "5.2",
-                  "action": "send:57",
-                  "flipback": "default"
+                  "single": {
+                    "send": {
+                      "name": " ",
+                      "keycode": "57"
+                    }
+                  }
                 },
                 {
                   "width": "2",
                   "caption": "↵",
-                  "style": ".key { background-color: #aaaaaa; font-size: 100%}",
-                  "action": "send:28"
+                  "class": "grey",
+                  "single": {
+                    "send": {
+                      "name": "return",
+                      "keycode": "28",
+                      "printable": false
+                    }
+                  },
+                  "long": {
+                    "keyboard": {
+                      "name": "minimized"
+                    }
+                  },
+                  "extracaptions": {
+                    "lpsymbol": "⌨"
+                  }
                 }
               ]
             }
@@ -759,57 +1598,124 @@
     },
     {
       "name": "arrows",
+      "style": ".key { font-size: 65%; } .key.row1 { font-size: 60%; }",
       "columns": [
         {
           "rows": [
             {
-              "style": ".key { font-size: 60%; }",
+              "ignoreKeyWidths": "1",
               "keys": [
                 {
                   "width": "1.2",
                   "caption": "Esc",
-                  "action": "send:1"
+                  "single": {
+                    "send": {
+                      "name": "escape",
+                      "keycode": "1",
+                      "printable": false
+                    }
+                  }
                 },
                 {
                   "caption": "F1",
-                  "action": "send:59"
+                  "single": {
+                    "send": {
+                      "name": "f1",
+                      "keycode": "59",
+                      "printable": false
+                    }
+                  }
                 },
                 {
                   "caption": "F2",
-                  "action": "send:60"
+                  "single": {
+                    "send": {
+                      "name": "f2",
+                      "keycode": "60",
+                      "printable": false
+                    }
+                  }
                 },
                 {
                   "caption": "F3",
-                  "action": "send:61"
+                  "single": {
+                    "send": {
+                      "name": "f3",
+                      "keycode": "61",
+                      "printable": false
+                    }
+                  }
                 },
                 {
                   "caption": "F4",
-                  "action": "send:62"
+                  "single": {
+                    "send": {
+                      "name": "f4",
+                      "keycode": "62",
+                      "printable": false
+                    }
+                  }
                 },
                 {
                   "caption": "F5",
-                  "action": "send:63"
+                  "single": {
+                    "send": {
+                      "name": "f5",
+                      "keycode": "63",
+                      "printable": false
+                    }
+                  }
                 },
                 {
                   "caption": "F6",
-                  "action": "send:64"
+                  "single": {
+                    "send": {
+                      "name": "f6",
+                      "keycode": "64",
+                      "printable": false
+                    }
+                  }
                 },
                 {
                   "caption": "F7",
-                  "action": "send:65"
+                  "single": {
+                    "send": {
+                      "name": "f7",
+                      "keycode": "65",
+                      "printable": false
+                    }
+                  }
                 },
                 {
                   "caption": "F8",
-                  "action": "send:66"
+                  "single": {
+                    "send": {
+                      "name": "f8",
+                      "keycode": "66",
+                      "printable": false
+                    }
+                  }
                 },
                 {
                   "caption": "F9",
-                  "action": "send:67"
+                  "single": {
+                    "send": {
+                      "name": "f9",
+                      "keycode": "67",
+                      "printable": false
+                    }
+                  }
                 },
                 {
                   "width": "1.2",
                   "caption": "F10",
-                  "action": "send:68"
+                  "single": {
+                    "send": {
+                      "name": "f10",
+                      "keycode": "68",
+                      "printable": false
+                    }
+                  }
                 }
               ]
             },
@@ -817,9 +1723,14 @@
               "MeasureStdKeyWidthHere": "1",
               "keys": [
                 {
-                  "style": ".key { font-size: 65%; }",
                   "caption": "Tab",
-                  "action": "send:15",
+                  "single": {
+                    "send": {
+                      "name": "tab",
+                      "keycode": "15",
+                      "printable": false
+                    }
+                  },
                   "width": "2"
                 },
                 {
@@ -827,38 +1738,68 @@
                   "width": "1.1"
                 },
                 {
-                  "style": ".key { font-size: 65%; }",
                   "caption": "Ins",
-                  "action": "send:110"
+                  "single": {
+                    "send": {
+                      "name": "insert",
+                      "keycode": "110",
+                      "printable": false
+                    }
+                  }
                 },
                 {
-                  "style": ".key { font-size: 65%; }",
                   "caption": "⇱",
-                  "action": "send:102"
+                  "single": {
+                    "send": {
+                      "name": "home",
+                      "keycode": "102",
+                      "printable": false
+                    }
+                  }
                 },
                 {
-                  "style": ".key { font-size: 65%; }",
                   "caption": "⇞",
-                  "action": "send:104"
+                  "single": {
+                    "send": {
+                      "name": "pgup",
+                      "keycode": "104",
+                      "printable": false
+                    }
+                  }
                 },
                 {
                   "type": "spacer",
                   "width": "0.2"
                 },
                 {
-                  "style": ".key { font-size: 65%; }",
                   "caption": "⭠",
-                  "action": "send:105"
+                  "single": {
+                    "send": {
+                      "name": "left",
+                      "keycode": "105",
+                      "printable": false
+                    }
+                  }
                 },
                 {
-                  "style": ".key { font-size: 65%; }",
                   "caption": "⭡",
-                  "action": "send:103"
+                  "single": {
+                    "send": {
+                      "name": "up",
+                      "keycode": "103",
+                      "printable": false
+                    }
+                  }
                 },
                 {
-                  "style": ".key { font-size: 65%; }",
                   "caption": "⭢",
-                  "action": "send:106"
+                  "single": {
+                    "send": {
+                      "name": "right",
+                      "keycode": "106",
+                      "printable": false
+                    }
+                  }
                 },
                 {
                   "type": "spacer",
@@ -869,15 +1810,32 @@
             {
               "keys": [
                 {
-                  "style": ".key { font-size: 65%; }",
                   "class": "grey",
                   "caption": "123",
-                  "action": "view:numbers",
+                  "single": {
+                    "view": {
+                      "name": "numbers"
+                    }
+                  },
                   "width": "1.3"
                 },
                 {
                   "caption": "⇧",
-                  "action": "modifier:42",
+                  "style": ".key { font-size: 100%; }",
+                  "single": {
+                    "modifier": {
+                      "name": "shift",
+                      "keycode": "42",
+                      "action": "toggle"
+                    }
+                  },
+                  "long": {
+                    "modifier": {
+                      "name": "shift",
+                      "keycode": "42",
+                      "action": "lock"
+                    }
+                  },
                   "width": "1.5"
                 },
                 {
@@ -885,28 +1843,48 @@
                   "width": "0.3"
                 },
                 {
-                  "style": ".key { font-size: 65%; }",
                   "caption": "Del",
-                  "action": "send:111"
+                  "single": {
+                    "send": {
+                      "name": "delete",
+                      "keycode": "111",
+                      "printable": false
+                    }
+                  }
                 },
                 {
-                  "style": ".key { font-size: 65%; }",
                   "caption": "⇲",
-                  "action": "send:107"
+                  "single": {
+                    "send": {
+                      "name": "end",
+                      "keycode": "107",
+                      "printable": false
+                    }
+                  }
                 },
                 {
-                  "style": ".key { font-size: 65%; }",
                   "caption": "⇟",
-                  "action": "send:109"
+                  "single": {
+                    "send": {
+                      "name": "pgdn",
+                      "keycode": "109",
+                      "printable": false
+                    }
+                  }
                 },
                 {
                   "type": "spacer",
                   "width": "1.2"
                 },
                 {
-                  "style": ".key { font-size: 65%; }",
                   "caption": "⭣",
-                  "action": "send:108"
+                  "single": {
+                    "send": {
+                      "name": "down",
+                      "keycode": "108",
+                      "printable": false
+                    }
+                  }
                 },
                 {
                   "type": "spacer",
@@ -914,46 +1892,109 @@
                 },
                 {
                   "caption": "⌫",
-                  "style": ".key { font-size: 65%; }",
                   "class": "grey",
                   "width": "1.3",
-                  "action": "send:14"
+                  "single": {
+                    "send": {
+                      "name": "backspace",
+                      "keycode": "14",
+                      "printable": false
+                    }
+                  }
                 }
               ]
             },
             {
-              "style": ".key { font-size: 65%; }",
               "keys": [
                 {
                   "caption": "ABC",
                   "class": "grey",
-                  "longpress": "keyboard:",
-                  "action": "view:default",
-                  "width": "1.3"
+                  "long": {
+                    "keyboard": {
+                      "name": "chooser"
+                    }
+                  },
+                  "single": {
+                    "view": {
+                      "name": "default"
+                    }
+                  },
+                  "width": "1.3",
+                  "extracaptions": {
+                    "lpsymbol": "🌐"
+                  }
                 },
                 {
                   "width": "0.75",
                   "style": ".key { font-size: 40%; }",
                   "caption": "c\nt\nl",
-                  "action": "modifier:29"               
+                  "single": {
+                    "modifier": {
+                      "name": "ctrl",
+                      "keycode": "29",
+                      "printable": false,
+                      "action": "toggle"
+                    }
+                  },
+                  "long": {
+                    "modifier": {
+                      "name": "ctrl",
+                      "keycode": "29",
+                      "printable": false,
+                      "action": "lock"
+                    }
+                  }               
                 },
                 {
                   "width": "0.75",
                   "style": ".key { font-size: 40%; }",
                   "caption": "a\nl\nt",
-                  "action": "modifier:56"               
+                  "single": {
+                    "modifier": {
+                      "name": "alt",
+                      "keycode": "56",
+                      "printable": false,
+                      "action": "toggle"
+                    }
+                  },
+                  "long": {
+                    "modifier": {
+                      "name": "alt",
+                      "keycode": "56",
+                      "printable": false,
+                      "action": "lock"
+                    }
+                  }               
                 },
                 {
                   "caption": "Leerzeichen",
                   "width": "5.2",
-                  "action": "send:57",
-                  "flipback": "default"
+                  "single": {
+                    "send": {
+                      "name": " ",
+                      "keycode": "57"
+                    }
+                  }
                 },
                 {
                   "width": "2",
                   "caption": "↵",
-                  "style": ".key { background-color: #aaaaaa; font-size: 100%}",
-                  "action": "send:28"
+                  "class": "grey",
+                  "single": {
+                    "send": {
+                      "name": "return",
+                      "keycode": "28",
+                      "printable": false
+                    }
+                  },
+                  "long": {
+                    "keyboard": {
+                      "name": "minimized"
+                    }
+                  },
+                  "extracaptions": {
+                    "lpsymbol": "⌨"
+                  }
                 }
               ]
             }

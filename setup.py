@@ -8,7 +8,7 @@ this_directory = path.abspath(path.dirname(__file__))
 
 setup(
     name = 'oskb',
-    version = '0.0.4',
+    version = '0.1.0',
     description = 'On-Screen KeyBoard',
     long_description = 'I disliked the on-screen keyboards for Linux I tried. So I wrote a new one. Brand new but maturing fast... Please check the website for screenshots and instructions',
     url = 'https://github.com/ropg/oskb',

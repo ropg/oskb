@@ -1,0 +1,24 @@
+QWidget {
+	background-color: #cccccc;
+	margin:0px;
+}
+
+QLabel {
+	font-size: 50%;
+	background: transparent;
+	margin: 2px 5px;
+	qproperty-alignment: 'AlignBottom | AlignLeft';
+}
+
+.key {
+	background-color: #eeeeee;
+	border: 1px solid black;
+}
+
+.key:pressed, .key.pseudomodifier, .key.held {
+	background-color: #999999;
+}
+
+.view .key.pseudomodifier, .key.locked {
+	background-color: #cc9999;
+}

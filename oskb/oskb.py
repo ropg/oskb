@@ -1,371 +1,530 @@
-import os, re, json, subprocess
+import os, sys, re, json, subprocess
 from functools import partial
 import pkg_resources
 
-from PyQt5.QtCore import QTimer, QRect, QSysInfo
-from PyQt5.QtWidgets import QWidget, QPushButton, QMainWindow
+from PyQt5.QtCore import QTimer, QRect, QSysInfo, QEvent, QSize, Qt
+from PyQt5.QtWidgets import (
+    QWidget,
+    QPushButton,
+    QMainWindow,
+    QGridLayout,
+    QHBoxLayout,
+    QSizePolicy,
+    QLayout,
+    QStackedLayout,
+    QLabel,
+)
+
 
 RELEASED = 0
 PRESSED = 1
 
+# key detection timings in milliseconds
+LONGPRESS_TIMEOUT = 350
+DOUBLECLICK_TIMEOUT = 200
+
 
 class Keyboard(QWidget):
-
     def __init__(self):
         super().__init__()
 
-        self.modifiers = {}
-        self.longpresswait = False
-        self.keytimer = None
+        self.setWindowTitle("On-Screen Keyboard")
 
-        self.kbds = []
-        self.view = None
-        self.kbd = None
-        self.sendkeysobject = None
+        self._modifiers = {}
+
+        # This is all for the key-detection state-machine
+        self._longpresswait = False
+        self._longtimer = QTimer()
+        self._stopsinglepress = False
+        self._doublebutton = None
+        self._doubletimer = QTimer()
+        self._doubletimer.setSingleShot(True)
+        self._doubletimer.timeout.connect(self._doubleTimeout)
+
+        self._viewuntil = None
+        self._thenview = None
+
+        self._kbds = []
+        self._view = None
+        self._kbd = None
+        self._sendkeysobject = None
+        self._buttonhandler = self._oskbButtonHandler
+        self._minimizerlocation = QRect(0, 0, 70, 70)
 
     def sendKeys(self, object):
         if getattr(object, "receiveKeys", None) and callable(object.receiveKeys):
-            self.sendkeysobject = object
+            self._sendkeysobject = object
             return True
         return False
+
+    def setButtonHandler(self, handler=None):
+        if not handler:
+            handler = self._oskbButtonHandler
+        self._buttonhandler = handler
+
+    def setMinimizer(self, mx, my, mw, mh):
+        self._minimizerlocation = QRect(mx, my, mw, mh)
 
     def readKeyboards(self, kbdfiles):
         for kbdfile in kbdfiles:
             kbd = None
             if os.access(kbdfile, os.R_OK):
-                with open(kbdfile, 'r', encoding='utf-8') as f:
+                with open(kbdfile, "r", encoding="utf-8") as f:
                     kbd = json.load(f)
-            elif kbdfile == os.path.basename(kbdfile) and pkg_resources.resource_exists('oskb', 'keyboards/' + kbdfile):
-                kbd = json.loads(pkg_resources.resource_string('oskb', 'keyboards/' + kbdfile))
+            elif kbdfile == os.path.basename(kbdfile) and pkg_resources.resource_exists(
+                "oskb", "keyboards/" + kbdfile
+            ):
+                kbd = json.loads(
+                    pkg_resources.resource_string("oskb", "keyboards/" + kbdfile)
+                )
             if kbd:
-                kbd['name'] = os.path.basename(kbdfile)
-                self.kbds.append(kbd)
+                kbd["_name"] = os.path.basename(kbdfile)
+                self._kbds.append(kbd)
             else:
-                raise FileNotFoundError('Could not find ' + kbdfile)
-        if len(self.kbds) > 1:
-            self.kbds.append(self.makeChooser())
+                raise FileNotFoundError("Could not find " + kbdfile)
 
-    def makeChooser(self):
-        chooser = { "name": "chooser", "views": [ { "name": "default", "columns": [ { "rows": [] } ] } ] }
-        for k in self.kbds:
-            rows = chooser['views'][0]['columns'][0].get('rows')
-            rows.append( { 'keys': [ {'caption': k.get('description'), 'action': 'keyboard:' + k.get('name') } ] } )
-        return chooser
-
-
-    def defaultStyleSheet(self):
-        return """
-            QWidget {
-                background-color: #cccccc;
+        if len(self._kbds) > 1:
+            chooser = {
+                "_name": "chooser",
+                "views": [{"name": "default", "columns": [{"rows": []}]}],
             }
+            for k in self._kbds:
+                rows = chooser["views"][0]["columns"][0].get("rows")
+                rows.append(
+                    {
+                        "keys": [
+                            {
+                                "caption": k.get("description"),
+                                "single": {"keyboard": {"name": k.get("name")}},
+                            }
+                        ]
+                    }
+                )
+            self._kbds.append(chooser)
 
-            .key {
-                background-color: #eeeeee;
-                border: 1px solid black;
-            }
+        minimized = {
+            "_name": "minimized",
+            "style": "QWidget {background: transparent;}",
+            "views": [
+                {
+                    "name": "default",
+                    "columns": [
+                        {
+                            "rows": [
+                                {
+                                    "keys": [
+                                        {
+                                            "caption": "⌨",
+                                            "single": {"keyboard": {"name": "back"}},
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                }
+            ],
+        }
+        self._kbds.append(minimized)
 
-            .key:pressed, .key.held {
-                background-color: #999999;
-            }
+        self._initKeyboards()
 
-            .view .key.pseudomodifier, .key.locked {
-                background-color: #cc9999;
-            }
-        """
-
-    def showKeyboard(self, kbdname = None):
-        self.flipback = None
+    def setKeyboard(self, kbdname=None):
+        newgeometry = None
         if not kbdname:
-            # cannot be default because calling context may not have self
-            kbdname = self.kbds[0]['name']
-        for k in self.kbds:
-            if k.get('name') == kbdname:
-                self.releaseModifiers()
-                self.deleteKeyboard()
-                self.kbd = k
-                if QSysInfo().kernelType() == 'linux' and k.get('setxkbmap'):
-                    cmd = ['setxkbmap'] + k['setxkbmap'].split(' ')
+            kbdname = self._kbds[0]["_name"]
+        if kbdname == "minimized":
+            newgeometry = self._minimizerlocation
+            if not self._view:
+                self._previouskeyboard = self._kbds[0]["_name"]
+        else:
+            if kbdname == "back":
+                kbdname = self._previouskeyboard
+                if self._previousgeometry != self.geometry():
+                    newgeometry = self._previousgeometry
+        for ki, k in enumerate(self._kbds):
+            if k.get("_name") == kbdname:
+                self._releaseModifiers()
+                self._kbd = k
+                if sys.platform.startswith("linux") and k.get("setxkbmap"):
+                    cmd = ["setxkbmap"] + k["setxkbmap"].split(" ")
                     try:
-                        subprocess.check_output( cmd )
+                        subprocess.check_output(cmd)
                     except:
                         pass
-                self.setView('default')
+                if newgeometry:
+                    self.hide()
+                if kbdname != "minimized":
+                    self._previouskeyboard = kbdname
+                self._previousgeometry = self.geometry()
+                self.layout().setCurrentIndex(ki)
+                self.setView("default", newgeometry)
 
-    def setView(self, viewname):
-        for view in self.kbd.get('views'):
-            if view.get('name') == viewname:
-                self.deleteKeyboard()
-                self.view = view
-                self.initKeyboard()
-                return
-
-    def divideSpace(self, budget, members, property):
-        # This may be a bit of a complicated one to wrap your head around at first, but it's kinda cool
-        #
-        # Hand it a number of pixels available in total (in budget), a list of columns, rows, or keys
-        # (in members) and the name of a property to adjucate on (mostly 'height' or 'width'). It will
-        # then read that property for relative weights and create two new properties named 'calcWidth'
-        # (or calc$whateverproperty) and 'calcBegin' with the absolute position in the budget.
-        #
-        # example: you pass it a list of three columns, one of which has 'width' property set to 2
-        # it will then add up the weights (defaulting to 1 for the other columns, and divide the budget
-        # by 4, and give the column with weight 2 half the budget and the other two a quarter
-        totalweight = 0
-        for member in members:
-            val = member.get(property, '1')
-            if val[-2:] == 'px':
-                budget -= int( val[:-2] )
-            else:
-                totalweight += float(val)
-        begin = 0
-        for member in members:
-            val = member.get(property, '1')
-            if val[-2:] == 'px':
-                thisone = int( val[:-2] )
-            else:
-                weight = float(val)
-                thisone = int( (budget / totalweight) * weight )
-                totalweight -= weight
-                budget -= thisone
-            member['calc' + property.capitalize()] = thisone
-            member['calcBegin'] = begin
-            begin += thisone
-
-    def findStdKeyWidth(self):
-        # This returns the width of a key with width 1 (or no width, as 1 is the default) on the first
-        # row. This, together with the height of a standard row (see below) is used to caculate a uniform
-        # standard font size for the whole keyboard. (Turns out trying to autofit makes things really ugly.)
-        #
-        # If the first row on any keyboard has odd-sized keys you can specify any other row by giving it
-        # "MeasureStdKeyWidthHere" with value "1" in the JSON file.
-        unit = 0
-        for column in self.view.get('columns', []):
-            for row in column.get('rows', []):
-                if row.get('MeasureStdKeyWidthHere'):
-                    unit = 0
-                if len(row.get('keys', [])):
-                    totalweight = 0
-                    budget = column['calcWidth']
-                    for keydata in row.get('keys', []):
-                        w = keydata.get('width', '1')
-                        if w[-2:] == 'px':
-                            budget -= int(w[:-2])
-                        else:
-                            totalweight += float(w)
-                    unit = int(budget / totalweight)
-        return unit
-
-    def findStdRowHeight(self):
-        unit = 0
-        totalweight = 0
-        budget = self.height()
-        for column in self.view.get('columns', []):
-            for row in column.get('rows', []):
-                h = row.get('height', '1')
-                if h[-2:] == 'px':
-                    budget -= int(h[:-2])
+    def setView(self, viewname, newgeometry=None):
+        for vi, view in enumerate(self._kbd.get("views")):
+            if view.get("name") == viewname:
+                self._view = view
+                self._kbd["_QWidget"].layout().setCurrentIndex(vi)
+                if newgeometry:
+                    self.setGeometry(newgeometry)
+                    self.show()
                 else:
-                    totalweight += float(h)
-            thisunit = int (budget / totalweight)
-            if unit == 0 or thisunit < unit:
-                unit = thisunit
-        return unit
+                    self.updateKeyboard()
 
-    def deleteKeyboard(self):
-        if self.view:
-            for column in self.view.get('columns', []):
-                for row in column.get('rows', []):
-                    for keydata in row.get('keys', []):
-                        if keydata.get('QWidget'):
-                            # Make sure it's not a spacer, they have no QWidget
-                            keydata['QWidget'].deleteLater()
-                    row['QWidget'].deleteLater()
-                column['QWidget'].deleteLater()
-            self.view = None
+    #
+    # Make sure show events also calculate proper sizes and first initialise if that hasn't happened yet.
+    #
 
-    def calcKeyboard(self):
-        self.divideSpace(self.width(), self.view.get('columns', []), 'width')
-        for column in self.view.get('columns', []):
-            self.divideSpace(self.height(), column.get('rows', []), 'height')
-            self.stdKeyWidth = self.findStdKeyWidth()
-            self.stdRowHeight = self.findStdRowHeight()
-            for row in column.get('rows', []):
-                self.divideSpace(column['calcWidth'], row.get('keys', []), 'width')
+    def showEvent(self, event):
+        if not self._view:
+            self.setKeyboard()  # includes another show event with self._view set
+        else:
+            self.updateKeyboard()
+            QWidget.showEvent(self, event)
 
-    def initKeyboard(self):
-        self.calcKeyboard()
-        for column in self.view.get('columns', []):
-            c = QWidget(self)
-            c.setProperty('class', 'column ' + column.get('class', ''))
-            column['QWidget'] = c
-            for row in column.get('rows', []):
-                r = QWidget(c)
-                r.setProperty('class', 'row ' + row.get('class', ''))
-                row['QWidget'] = r
-                for keydata in row.get('keys', []):
-                    if keydata.get('type', 'key') == 'key':
-                        k = QPushButton(r)
-                        k.setProperty('class', 'key ' + keydata.get('class', ''))
-                        k.setText(keydata.get('caption', ''))
-                        k.data = keydata
-                        k.pressed.connect(partial(self.pressedButton, k))
-                        k.released.connect(partial(self.releasedButton, k))
-                        # See if the key is a modifier, and create that modifier and set it to 0
-                        # if it didn't exist yet
-                        act, arg = self.parseAction(keydata.get('action', 'none'))
-                        if act == 'modifier':
-                            try:
-                                self.modifiers[arg]
-                            except KeyError:
-                                self.modifiers[arg] = 0
-                        keydata['QWidget'] = k
-        self.updateModifiers()
-        self.positionEverything()
-
-    def positionEverything(self):
-        fontsize = int(min(self.stdKeyWidth / 1.5, self.stdRowHeight / 2))
-        margin = min( int( (self.width() - 100) / 100), 6 )
-        self.setStyleSheet(self.defaultStyleSheet() + ' .key { font-size: ' + str(fontsize) + 'px; margin: ' + str(margin) + 'px; border-radius: ' + str(margin * 2) + 'px }' + self.fixStyleSheet( self.kbd.get('style', '') + ' ' + self.view.get('style', ''), fontsize))
-        for column in self.view.get('columns', []):
-            column['QWidget'].setGeometry(QRect(column['calcBegin'], 0, column['calcWidth'],  self.height()))
-            column['QWidget'].setVisible(True)      # No idea why this is needed for subsequent view draws. But hey...
-            column['QWidget'].setStyleSheet(self.fixStyleSheet(column.get('style', ''), fontsize))
-            for row in column.get('rows', []):
-                row['QWidget'].setGeometry(QRect(0, row['calcBegin'], column['calcWidth'], row['calcHeight']))
-                row['QWidget'].setStyleSheet(self.fixStyleSheet(row.get('style', ''), fontsize))
-                for keydata in row.get('keys', []):
-                    try:
-                        keydata['QWidget'].setGeometry(QRect(keydata['calcBegin'], 0, keydata['calcWidth'],  row['calcHeight']))
-                        keydata['QWidget'].setStyleSheet(self.fixStyleSheet(keydata.get('style', ''), fontsize))
-                    except KeyError:
-                        pass
-        self.show()
-
-    def updateModifiers(self):
-        for column in self.view.get('columns', []):
-            for row in column.get('rows', []):
-                for keydata in row.get('keys', []):
-                    act, arg = self.parseAction(keydata.get('action', 'none'))
-                    if act == 'modifier':
-                        s = self.modifiers[arg]
-                        if s == 0:
-                            addclass = ''
-                        elif s == 1:
-                            addclass = 'held'
-                        else:
-                            addclass = 'locked'
-                        keydata['QWidget'].setProperty('class', 'key ' + keydata.get('class', '') + ' ' + addclass)
-        self.positionEverything()
-
-    def releaseModifiers(self):
-        if self.view:
-            for modifier, state in self.modifiers.items():
-                if self.modifiers[modifier] == 1:
-                    self.injectKeys(modifier, 0)
-                    self.modifiers[modifier] = 0
-            self.updateModifiers()
-
-    def fixStyleSheet(self, stylesheet, fontsize):
-        if stylesheet == '': return stylesheet
-        #print ('in: ' + stylesheet)
-        r = re.compile(r"font-size\s*:\s*(\d+)\%")
-        i = r.finditer(stylesheet)
-        for m in i:
-            stylesheet = stylesheet.replace(m.group(0), 'font-size: ' + str( int ( (fontsize / 100) * int(m.group(1)) ) ) + 'px')
-        #print ('out: ' + stylesheet)
-        return stylesheet
+    #
+    # Recalculate the fontsize and mrgaing and change the stylesheets when resizing
+    #
 
     def resizeEvent(self, event):
         QWidget.resizeEvent(self, event)
-        self.calcKeyboard()
-        self.positionEverything()
+        if self._view and self.isVisible():
+            self.updateKeyboard()
 
-    def parseAction(self, action):
-        l = action.split(':', 1)
-        if len(l) == 2:
-            return ( l[0], l[1] )
-        else:
-            return ( l[0], None )
+    def updateKeyboard(self):
+        if not self._view:
+            return False
+        #
+        # Calculate the font and margin sizes
+        kw = self.width() / self._view["widthInUnits"]
+        kh = self.height() / self._view["heightInUnits"]
+        fontsize = min(max(int(min(kw / 1.5, kh / 2)), 5), 50)
+        margin = int(fontsize / 10)
+        #
+        # Dynamically change the default, per-keyboard and per-view stylesheets
+        all_sheets = (
+            pkg_resources.resource_string("oskb", "default.css").decode("utf-8")
+            + " .key { font-size: "
+            + str(fontsize)
+            + "px; "
+            + "margin: "
+            + str(margin)
+            + "px; "
+            + "border-radius: "
+            + str(margin * 3)
+            + "px } "
+            + self._kbd.get("style", "")
+            + " "
+            + self._view.get("style", "")
+            + " "
+        )
+        self.setStyleSheet(self._fixStyleSheet(all_sheets, fontsize))
+        #
+        # Then adjust the stylesheets and class properties of all keys
+        for ci, column in enumerate(self._view.get("columns", [])):
+            for ri, row in enumerate(column.get("rows", [])):
+                for keydata in row.get("keys", []):
+                    k = keydata.get("_QWidget")
+                    if k:
+                        addclass = ""
+                        if keydata.get("single") and keydata["single"].get("modifier"):
+                            modname = keydata["single"]["modifier"].get("name", "")
+                            moddata = self._modifiers.get(modname, {})
+                            modstate = moddata.get("state")
+                            if modstate == 1:
+                                addclass = " held"
+                            elif modstate == 2:
+                                addclass = " locked"
+                        k.setProperty(
+                            "class",
+                            "key row"
+                            + str(ri + 1)
+                            + " col"
+                            + str(ci + 1)
+                            + " "
+                            + keydata.get("class", "")
+                            + addclass,
+                        )
+                        k.setStyleSheet(
+                            self._fixStyleSheet(keydata.get("style", ""), fontsize)
+                        )
 
+    #
+    # _initKeyboards sets up a QStackedLayout holding QWidgets for each keyboard, which in turn have a QStackedlayout
+    # that holds a QWidget for each view within that keyboard. That has a QGridLayout with QHboxLayouts in it that
+    # hold the individual key QPushButton widgets. It also sets the captions and button actions for each key
+    # and figures out how many standard key widths and row heights there are in all the views, which is used by
+    # updateKeyboard() to dynamically figure out how big the fonts, margins and rounded corners need to be.
+    #
 
-    # Button handling
+    def _initKeyboards(self):
+        kbdstack = QStackedLayout()
+        self.setMaximumSize(self.width(), self.height())
+        kbdstack.setSizeConstraint(QLayout.SetMaximumSize)
+        for ki, kbd in enumerate(self._kbds):
+            viewstack = QStackedLayout()
+            for vi, view in enumerate(kbd.get("views", [])):
+                #
+                # This stores the width and height in standard key widths for each view.
+                total_height = 0
+                total_width = 0
+                for ci, column in enumerate(view.get("columns", [])):
+                    largest_width = 0
+                    for ri, row in enumerate(column.get("rows", [])):
+                        if len(row.get("keys", [])) and not row.get("ignoreKeyWidths"):
+                            totalweight = 0
+                            for keydata in row.get("keys", []):
+                                w = keydata.get("width", "1")
+                                totalweight += float(w)
+                            if totalweight > largest_width:
+                                largest_width = totalweight
+                        total_height += float(row.get("height", "1"))
+                    total_width += largest_width
+                view["widthInUnits"] = total_width
+                view["heightInUnits"] = total_height
+                #
+                # This is the part where everything is created
+                grid = QGridLayout()
+                grid.setSpacing(0)
+                grid.setContentsMargins(0, 0, 0, 0)
+                for ci, column in enumerate(view.get("columns", [])):
+                    for ri, row in enumerate(column.get("rows", [])):
+                        keys = row.get("keys", [])
+                        if not len(keys):
+                            continue
+                        kl = QHBoxLayout()
+                        kl.setContentsMargins(0, 0, 0, 0)
+                        kl.setSpacing(0)
+                        for keydata in keys:
+                            stretch = int(float(keydata.get("width", 1)) * 10)
+                            #
+                            # This handles creation of the QPushButton for the key
+                            if keydata.get("type", "key") == "key":
+                                k = QPushButton()
+                                k.setSizePolicy(
+                                    QSizePolicy.Expanding, QSizePolicy.Expanding
+                                )
+                                k.setText(keydata.get("caption", ""))
+                                k.data = keydata
+                                k.pressed.connect(
+                                    partial(self._buttonhandler, k, PRESSED)
+                                )
+                                k.released.connect(
+                                    partial(self._buttonhandler, k, RELEASED)
+                                )
+                                keydata["_QWidget"] = k
+                                #
+                                # Is there are multiple captions, create a QStackedWidget that overlays them all
+                                ec = keydata.get("extracaptions", {})
+                                if len(ec):
+                                    # ecl = extra captions layout
+                                    ecl = QStackedLayout()
+                                    ecl.setStackingMode(QStackedLayout.StackAll)
+                                    ecl.addWidget(k)
+                                    for cssclass, txt in ec.items():
+                                        ql = QLabel(txt)
+                                        ql.setProperty("class", cssclass)
+                                        ql.setAttribute(Qt.WA_TransparentForMouseEvents)
+                                        ecl.addWidget(ql)
+                                        kl.addLayout(ecl, stretch)
+                                else:
+                                    kl.addWidget(k, stretch)
+                            #
+                            # Oh... It's only a spacer....
+                            if keydata.get("type", "key") == "spacer":
+                                kl.addStretch(stretch)
+                        grid.addLayout(kl, ri, ci)
+                view["_QWidget"] = QWidget(
+                    self
+                )  # Create with self as parent, then reparent to prevent startup flicker
+                view["_QWidget"].setLayout(grid)
+                viewstack.addWidget(view["_QWidget"])
+            kbd["_QWidget"] = QWidget(self)
+            kbd["_QWidget"].setLayout(viewstack)
+            kbdstack.addWidget(kbd["_QWidget"])
+        # Apply layout to our root QWidget
+        self.setLayout(kbdstack)
 
-    def pressedButton(self, button):
-        if button.data.get('longpress'):
-            self.longpresswait = True
-            if self.keytimer:
-                self.keytimer.stop()
-                self.keytimer.deleteLater()
-            self.keytimer = QTimer()
-            self.keytimer.setSingleShot(True)
-            self.keytimer.timeout.connect(partial(self.longPress, button))
-            self.keytimer.start(500)
-        else:
-            self.doAction(button.data.get('action', 'none'), button, 1)
+    def _releaseModifiers(self):
+        if self._view:
+            donestuff = False
+            for modinfo in self._modifiers.values():
+                if modinfo["state"] == 1:
+                    donestuff = True
+                    self._injectKeys(modinfo["keycode"], 0)
+                    modinfo["state"] = 0
+            if donestuff:
+                self.updateKeyboard()
 
-    def releasedButton(self, button):
-        if self.keytimer:
-            self.keytimer.stop()
-        if self.longpresswait:
-            self.longpresswait = False
-            self.doAction(button.data['action'], button, 1)
-        self.doAction(button.data['action'], button, 0)
+    def _fixStyleSheet(self, stylesheet, fontsize):
+        if stylesheet == "":
+            return stylesheet
+        r = re.compile(r"font-size\s*:\s*(\d+)\%")
+        i = r.finditer(stylesheet)
+        for m in i:
+            stylesheet = stylesheet.replace(
+                m.group(0),
+                "font-size: " + str(int((fontsize / 100) * int(m.group(1)))) + "px",
+            )
+        return stylesheet
 
-    def longPress(self, button):
-        if self.keytimer:
-            self.keytimer.stop()
-        self.longpresswait = False
-        self.doAction(button.data['longpress'], button, 1)
-        self.doAction(button.data['longpress'], button, 0)
+    #
+    # The part here is the low-level button handling. It takes care of calling _doAction() with PRESSED and RELEASED
+    # with pointers to either the "single", "double" or "long" sub-dictionaries for that button, handling all the
+    # nitty-gritty. Somewhat complex state-machine, maybe only touch when wide awake and concentrated.
+    #
 
-    def doAction(self, action, button, down):
-        c, a = self.parseAction(action)
-        if (c == 'view' or c == 'oneview') and down:
-            oldview = self.view.get('name')
-            if c == 'oneview':
-                self.flipback = oldview
-                self.setProperty('class', self.view.get('class', '') + ' oneview')
+    def _oskbButtonHandler(self, button, direction):
+        sng = button.data.get("single")
+        dbl = button.data.get("double")
+        lng = button.data.get("long")
+        if direction == PRESSED:
+            if self._doublebutton and self._doublebutton != button:
+                # Another key was pressed within the doubleclick timeout, so we must
+                # first process the previous key that was held back
+                self._doAction(self._doublebutton.data.get("single"), PRESSED)
+                self._doAction(self._doublebutton.data.get("single"), RELEASED)
+                self._doublebutton = None
+                self._doubletimer.stop()
+            self._stopsinglepress = False
+            if lng or dbl:
+                if lng:
+                    self._longtimer = QTimer()
+                    self._longtimer.setSingleShot(True)
+                    self._longtimer.timeout.connect(partial(self._longPress, lng))
+                    self._longtimer.start(LONGPRESS_TIMEOUT)
+                if dbl:
+                    self._stopsinglepress = True
+                    if self._doubletimer.isActive():
+                        self._doubletimer.stop()
+                        self._doAction(dbl, PRESSED)
+                        self._doAction(dbl, RELEASED)
+                        self._doublebutton = None
+                    else:
+                        self._doublebutton = button
+                        self._doubletimer.start(DOUBLECLICK_TIMEOUT)
             else:
-                self.setProperty('class', self.view.get('class', '') + ' view')
-            self.setView(a)
-        if c == 'send':
-            self.injectKeys(a, down)
-            if not down:
-                self.releaseModifiers()
-                if self.flipback:
-                    self.setView(self.flipback)
-                    self.flipback = None
-        if c == 'modifier' and down:
-            if self.modifiers[a] == 0:
-                self.modifiers[a] = 1
-                self.injectKeys(a, 1)
-            else:
-                self.modifiers[a] = 0
-                self.injectKeys(a, 0)
-            self.updateModifiers()
-        if c == 'keyboard' and down:
-            if not a == "":
-                self.showKeyboard(a)
-            elif len(self.kbds) > 1:
-                self.showKeyboard('chooser')
-
-    # From buttons to keypresses
-
-    def injectKeys(self, keystr, down):
-
-        keylist = keystr.split("+")
-        if down:
-            for keycode in keylist:
-                self.sendkey(int(keycode), PRESSED)
+                self._doAction(sng, PRESSED)
         else:
-            for keycode in reversed(keylist):
-                self.sendkey(int(keycode), RELEASED)
+            if not self._stopsinglepress:
+                if self._longtimer.isActive():
+                    self._longtimer.stop()
+                    self._doAction(sng, PRESSED)
+                    self._doAction(sng, RELEASED)
+                else:
+                    self._doAction(sng, RELEASED)
+            self._stopsinglepress = False
+            self._longtimer.stop()
+
+    def _longPress(self, lng):
+        self._doAction(lng, PRESSED)
+        self._doAction(lng, RELEASED)
+        self._stopsinglepress = True
+
+    def _doubleTimeout(self):
+        if not self._stopsinglepress:
+            actiondict = self._doublebutton.data.get("single")
+            self._doAction(actiondict, PRESSED)
+            self._doAction(actiondict, RELEASED)
+        self._doublebutton = None
+
+    #
+    # Higher level button handling: parses the actions from the action dictionary
+    #
+
+    def _doAction(self, actiondict, direction):
+        for cmd, argdict in actiondict.items():
+
+            if cmd == "send":
+                keycode = argdict.get("keycode", "")
+                keycodeplus = keycode
+                keyname = argdict.get("name", "")
+                printable = argdict.get("printable", True)
+
+                for modname, mod in self._modifiers.items():
+                    if mod.get("state") > 0:
+                        keyname = modname + " " + keyname
+                        keycodeplus = mod.get("keycode") + "+" + keycode
+                        if not mod.get("printable"):
+                            printable = False
+                self._injectKeys(keycode, direction)
+                if direction == RELEASED:
+                    self._releaseModifiers()
+                    if self._viewuntil and re.fullmatch(self._viewuntil, keyname):
+                        self.setView(self._thenview)
+                        self.viewuntil, self._thenview = None, None
+
+            if cmd == "view" and direction == RELEASED:
+                viewname = argdict.get("name", "default")
+                self._viewuntil = argdict.get("until")
+                self._thenview = argdict.get("thenview")
+                self.setView(viewname)
+                addclass = "oneview" if self._viewuntil else "view"
+                self.setProperty("class", self._view.get("class", "") + addclass)
+                self.updateKeyboard()
+
+            if cmd == "modifier" and direction == RELEASED:
+                keycode = argdict.get("keycode", "")
+                modifier = argdict.get("name", "")
+                printable = argdict.get("printable", True)
+                modaction = argdict.get("action", "toggle")
+                if modaction == "toggle":
+                    m = self._modifiers.get(modifier)
+                    if not m or m["state"] == 0:
+                        self._modifiers[modifier] = {
+                            "state": 1,
+                            "keycode": keycode,
+                            "printable": printable,
+                        }
+                        self._injectKeys(keycode, PRESSED)
+                    else:
+                        self._modifiers[modifier] = {
+                            "state": 0,
+                            "keycode": keycode,
+                            "printable": printable,
+                        }
+                        self._injectKeys(keycode, RELEASED)
+                if modaction == "lock":
+                    self._modifiers[modifier] = {
+                        "state": 2,
+                        "keycode": keycode,
+                        "printable": printable,
+                    }
+                    self._injectKeys(keycode, PRESSED)
+                self.updateKeyboard()
+
+            if cmd == "keyboard" and direction == RELEASED:
+                kbdname = argdict.get("name", "")
+                self.setKeyboard(kbdname)
+
+    #
+    # This is where the strings with keycodes to be pressed or released get turned into actual keypress
+    # events. There's two levels here: "42+2;57" (in the US layout) means we're first pressing and then
+    # releasing shift 2 (an exclamation point) and then a space.
+    #
+
+    def _injectKeys(self, keystr, direction):
+        keylist = keystr.split(";")
+
+        # If PRESSED, press and release all the ;-separated keycodes, releasing all but the last
+        if direction == PRESSED:
+            for keycodes in keylist:
+                keycodelist = keycodes.split("+")
+                for keycode in keycodelist:
+                    self._sendKey(int(keycode), PRESSED)
+                    if keycodes != keylist[-1]:
+                        self._sendKey(int(keycode), RELEASED)
+
+        # If RELEASED, only need to release the last (set of) keys
+        if direction == RELEASED:
+            keycodelist = keylist[-1].split("+")
+            for keycode in reversed(keycodelist):
+                self._sendKey(int(keycode), RELEASED)
+
+    def _sendKey(self, keycode, keyevent):
+        if self._sendkeysobject:
+            self._sendkeysobject.receiveKeys(keycode, keyevent)
 
 
-    def sendkey(self, keycode, keyevent):
-        if self.sendkeysobject:
-            self.sendkeysobject.receiveKeys(keycode, keyevent)
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
