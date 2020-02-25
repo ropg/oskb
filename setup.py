@@ -24,7 +24,10 @@ setup(
         'Source': 'https://github.com/ropg/oskb',
         'Tracker': 'https://github.com/ropg/oskb/issues',
     },
-    packages = ['oskb'],
+    packages = [
+        'oskb',
+        'oskb.im',
+    ],
     python_requires = '>=3',
     setup_requires = ['wheel'],
     install_requires = [
