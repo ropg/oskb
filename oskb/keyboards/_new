@@ -1,0 +1,18 @@
+{
+  "format": "oskb keyboard",
+  "formatversion": 1,
+  "description": "unnamed keyboard",
+  "views": {
+    "default" : {
+      "columns": [
+        {
+          "rows": [
+            {
+              "keys": []
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

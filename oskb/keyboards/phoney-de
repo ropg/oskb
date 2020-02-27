@@ -1,10 +1,11 @@
 {
+  "format": "oskb keyboard",
+  "formatversion": 1,
   "description": "DE - QWERTZ",
-  "setxkbmap": "de",
-  "style": ".grey { background-color: #aaaaaa; } .key.row4 { font-size: 65%; } .lpsymbol { font-size: 50%; color: blue; qproperty-alignment: 'AlignTop | AlignRight'; }",
-  "views": [
-    {
-      "name": "default",
+  "keymap": "de",
+  "style": ".grey { background-color: #aaaaaa; } .key.row4, .key.view_arrows { font-size: 65%; } .key.row1.view_arrows { font-size: 60%; } .lpsymbol { font-size: 50%; color: blue; qproperty-alignment: 'AlignTop | AlignRight'; }",
+  "views": {
+    "default": {
       "columns": [
         {
           "rows": [
@@ -343,7 +344,7 @@
                   },
                   "long": {
                     "keyboard": {
-                      "name": "chooser"
+                      "name": "_chooser"
                     }
                   },
                   "width": "1.3",
@@ -427,7 +428,7 @@
                   },
                   "long": {
                     "keyboard": {
-                      "name": "minimized"
+                      "name": "_minimized"
                     }
                   },
                   "extracaptions": {
@@ -440,8 +441,7 @@
         }
       ]
     },
-    {
-      "name": "shifted",
+    "shifted": {
       "columns": [
         {
           "rows": [
@@ -779,7 +779,7 @@
                   },
                   "long": {
                     "keyboard": {
-                      "name": "chooser"
+                      "name": "_chooser"
                     }
                   },
                   "width": "1.3",
@@ -852,7 +852,7 @@
                   },
                   "long": {
                     "keyboard": {
-                      "name": "minimized"
+                      "name": "_minimized"
                     }
                   },
                   "extracaptions": {
@@ -865,8 +865,7 @@
         }
       ]
     },
-    {
-      "name": "numbers",
+    "numbers": {
       "columns": [
         {
           "rows": [
@@ -1151,7 +1150,7 @@
                   "class": "grey",
                   "long": {
                     "keyboard": {
-                      "name": "chooser"
+                      "name": "_chooser"
                     }
                   },
                   "single": {
@@ -1229,7 +1228,7 @@
                   },
                   "long": {
                     "keyboard": {
-                      "name": "minimized"
+                      "name": "_minimized"
                     }
                   },
                   "extracaptions": {
@@ -1242,8 +1241,7 @@
         }
       ]
     },
-    {
-      "name": "symbols",
+    "symbols": {
       "columns": [
         {
           "rows": [
@@ -1505,7 +1503,7 @@
                   "class": "grey",
                   "long": {
                     "keyboard": {
-                      "name": "chooser"
+                      "name": "_chooser"
                     }
                   },
                   "single": {
@@ -1583,7 +1581,7 @@
                   },
                   "long": {
                     "keyboard": {
-                      "name": "minimized"
+                      "name": "_minimized"
                     }
                   },
                   "extracaptions": {
@@ -1596,9 +1594,7 @@
         }
       ]
     },
-    {
-      "name": "arrows",
-      "style": ".key { font-size: 65%; } .key.row1 { font-size: 60%; }",
+    "arrows": {
       "columns": [
         {
           "rows": [
@@ -1911,7 +1907,7 @@
                   "class": "grey",
                   "long": {
                     "keyboard": {
-                      "name": "chooser"
+                      "name": "_chooser"
                     }
                   },
                   "single": {
@@ -1989,7 +1985,7 @@
                   },
                   "long": {
                     "keyboard": {
-                      "name": "minimized"
+                      "name": "_minimized"
                     }
                   },
                   "extracaptions": {
@@ -2002,5 +1998,5 @@
         }
       ]
     }
-  ]
+  }
 }

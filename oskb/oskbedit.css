@@ -18,10 +18,18 @@ QLabel {
 	border-radius: _OSKB_RADIUS_px;
 }
 
-.spacer, .emptyrow {
+.spacer {
 	background-color: #cccccc;
-	border: none;
-	color: #cccccc;
+	border: 2px dotted white;
+	margin: _OSKB_MARGIN_px 0px;
+	border-radius: _OSKB_RADIUS_px;
+}
+
+.emptyrow {
+	background-color: #cccccc;
+	border: 2px dotted #aaaaaa;
+	margin: _OSKB_MARGIN_px 0px;
+	border-radius: _OSKB_RADIUS_px;
 }
 
 .key:pressed, .key.pseudomodifier, .key.held {
@@ -30,4 +38,11 @@ QLabel {
 
 .view .key.pseudomodifier, .key.locked {
 	background-color: #cc9999;
+}
+
+
+/* Below are used by oskbedit */
+
+.key.selected, .spacer.selected, .emptyrow.selected {
+	background-color: #77bbff !important;
 }

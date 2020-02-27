@@ -1,6 +1,6 @@
-from PyQt5.QtCore import QSysInfo
+import sys
 
-if QSysInfo().kernelType() == "linux":
+if sys.platform.startswith("linux"):
 
     import evdev
 

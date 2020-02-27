@@ -24,18 +24,15 @@ def main():
     )
     ap.add_argument("--start", help="start with keyboard", metavar="<kbdname>")
     ap.add_argument("--list", help="list built-in keyboards", action="store_true")
-    ap.add_argument(
-        "--dump", help="dumps built-in keyboard to stdout", action="store_true"
-    )
+    ap.add_argument("--dump", help="dumps built-in keyboard to stdout", action="store_true")
+    ap.add_argument("--nomap", help="do not remap systemkeyboard", action="store_true")
     ap.add_argument("-x", help="window absolute position x", metavar="<x>", type=int)
     ap.add_argument("-y", help="window absolute position y", metavar="<y>", type=int)
     ap.add_argument("--width", help="window width", metavar="<width>", type=int)
     ap.add_argument("--height", help="window height", metavar="<height>", type=int)
     hpos = ap.add_mutually_exclusive_group()
     hpos.add_argument("--left", help="oksb docks to the left", action="store_true")
-    hpos.add_argument(
-        "--middle", "--center", help="oksb docks in the middle", action="store_true"
-    )
+    hpos.add_argument("--middle", "--center", help="oksb docks in the middle", action="store_true")
     hpos.add_argument("--right", help="oksb docks to the right", action="store_true")
     vpos = ap.add_mutually_exclusive_group()
     vpos.add_argument("--top", help="oksb docks to the top", action="store_true")
@@ -43,16 +40,10 @@ def main():
     ap.add_argument("--toggle", help="toggles oskb on and off", action="store_true")
     ap.add_argument("--off", help="turns oskb off", action="store_true")
     ap.add_argument(
-        "--float",
-        help="floating window instead of docking to top or bottom",
-        action="store_true",
+        "--float", help="floating window instead of docking to top or bottom", action="store_true",
     )
-    ap.add_argument(
-        "--justshow", help="show keyboard, do not send keys to OS", action="store_true"
-    )
-    ap.add_argument(
-        "--version", "-v", help="print version number and exit", action="store_true"
-    )
+    ap.add_argument("--justshow", help="show keyboard, do not send keys to OS", action="store_true")
+    ap.add_argument("--version", "-v", help="print version number and exit", action="store_true")
     cmdline = ap.parse_args()
 
     if cmdline.version:
@@ -61,25 +52,18 @@ def main():
 
     if cmdline.list:
         for k in pkg_resources.resource_listdir("oskb", "keyboards"):
-            print(k)
+            if not k.startswith("_"):
+                print(k)
         sys.exit(0)
 
     if cmdline.dump:
         if len(cmdline.keyboards) != 1:
             sys.stderr.write("Must specify exactly one built-in keyboard to dump.\n")
             sys.exit(-1)
-        if not pkg_resources.resource_exists(
-            "oskb", "keyboards/" + cmdline.keyboards[0]
-        ):
-            sys.stderr.write(
-                "Built-in keyboard '" + cmdline.keyboards[0] + "' not found.\n"
-            )
+        if not pkg_resources.resource_exists("oskb", "keyboards/" + cmdline.keyboards[0]):
+            sys.stderr.write("Built-in keyboard '" + cmdline.keyboards[0] + "' not found.\n")
             sys.exit(-1)
-        print(
-            pkg_resources.resource_string(
-                "oskb", "keyboards/" + cmdline.keyboards[0]
-            ).decode("utf-8")
-        )
+        print(pkg_resources.resource_string("oskb", "keyboards/" + cmdline.keyboards[0]).decode("utf-8"))
         sys.exit(0)
 
     #
@@ -138,7 +122,7 @@ def main():
         keyboard.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.X11BypassWindowManagerHint)
         # Qt.X11BypassWindowManagerHint means no WM border or title, no application focus, not in taskbar
 
-        # This alternative also works but creates taskbar entry that will give app focus to oskb if pressed
+        # This alternative also works but creates taskbar entry that will application focus to oskb if pressed
         # keyboard.setWindowFlags( Qt.WindowStaysOnTopHint | Qt.WindowDoesNotAcceptFocus | Qt.FramelessWindowHint)
 
     #
@@ -202,7 +186,7 @@ def main():
     if not cmdline.justshow:
         plugged = False
         try:
-            plugged = keyboard.sendKeys(im.default())
+            plugged = keyboard.sendKeys(im.default().receiveKeys)
         except:
             sys.stderr.write("Could not set up the virtual keyboard.\n")
 
@@ -221,13 +205,21 @@ def main():
             sys.exit(-1)
 
     #
+    # Tell oskb where to send keymap changes, so we can call setxkbmap to switch as well
+    #
+
+    if not cmdline.nomap:
+        keyboard.sendMapChanges(receiveMapChanges)
+
+    #
     # Load the keyboard files
     #
 
-    keyboard.readKeyboards(cmdline.keyboards)
+    for k in cmdline.keyboards:
+        keyboard.readKeyboard(k)
 
-    if cmdline.start:
-        keyboard.setKeyboard(cmdline.start)
+    # Also works if no startup kbd is specified, because None will load first keyboard
+    keyboard.setKeyboard(cmdline.start)
 
     #
     # Display the keyboard
@@ -236,3 +228,10 @@ def main():
     keyboard.show()
 
     sys.exit(app.exec_())
+
+
+def receiveMapChanges(keymap):
+    try:
+        subprocess.run(["setxkbmap"] + keymap.split(" "))
+    except:
+        pass

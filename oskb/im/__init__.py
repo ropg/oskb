@@ -1,10 +1,8 @@
-# All this does is "from * import *", if python only accepted that
-
-# https://stackoverflow.com/questions/43059267/how-to-do-from-module-import-using-importlib
-
 import sys, importlib, pkg_resources
 from os.path import basename
 
+# All this does is "from * import *", if python only accepted that
+# https://stackoverflow.com/questions/43059267/how-to-do-from-module-import-using-importlib
 for module in pkg_resources.resource_listdir("oskb.im", ""):
     if module.startswith("_"):
         continue
@@ -15,8 +13,6 @@ for module in pkg_resources.resource_listdir("oskb.im", ""):
 
 
 # Return a default handler for a given platform
-
-from PyQt5.QtCore import QSysInfo
 
 
 def default():
