@@ -55,6 +55,7 @@ import oskb
 DOUBLECLICK_TIMEOUT = 200
 MAX_UNDO = 10
 
+
 def main():
     app = QApplication(sys.argv)
     ex = OskbEdit()
@@ -102,10 +103,12 @@ class OskbEdit(QWidget):
         frame.setLayout(self._kbdlayout)
         self._kbdlayout.addWidget(self._oskb)
 
-        layout.addLayout(self._kbdlayout)
+        layout.addWidget(frame)
         self.setWindowTitle("oskbedit")
 
         layout.addWidget(frame)
+
+        self._lastclicked = None
 
         self._menu = QMenuBar()
         self._menu.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -135,7 +138,7 @@ class OskbEdit(QWidget):
         filemenu = self._menu.addMenu("&File")
         newitem = filemenu.addAction("&New")
         newitem.setShortcut("Ctrl+N")
-        newitem.triggered.connect(partial(self._loadFile,"_new"))
+        newitem.triggered.connect(partial(self._loadFile, "_new"))
         loaditem = filemenu.addAction("&Open file")
         loaditem.triggered.connect(self._file_open)
         loaditem.setShortcut("Ctrl+O")
@@ -171,7 +174,7 @@ class OskbEdit(QWidget):
         self._changed = False
         dialog = QFileDialog()
         dialog.setFileMode(QFileDialog.ExistingFile)
-        dialog.setViewMode(QFileDialog.Detail);
+        dialog.setViewMode(QFileDialog.Detail)
         if dialog.exec_():
             self._loadFile(*dialog.selectedFiles())
 
@@ -185,8 +188,13 @@ class OskbEdit(QWidget):
         try:
             self._kbdname = self._oskb.readKeyboard(f)
         except:
-            QMessageBox.warning(self, "read failed",
-                "File read failed: " + str(sys.exc_info()[1]), QMessageBox.Ok, QMessageBox.Ok)
+            QMessageBox.warning(
+                self,
+                "read failed",
+                "File read failed: " + str(sys.exc_info()[1]),
+                QMessageBox.Ok,
+                QMessageBox.Ok,
+            )
             return False
         self._oskb.setKeyboard(self._kbdname)
         self._changed = False
@@ -208,9 +216,16 @@ class OskbEdit(QWidget):
         return True
 
     def _areyousure(self):
-        if QMessageBox.warning(self, "Almost losing changes",
-            "You have made changes, are you sure you want to do this? Hit 'No' and save if not.",
-             QMessageBox.Yes | QMessageBox.No, QMessageBox.No) == QMessageBox.Yes:
+        if (
+            QMessageBox.warning(
+                self,
+                "Almost losing changes",
+                "You have made changes, are you sure you want to do this? Hit 'No' and save if not.",
+                QMessageBox.Yes | QMessageBox.No,
+                QMessageBox.No,
+            )
+            == QMessageBox.Yes
+        ):
             return True
         else:
             return False
@@ -226,7 +241,7 @@ class OskbEdit(QWidget):
 
     def _saveFile(self, f):
         savecopy = oskb.oskbCopy(self._kbd)
-        with open(f, 'w') as outfile:
+        with open(f, "w") as outfile:
             json.dump(savecopy, outfile)
         self._changed = False
 
@@ -235,7 +250,6 @@ class OskbEdit(QWidget):
             event.ignore()
             return
         event.accept()
-
 
     #
     # "Edit" menu
@@ -322,16 +336,16 @@ class OskbEdit(QWidget):
         actionname, actionview, kbd = self._undo.pop(0)
         self._redo.insert(0, (actionname, self._viewname, oskb.oskbCopy(self._kbd)))
         oskb.oskbCopy(kbd, self._kbd)
-        if actionview != self._viewname:
-            self._view_switch(actionview)
+#         if actionview != self._viewname:
+#             self._view_switch(actionview)
         self._stir()
 
     def _edit_redo(self):
         actionname, actionview, kbd = self._redo.pop(0)
         self._undo.insert(0, (actionname, self._viewname, oskb.oskbCopy(self._kbd)))
         oskb.oskbCopy(kbd, self._kbd)
-        if actionview != self._viewname:
-            self._view_switch(actionview)
+#         if actionview != self._viewname:
+#             self._view_switch(actionview)
         self._stir()
 
     def _edit_delete(self):
@@ -345,13 +359,13 @@ class OskbEdit(QWidget):
         self._copypaste = self._copyCut(True)
         self._stir("Cut")
 
-    def _edit_paste(self, tuple, after = 0):
-        ci, ri, ki = (tuple)
+    def _edit_paste(self, tuple, after=0):
+        ci, ri, ki = tuple
         for ins in self._copypaste:
             self._view["columns"][ci]["rows"][ri]["keys"].insert(ki + after, oskb.oskbCopy(ins))
         self._stir("Paste")
 
-    def _copyCut(self, cut = False):
+    def _copyCut(self, cut=False):
         buffer = []
         for ci, ri, ki, keydata in self._reverseIterateKeys():
             if keydata.get("_selected", False):
@@ -363,8 +377,13 @@ class OskbEdit(QWidget):
                 if len(self._view["columns"][ci].get("rows", [])) > 1:
                     del self._view["columns"][ci]["rows"][ri]
                 else:
-                    QMessageBox.warning(self, "Deleting objects",
-                        "You cannot delete the last row", QMessageBox.Ok, QMessageBox.Ok)
+                    QMessageBox.warning(
+                        self,
+                        "Deleting objects",
+                        "You cannot delete the last row",
+                        QMessageBox.Ok,
+                        QMessageBox.Ok,
+                    )
         return buffer
 
     def _edit_css(self):
@@ -378,7 +397,6 @@ class OskbEdit(QWidget):
     def _edit_key(self, widget):
         if Editkey(widget, self._oskb, self._kbd).exec():
             self._stir("Edit Key")
-
 
     #
     # "Insert" menu
@@ -416,27 +434,26 @@ class OskbEdit(QWidget):
             addson.triggered.connect(partial(self._insertSpacer, self._firstSelRow()))
             insertkmenu.addAction(addkon)
 
-    def _insertKey(self, tuple, after = 0):
-        ci, ri, ki = (tuple)
+    def _insertKey(self, tuple, after=0):
+        ci, ri, ki = tuple
         rowkeys = self._view["columns"][ci]["rows"][ri]["keys"]
-        rowkeys.insert(ki + after, { "type": "key" })
+        rowkeys.insert(ki + after, {"type": "key"})
         self._oskb.initKeyboards()
         self._selectState(False)
         self._selectState(True, rowkeys[ki + after]["_QWidget"])
         self._stir("Insert Key")
 
-    def _insertSpacer(self, tuple, after = 0):
-        spacerwidth, okbutton = QInputDialog.getDouble(self, "Spacer","Width:", 0.5, 0.1, 100, 1)
+    def _insertSpacer(self, tuple, after=0):
+        spacerwidth, okbutton = QInputDialog.getDouble(self, "Spacer", "Width:", 0.5, 0.1, 100, 1)
         if not okbutton:
             return
-        ci, ri, ki = (tuple)
+        ci, ri, ki = tuple
         rowkeys = self._view["columns"][ci]["rows"][ri]["keys"]
-        rowkeys.insert(ki + after, { "type": "spacer", "width": str(spacerwidth) })
+        rowkeys.insert(ki + after, {"type": "spacer", "width": str(spacerwidth)})
         self._oskb.initKeyboards()
         self._selectState(False)
         self._selectState(True, rowkeys[ki + after]["_QWidget"])
         self._stir("Insert Spacer")
-
 
     #
     # "View" menu
@@ -498,8 +515,7 @@ class OskbEdit(QWidget):
     def _view_delete(self):
         delview = self._oskb.getView()
         if delview == "default":
-            QMessageBox.warning(self, "New View",
-                "Cannot delete 'default' view", QMessageBox.Ok)
+            QMessageBox.warning(self, "New View", "Cannot delete 'default' view", QMessageBox.Ok)
             return
         self._view_switch("default")
         del self._kbd["views"][delview]
@@ -508,22 +524,24 @@ class OskbEdit(QWidget):
     def _view_add(self):
         while True:
             viewname, result = QInputDialog.getText(self, "New View", "Name:")
-            if not result: break
+            if not result:
+                break
             if not re.fullmatch("[a-z_]+", viewname):
-                QMessageBox.warning(self, "New View",
-                    "View name can only contain lower case letters and underscores", QMessageBox.Ok)
+                QMessageBox.warning(
+                    self,
+                    "New View",
+                    "View name can only contain lower case letters and underscores",
+                    QMessageBox.Ok,
+                )
                 continue
             if self._kbd["views"].get(viewname):
-                QMessageBox.warning(self, "New View",
-                    "View " + viewname + " already exists", QMessageBox.Ok)
+                QMessageBox.warning(self, "New View", "View " + viewname + " already exists", QMessageBox.Ok)
                 continue
-            self._kbd["views"][viewname] = { "columns": [ { "rows": [ { "keys": [] } ] } ] }
+            self._kbd["views"][viewname] = {"columns": [{"rows": [{"keys": []}]}]}
             self._stir("Add View")
             self._view_switch(viewname)
             self._fixMenu()
             break
-
-
 
     def _buttonHandler(self, widget, direction):
         if direction == oskb.PRESSED:
@@ -531,13 +549,13 @@ class OskbEdit(QWidget):
             mod = QGuiApplication.keyboardModifiers()
             if mod & Qt.ControlModifier:
                 self._selectState(not widget.data.get("_selected", False), widget)
-            elif ( mod & Qt.ShiftModifier ):
+            elif mod & Qt.ShiftModifier:
                 if self._lastclicked:
                     if widget.data.get("type") == "emptyrow":
                         return
                     selecting = False
                     for ci, ri, ki, keydata in self._iterateKeys():
-                        thisone = keydata['_QWidget']
+                        thisone = keydata["_QWidget"]
                         if thisone == self._lastclicked:
                             selecting = not selecting
                         if thisone == widget:
@@ -564,7 +582,7 @@ class OskbEdit(QWidget):
         elif widget.data.get("type", "key") == "key":
             self._edit_key(widget)
 
-    def _stir(self, actionname = None):
+    def _stir(self, actionname=None):
         if actionname:
             self._changed = True
             self._undo.insert(0, (actionname, self._viewname[:], oskb.oskbCopy(self._previouskbd)))
@@ -574,6 +592,7 @@ class OskbEdit(QWidget):
             self._redo = []
         self._oskb.initKeyboards()
         self._oskb.updateKeyboard()
+        self._view_switch(self._oskb.getView())
         self._fixMenu()
 
     def _listViews(self):
@@ -588,9 +607,9 @@ class OskbEdit(QWidget):
             if row.get("_QWidget"):
                 if not widget or row.get("_QWidget") == widget:
                     row["_selected"] = newstate
-            for _, _, _, keydata in self._iterateKeys():
-                if not widget or widget == keydata.get("_QWidget"):
-                    keydata["_selected"] = newstate
+        for _, _, _, keydata in self._iterateKeys():
+            if not widget or widget == keydata.get("_QWidget"):
+                keydata["_selected"] = newstate
 
     def _surveySelected(self):
         selrows, selkeys = 0, 0
@@ -599,9 +618,8 @@ class OskbEdit(QWidget):
                 selrows += 1
         for _, _, _, keydata in self._iterateKeys():
             if keydata.get("_selected"):
-                selkeys +=1
+                selkeys += 1
         return selrows, selkeys
-
 
     def _firstSelWidget(self):
         for ci, ri, ki, keydata in self._iterateKeys():
@@ -653,7 +671,7 @@ class EditCSS(QDialog):
         self.cancelsavebuttons = QDialogButtonBox(self)
         self.cancelsavebuttons.setGeometry(QRect(150, 360, 341, 32))
         self.cancelsavebuttons.setOrientation(Qt.Horizontal)
-        self.cancelsavebuttons.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
+        self.cancelsavebuttons.setStandardButtons(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
         self.maintabs = QTabWidget(self)
         self.maintabs.setGeometry(QRect(10, 10, 481, 341))
         self.tab = QWidget()
@@ -695,7 +713,7 @@ class EditSpacer(QDialog):
         self.buttonBox = QDialogButtonBox(self)
         self.buttonBox.setGeometry(QRect(10, 40, 171, 32))
         self.buttonBox.setOrientation(Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
+        self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
         self.widthbox = QDoubleSpinBox(self)
         self.widthbox.setGeometry(QRect(100, 10, 81, 24))
         self.widthbox.setDecimals(1)
@@ -705,7 +723,7 @@ class EditSpacer(QDialog):
         self.label = QLabel(self)
         self.label.setText("Width:")
         self.label.setGeometry(QRect(30, 10, 61, 21))
-        self.label.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.label.setAlignment(Qt.AlignRight | Qt.AlignTrailing | Qt.AlignVCenter)
         self.buttonBox.accepted.connect(self.accept)
         self.buttonBox.rejected.connect(self.reject)
         self.widthbox.valueChanged.connect(self._tryItOut)
@@ -736,14 +754,14 @@ class Editkey(QDialog):
         self.cancelsavebuttons = QDialogButtonBox(self)
         self.cancelsavebuttons.setGeometry(QRect(270, 390, 281, 32))
         self.cancelsavebuttons.setOrientation(Qt.Horizontal)
-        self.cancelsavebuttons.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
+        self.cancelsavebuttons.setStandardButtons(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
         self.maintabs = QTabWidget(self)
         self.maintabs.setGeometry(QRect(10, 10, 541, 371))
         self.appearance = QWidget()
         self._ap_lbl_4 = QLabel(self.appearance)
         self._ap_lbl_4.setText("Additional captions:")
         self._ap_lbl_4.setGeometry(QRect(270, 20, 151, 16))
-        self._ap_lbl_4.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+        self._ap_lbl_4.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignVCenter)
         self._ap_caption = QLineEdit(self.appearance)
         self._ap_caption.setGeometry(QRect(110, 20, 101, 21))
         self._ap_class = QLineEdit(self.appearance)
@@ -770,29 +788,31 @@ class Editkey(QDialog):
         self._ap_lbl_3 = QLabel(self.appearance)
         self._ap_lbl_3.setText("Additional CSS classes, separated by spaces:")
         self._ap_lbl_3.setGeometry(QRect(30, 90, 171, 41))
-        self._ap_lbl_3.setAlignment(Qt.AlignJustify|Qt.AlignVCenter)
+        self._ap_lbl_3.setAlignment(Qt.AlignJustify | Qt.AlignVCenter)
         self._ap_lbl_3.setWordWrap(True)
         self._ap_lbl_1 = QLabel(self.appearance)
         self._ap_lbl_1.setText("Caption:")
         self._ap_lbl_1.setGeometry(QRect(20, 20, 81, 16))
-        self._ap_lbl_1.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self._ap_lbl_1.setAlignment(Qt.AlignRight | Qt.AlignTrailing | Qt.AlignVCenter)
         self._ap_style = QTextEdit(self.appearance)
         self._ap_style.setGeometry(QRect(20, 190, 491, 101))
         self._ap_lbl_5 = QLabel(self.appearance)
         self._ap_lbl_5.setText("CSS StyleSheet specific to this key:")
         self._ap_lbl_5.setGeometry(QRect(40, 170, 291, 16))
-        self._ap_lbl_5.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+        self._ap_lbl_5.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignVCenter)
         self._ap_lbl_6 = QLabel(self.appearance)
-        self._ap_lbl_6.setText("(Usually better to add a CSS class and put the style info in the common stylesheet)")
+        self._ap_lbl_6.setText(
+            "(Usually better to add a CSS class and put the style info in the common stylesheet)"
+        )
         self._ap_lbl_6.setGeometry(QRect(20, 300, 491, 20))
         font = QFont()
         font.setPointSize(9)
         self._ap_lbl_6.setFont(font)
-        self._ap_lbl_6.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self._ap_lbl_6.setAlignment(Qt.AlignRight | Qt.AlignTrailing | Qt.AlignVCenter)
         self._ap_lbl_2 = QLabel(self.appearance)
         self._ap_lbl_2.setText("Key width:")
         self._ap_lbl_2.setGeometry(QRect(20, 50, 81, 16))
-        self._ap_lbl_2.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self._ap_lbl_2.setAlignment(Qt.AlignRight | Qt.AlignTrailing | Qt.AlignVCenter)
         self._ap_width = QDoubleSpinBox(self.appearance)
         self._ap_width.setGeometry(QRect(110, 50, 81, 24))
         self._ap_width.setDecimals(1)
@@ -848,25 +868,25 @@ class Editkey(QDialog):
             a["modifier_action"].addItem("")
             a["lbl_11"] = QLabel(a["tab"])
             a["lbl_11"].setGeometry(QRect(20, 70, 81, 16))
-            a["lbl_11"].setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+            a["lbl_11"].setAlignment(Qt.AlignRight | Qt.AlignTrailing | Qt.AlignVCenter)
             a["modifier_keycode"] = QLineEdit(a["tab"])
             a["modifier_keycode"].setGeometry(QRect(390, 40, 81, 21))
             a["lbl_15"] = QLabel(a["tab"])
             a["lbl_15"].setGeometry(QRect(300, 100, 81, 16))
-            a["lbl_15"].setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+            a["lbl_15"].setAlignment(Qt.AlignRight | Qt.AlignTrailing | Qt.AlignVCenter)
             a["lbl_14"] = QLabel(a["tab"])
             a["lbl_14"].setGeometry(QRect(300, 70, 81, 16))
-            a["lbl_14"].setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+            a["lbl_14"].setAlignment(Qt.AlignRight | Qt.AlignTrailing | Qt.AlignVCenter)
             a["modifier_printable"] = QCheckBox(a["tab"])
             a["modifier_printable"].setGeometry(QRect(390, 130, 91, 20))
             a["view_until_checkbox"] = QCheckBox(a["tab"])
             a["view_until_checkbox"].setGeometry(QRect(40, 210, 121, 20))
             a["lbl_16"] = QLabel(a["tab"])
             a["lbl_16"].setGeometry(QRect(320, 200, 61, 20))
-            a["lbl_16"].setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+            a["lbl_16"].setAlignment(Qt.AlignRight | Qt.AlignTrailing | Qt.AlignVCenter)
             a["lbl_13"] = QLabel(a["tab"])
             a["lbl_13"].setGeometry(QRect(300, 40, 81, 16))
-            a["lbl_13"].setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+            a["lbl_13"].setAlignment(Qt.AlignRight | Qt.AlignTrailing | Qt.AlignVCenter)
             a["send_printable"] = QCheckBox(a["tab"])
             a["send_printable"].setGeometry(QRect(110, 100, 91, 20))
             a["send"] = QCheckBox(a["tab"])
@@ -881,12 +901,12 @@ class Editkey(QDialog):
             a["view_name"].setGeometry(QRect(40, 180, 131, 26))
             a["lbl_10"] = QLabel(a["tab"])
             a["lbl_10"].setGeometry(QRect(20, 40, 81, 16))
-            a["lbl_10"].setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+            a["lbl_10"].setAlignment(Qt.AlignRight | Qt.AlignTrailing | Qt.AlignVCenter)
             a["view_thenview"] = QComboBox(a["tab"])
             a["view_thenview"].setGeometry(QRect(170, 210, 131, 26))
             a["lbl_12"] = QLabel(a["tab"])
             a["lbl_12"].setGeometry(QRect(40, 240, 171, 21))
-            a["lbl_12"].setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+            a["lbl_12"].setAlignment(Qt.AlignRight | Qt.AlignTrailing | Qt.AlignVCenter)
             a["lbl_12"].setWordWrap(True)
             self.actiontabs.addTab(a["tab"], "")
         self.maintabs.addTab(self.action, "")

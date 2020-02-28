@@ -47,11 +47,11 @@ class Keyboard(QWidget):
         self._viewuntil = None
         self._thenview = None
 
-        self._kbds = { }
+        self._kbds = {}
 
         # Create the special 'chooser' keyboard that shows all the loaded keyboards
         self._kbds["_chooser"] = {
-            "views": { "default": { "columns": [{"rows": [] } ] } },
+            "views": {"default": {"columns": [{"rows": []}]}},
         }
 
         # Create the special 'minimized' keyboard that shows one small button
@@ -60,15 +60,7 @@ class Keyboard(QWidget):
             "views": {
                 "default": {
                     "columns": [
-                        {
-                            "rows": [
-                                {
-                                    "keys": [
-                                        {"caption": "⌨", "single": {"keyboard": {"name": "back"}},}
-                                    ]
-                                }
-                            ]
-                        }
+                        {"rows": [{"keys": [{"caption": "⌨", "single": {"keyboard": {"name": "back"}},}]}]}
                     ],
                 }
             },
@@ -85,7 +77,6 @@ class Keyboard(QWidget):
         self._kbdstack = QStackedLayout(self)
 
         self._stylesheet = pkg_resources.resource_string("oskb", "default.css").decode("utf-8")
-
 
     #
     # Make sure show events also calculate proper sizes and first initialise if that hasn't happened yet.
@@ -137,8 +128,9 @@ class Keyboard(QWidget):
         if os.access(kbdfile, os.R_OK):
             with open(kbdfile, "r", encoding="utf-8") as f:
                 kbd = json.load(f)
-        elif kbdfile == os.path.basename(kbdfile) and \
-         pkg_resources.resource_exists("oskb", "keyboards/" + kbdfile):
+        elif kbdfile == os.path.basename(kbdfile) and pkg_resources.resource_exists(
+            "oskb", "keyboards/" + kbdfile
+        ):
             kbd = json.loads(pkg_resources.resource_string("oskb", "keyboards/" + kbdfile))
         if not kbd:
             raise FileNotFoundError("Could not find " + kbdfile)
@@ -164,17 +156,10 @@ class Keyboard(QWidget):
             if kbdname.startswith("_"):
                 continue
             therows.append(
-                {
-                    "keys": [
-                        {
-                            "caption": kbd.get("description"),
-                            "single": { "keyboard": {"name": kbdname }},
-                        }
-                    ]
-                }
+                {"keys": [{"caption": kbd.get("description"), "single": {"keyboard": {"name": kbdname}},}]}
             )
 
-    def setKeyboard(self, kbdname = None):
+    def setKeyboard(self, kbdname=None):
         newgeometry = None
         if kbdname == "_minimized":
             newgeometry = self._minimizerlocation
@@ -263,6 +248,32 @@ class Keyboard(QWidget):
                 ecl.addWidget(ql)
             return ecl
 
+        def _maxRowsInView(view):
+            maxrows = 0
+            for column in view.get("columns", []):
+                maxrows = max(len(column.get("rows")), maxrows)
+            return maxrows
+
+        # This stores the width and height in standard key widths for each view.
+        def _storeWidthsAndHeights(view):
+            total_height = 0
+            total_width = 0
+            for ci, column in enumerate(view.get("columns", [])):
+                largest_width = 0
+                for ri, row in enumerate(column.get("rows", [])):
+                    if len(row.get("keys", [])) and not row.get("ignoreKeyWidths"):
+                        totalweight = 0
+                        for keydata in row.get("keys", []):
+                            w = keydata.get("width", "1")
+                            totalweight += float(w)
+                        if totalweight > largest_width:
+                            largest_width = totalweight
+                    total_height += float(row.get("height", "1"))
+                total_width += largest_width
+            view["widthInUnits"] = max(total_width, 1)
+            view["heightInUnits"] = max(total_height, 1)
+
+
         # Start of initKeyboards() itself
 
         if self._kbdstack.itemAt(0):
@@ -272,31 +283,17 @@ class Keyboard(QWidget):
             viewstack = QStackedLayout()
             vi = 0
             for viewname, view in kbd.get("views", {}).items():
-                #
-                # This stores the width and height in standard key widths for each view.
-                total_height = 0
-                total_width = 0
-                for ci, column in enumerate(view.get("columns", [])):
-                    largest_width = 0
-                    for ri, row in enumerate(column.get("rows", [])):
-                        if len(row.get("keys", [])) and not row.get("ignoreKeyWidths"):
-                            totalweight = 0
-                            for keydata in row.get("keys", []):
-                                w = keydata.get("width", "1")
-                                totalweight += float(w)
-                            if totalweight > largest_width:
-                                largest_width = totalweight
-                        total_height += float(row.get("height", "1"))
-                    total_width += largest_width
-                view["widthInUnits"] = max(total_width, 1)
-                view["heightInUnits"] = max(total_height, 1)
-                #
-                # This is the part where everything is created
+                _storeWidthsAndHeights(view)
                 grid = QGridLayout()
                 grid.setSpacing(0)
                 grid.setContentsMargins(0, 0, 0, 0)
                 for ci, column in enumerate(view.get("columns", [])):
-                    for ri, row in enumerate(column.get("rows", [])):
+                    for ri in range(_maxRowsInView(view)):
+                        if ri < len(column["rows"]):
+                            row = column["rows"][ri]
+                        else:
+                            row = { "keys" : {} }
+                            column["rows"].append(row)
                         keys = row.get("keys", [])
                         kl = QHBoxLayout()
                         kl.setContentsMargins(0, 0, 0, 0)
@@ -307,6 +304,7 @@ class Keyboard(QWidget):
                             k = QPushButton(self)
                             k.setMinimumSize(1, 1)
                             keydata["_QWidget"] = k
+                            keydata["_selected"] = False
                             k.data = keydata
                             k.pressed.connect(partial(self._buttonhandler, k, PRESSED))
                             k.released.connect(partial(self._buttonhandler, k, RELEASED))
@@ -591,7 +589,8 @@ class Keyboard(QWidget):
 # variables it will move from one to the other without breaking the reference. If you specify just one,
 # it will return a new copy.
 
-def oskbCopy(f, t = None):
+
+def oskbCopy(f, t=None):
     if t == None:
         t = {}
     t.clear()
@@ -607,6 +606,7 @@ def oskbCopy(f, t = None):
         for fi, fv in enumerate(f):
             t.append(oskbCopy(fv))
     return t
+
 
 if __name__ == "__main__":
     main()
