@@ -533,7 +533,7 @@ class OskbEdit(QWidget):
     def _insert_row(self, tuple, after=0):
         _, ri, _ = tuple
         for ci, column in enumerate(self._view.get("columns", [])):
-            column["rows"].insert(ri + after, {"keys": {}})
+            column["rows"].insert(ri + after, {"keys": []})
         self._stir("Insert Row")
 
     def _insert_column(self, tuple, after=0):
@@ -881,6 +881,8 @@ class EditKey(QDialog):
         self.ui.cssclass.setText(self._d.get("class", ""))
         self.ui.cssclass.editingFinished.connect(self._tryItOut)
         self.ui.style.setPlainText(self._d.get("style", ""))
+        self.ui.addcaption.clicked.connect(self._addcaption)
+        self.ui.deletecaption.clicked.connect(self._deletecaption)
         for c, t in self._d.get("extracaptions", {}).items():
             rows = self.ui.extracaptions.rowCount()
             self.ui.extracaptions.setRowCount(rows + 1)
@@ -899,8 +901,8 @@ class EditKey(QDialog):
         self._d["style"] = self.ui.style.toPlainText()
         self._d["extracaptions"] = {}
         for n in range(self.ui.extracaptions.rowCount()):
-            cssclass = self.ui.extracaptions.item(n, 0)
-            caption = self.ui.extracaptions.item(n, 1)
+            cssclass = self.ui.extracaptions.item(n, 0).text()
+            caption = self.ui.extracaptions.item(n, 1).text()
             if caption and cssclass:
                 caption = caption.replace("\\n", "\n")
                 self._d["extracaptions"][cssclass] = caption
@@ -992,21 +994,33 @@ class KeyActions(QWidget):
             a["send"]["keycode"] = self.ui.send_keycode.text()
             a["send"]["name"] = self.ui.send_name.text()
             a["send"]["printable"] = self.ui.send_printable.isChecked()
+        else:
+            if a.get("send"):
+                del a["send"]
         if self.ui.view.isChecked():
             a["view"] = {}
-            a["view"]["name"] = self.ui.name.currentText()
+            a["view"]["name"] = self.ui.view_name.currentText()
             if self.ui.view_until_checkbox.isChecked():
                 a["view"]["thenview"] = self.ui.view_thenview.currentText()
                 a["view"]["until"] = self.ui.view_until.text()
+        else:
+            if a.get("view"):
+                del a["view"]
         if self.ui.modifier.isChecked():
             a["modifier"] = {}
             a["modifier"]["keycode"] = self.ui.modifier_keycode.text()
             a["modifier"]["name"] = self.ui.modifier_name.text()
             a["modifier"]["action"] = self.ui.modifier_action.currentText()
             a["modifier"]["printable"] = self.ui.modifier_printable.isChecked()
+        else:
+            if a.get("modifier"):
+                del a["modifier"]
         if self.ui.keyboard.isChecked():
             a["keyboard"] = {}
             a["keyboard"]["name"] = self.ui.keyboard_name.text()
+        else:
+            if a.get("keyboard"):
+                del a["keyboard"]
 
 
 if __name__ == "__main__":
