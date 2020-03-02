@@ -23,6 +23,9 @@ PRESSED = 1
 LONGPRESS_TIMEOUT = 350
 DOUBLECLICK_TIMEOUT = 200
 
+# The keyboard file format has its own version numbering
+KEYBOARDFILE_VERSION = 1
+
 
 class Keyboard(QWidget):
     def __init__(self):
@@ -31,6 +34,7 @@ class Keyboard(QWidget):
         self.setWindowTitle("On-Screen Keyboard")
 
         self._modifiers = {}
+        self._flashmodifiers = True
 
         # This is all for the key-detection state-machine
         self._longpresswait = False
@@ -60,7 +64,7 @@ class Keyboard(QWidget):
             "views": {
                 "default": {
                     "columns": [
-                        {"rows": [{"keys": [{"caption": "⌨", "single": {"keyboard": {"name": "back"}},}]}]}
+                        {"rows": [{"keys": [{"caption": "⌨", "single": {"keyboard": {"name": "back"}}}]}]}
                     ],
                 }
             },
@@ -123,6 +127,9 @@ class Keyboard(QWidget):
     def setMinimizer(self, mx, my, mw, mh):
         self._minimizerlocation = QRect(mx, my, mw, mh)
 
+    def setFlashModifiers(self, mode):
+        self._flashmodifiers = mode
+
     def readKeyboard(self, kbdfile):
         kbd = None
         if os.access(kbdfile, os.R_OK):
@@ -136,7 +143,7 @@ class Keyboard(QWidget):
             raise FileNotFoundError("Could not find " + kbdfile)
         if kbd.get("format") != "oskb keyboard":
             raise RuntimeError("Not an oskb keyboard file")
-        if kbd.get("formatversion") > 1:
+        if kbd.get("formatversion") > KEYBOARDFILE_VERSION:
             raise RuntimeError("oskb keyboard file newer than this oskb version. You must upgrade.")
         kbdname = os.path.basename(kbdfile)
         self._kbds[kbdname] = kbd
@@ -146,6 +153,9 @@ class Keyboard(QWidget):
 
     def getView(self):
         return self._viewname
+
+    def getViews(self):
+        return self._kbd["views"].keys()
 
     def _updateChooser(self):
         if not self._kbds.get("_chooser"):
@@ -210,7 +220,7 @@ class Keyboard(QWidget):
     # initKeyboards sets up a QStackedLayout holding QWidgets for each keyboard, which in turn have a
     # QStackedlayout that holds a QWidget for each view within that keyboard. That has a QGridLayout with
     # QHboxLayouts in it that hold the individual key QPushButton widgets. It also sets the captions and
-    # button actions for each key and figures out how many standard key widths and row heights there are in
+    # button actions for each key and figures out how many standard key widths and row vis there are in
     # all the views, which is used by updateKeyboard() to dynamically figure out how big the fonts, margins
     # and rounded corners need to be.
     #
@@ -225,7 +235,6 @@ class Keyboard(QWidget):
             er.setMinimumSize(1, 1)
             er.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
             er.setProperty("class", "emptyrow")
-            er.setText("<empty row>")
             row["_QWidget"] = er
             row["type"] = "emptyrow"
             er.data = row
@@ -257,22 +266,26 @@ class Keyboard(QWidget):
         # This stores the width and height in standard key widths for each view.
         def _storeWidthsAndHeights(view):
             total_height = 0
+            # Heights are only stored in first column
+            column = view["columns"][0]
+            for ri, row in enumerate(column.get("rows", [])):
+                total_height += row.get("height", 1)
             total_width = 0
             for ci, column in enumerate(view.get("columns", [])):
                 largest_width = 0
-                for ri, row in enumerate(column.get("rows", [])):
-                    if len(row.get("keys", [])) and not row.get("ignoreKeyWidths"):
+                for ri, row in reversed(list(enumerate(column.get("rows", [])))):
+                    if len(row.get("keys", [])):
                         totalweight = 0
                         for keydata in row.get("keys", []):
-                            w = keydata.get("width", "1")
-                            totalweight += float(w)
-                        if totalweight > largest_width:
+                            w = keydata.get("width", 1)
+                            totalweight += w
+                        # Not counting frst row if there are widths already (reversed order)
+                        if totalweight > largest_width and (ri != 0 or totalweight == 0):
                             largest_width = totalweight
-                    total_height += float(row.get("height", "1"))
+                column["_widthInUnits"] = largest_width
                 total_width += largest_width
-            view["widthInUnits"] = max(total_width, 1)
-            view["heightInUnits"] = max(total_height, 1)
-
+            view["_widthInUnits"] = max(total_width, 1)
+            view["_heightInUnits"] = max(total_height, 1)
 
         # Start of initKeyboards() itself
 
@@ -292,14 +305,14 @@ class Keyboard(QWidget):
                         if ri < len(column["rows"]):
                             row = column["rows"][ri]
                         else:
-                            row = { "keys" : {} }
+                            row = {"keys": []}
                             column["rows"].append(row)
                         keys = row.get("keys", [])
                         kl = QHBoxLayout()
                         kl.setContentsMargins(0, 0, 0, 0)
                         kl.setSpacing(0)
                         for keydata in keys:
-                            stretch = int(float(keydata.get("width", 1)) * 10)
+                            stretch = keydata.get("width", 1) * 10
                             type = keydata.get("type", "key")
                             k = QPushButton(self)
                             k.setMinimumSize(1, 1)
@@ -309,6 +322,7 @@ class Keyboard(QWidget):
                             k.pressed.connect(partial(self._buttonhandler, k, PRESSED))
                             k.released.connect(partial(self._buttonhandler, k, RELEASED))
                             k.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+                            k.setMinimumSize(1, 1)
                             if type == "key":
                                 k.setText(keydata.get("caption", ""))
                                 # Multiple captions? Create a QStackedWidget overlays them all
@@ -324,7 +338,15 @@ class Keyboard(QWidget):
                             kl.addWidget(er)
                         else:
                             row["_QWidget"] = None
-                        grid.addLayout(kl, ri, ci)
+                        grid.addLayout(kl, ri, ci * 2)
+                        if ci == 0:
+                            grid.setRowStretch(ri, row.get("height", 1) * 10)
+                    grid.setColumnStretch(ci * 2, column.get("_widthInUnits", 1) * 10)
+                    if ci > 0:
+                        spacercolumn = QHBoxLayout()
+                        spacercolumn.addWidget(QWidget(None))
+                        grid.setColumnStretch((ci * 2) - 1, 7)
+                        grid.addLayout(spacercolumn, 0, (ci * 2) - 1)
                 # Create with self as parent, then reparent to prevent startup flicker
                 view["_QWidget"] = QWidget(self)
                 view["_QWidget"].setLayout(grid)
@@ -347,8 +369,8 @@ class Keyboard(QWidget):
             return False
         #
         # Calculate the font and margin sizes
-        kw = self.width() / self._view["widthInUnits"]
-        kh = self.height() / self._view["heightInUnits"]
+        kw = self.width() / self._view["_widthInUnits"]
+        kh = self.height() / self._view["_heightInUnits"]
         fontsize = min(max(int(min(kw / 1.5, kh / 2)), 5), 50)
         margin = int(fontsize / 10)
         radius = margin * 3
@@ -388,17 +410,6 @@ class Keyboard(QWidget):
                         k.setProperty("class", " ".join(classes).strip())
                         keystyle = keydata.get("style", "")
                         k.setStyleSheet(self._fixStyle(keystyle, fontsize, margin, radius))
-
-    def _releaseModifiers(self):
-        if self._view:
-            donestuff = False
-            for modinfo in self._modifiers.values():
-                if modinfo["state"] == 1:
-                    donestuff = True
-                    self._injectKeys(modinfo["keycode"], 0)
-                    modinfo["state"] = 0
-            if donestuff:
-                self.updateKeyboard()
 
     def _fixStyle(self, stylesheet, fontsize, margin, radius):
         if stylesheet == "":
@@ -494,9 +505,12 @@ class Keyboard(QWidget):
                 for modname, mod in self._modifiers.items():
                     if mod.get("state") > 0:
                         keyname = modname + " " + keyname
-                        keycodeplus = mod.get("keycode") + "+" + keycode
+                        modkeycode = mod.get("keycode")
+                        keycodeplus = modkeycode + "+" + keycode
                         if not mod.get("printable"):
                             printable = False
+                        if direction == PRESSED and self._flashmodifiers:
+                            self._injectKeys(modkeycode, PRESSED)
                 self._injectKeys(keycode, direction)
                 if direction == RELEASED:
                     self._releaseModifiers()
@@ -526,21 +540,24 @@ class Keyboard(QWidget):
                             "keycode": keycode,
                             "printable": printable,
                         }
-                        self._injectKeys(keycode, PRESSED)
+                        if not self._flashmodifiers:
+                            self._injectKeys(keycode, PRESSED)
                     else:
                         self._modifiers[modifier] = {
                             "state": 0,
                             "keycode": keycode,
                             "printable": printable,
                         }
-                        self._injectKeys(keycode, RELEASED)
+                        if not self._flashmodifiers:
+                            self._injectKeys(keycode, RELEASED)
                 if modaction == "lock":
                     self._modifiers[modifier] = {
                         "state": 2,
                         "keycode": keycode,
                         "printable": printable,
                     }
-                    self._injectKeys(keycode, PRESSED)
+                    if not self._flashmodifiers:
+                        self._injectKeys(keycode, PRESSED)
                 self.updateKeyboard()
 
             if cmd == "keyboard" and direction == RELEASED:
@@ -574,6 +591,22 @@ class Keyboard(QWidget):
     def _sendKey(self, keycode, keyevent):
         if self._sendkeys:
             self._sendkeys(keycode, keyevent)
+
+    def _releaseModifiers(self):
+        if self._view:
+            donestuff = False
+            for modinfo in self._modifiers.values():
+                if modinfo["state"] == 1:
+                    donestuff = True
+                    if not self._flashmodifiers:
+                        self._injectKeys(modinfo["keycode"], RELEASED)
+                    modinfo["state"] = 0
+                if self._flashmodifiers:
+                    self._injectKeys(modinfo["keycode"], RELEASED)
+            if donestuff:
+                self.updateKeyboard()
+
+    # Helper
 
     def _clearLayout(self, layout):
         if layout != None:

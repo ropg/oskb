@@ -1,33 +1,33 @@
 QWidget {
-	background-color: #cccccc;
-	margin:0px;
+    background-color: #cccccc;
+    margin:0px;
 }
 
 QLabel {
-	font-size: 50%;
-	background: transparent;
-	margin: 2px 5px;
-	qproperty-alignment: 'AlignBottom | AlignLeft';
+    font-size: 50%;
+    background: transparent;
+    margin: 2px 5px;
+    qproperty-alignment: 'AlignBottom | AlignLeft';
 }
 
 .key {
-	background-color: #eeeeee;
-	border: 1px solid black;
-	font-size: _OSKB_FONTSIZE_px;
-	margin: _OSKB_MARGIN_px;
-	border-radius: _OSKB_RADIUS_px;
+    background-color: #eeeeee;
+    border: 1px solid black;
+    font-size: _OSKB_FONTSIZE_px;
+    margin: _OSKB_MARGIN_px;
+    border-radius: _OSKB_RADIUS_px;
 }
 
 .spacer, .emptyrow {
-	background-color: #cccccc;
-	border: none;
-	color: #cccccc;
+    background-color: #cccccc;
+    border: none;
+    color: #cccccc;
 }
 
 .key:pressed, .key.pseudomodifier, .key.held {
-	background-color: #999999;
+    background-color: #999999;
 }
 
 .view .key.pseudomodifier, .key.locked {
-	background-color: #cc9999;
+    background-color: #cc9999;
 }

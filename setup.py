@@ -37,5 +37,5 @@ setup(
             "oskbedit = oskb.oskbedit:main",
         ],
     },
-    package_data={"oskb": ["keyboards/*", "*.css",]},
+    package_data={"oskb": ["keyboards/*", "*.css", "ui/*",]},
 )

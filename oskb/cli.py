@@ -42,6 +42,9 @@ def main():
     ap.add_argument(
         "--float", help="floating window instead of docking to top or bottom", action="store_true",
     )
+    modmode = ap.add_mutually_exclusive_group()
+    modmode.add_argument("--flashmod", help="modifiers down briefly during keypress", action="store_true")
+    modmode.add_argument("--steadymod", help="modifiers down as shown in interface", action="store_true")
     ap.add_argument("--justshow", help="show keyboard, do not send keys to OS", action="store_true")
     ap.add_argument("--version", "-v", help="print version number and exit", action="store_true")
     cmdline = ap.parse_args()
@@ -117,7 +120,11 @@ def main():
 
     if cmdline.float:
         keyboard.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowDoesNotAcceptFocus)
+        if not cmdline.steadymod:
+            keyboard.setFlashModifiers(True)
     else:
+        if not cmdline.flashmod:
+            keyboard.setFlashModifiers(False)
         # quickly make sure X doesn't make a window frame etc.
         keyboard.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.X11BypassWindowManagerHint)
         # Qt.X11BypassWindowManagerHint means no WM border or title, no application focus, not in taskbar
@@ -192,9 +199,11 @@ def main():
 
         if not plugged:
             if sys.platform.startswith("linux"):
+                import getpass
+
+                user = getpass.getuser()
                 sys.stderr.write(
-                    "Try 'sudo setfacl -m m::rw -m u:<username>:rw /dev/uinput'\n"
-                    "(replacing <username> with your username).\n"
+                    "Try 'sudo setfacl -m m::rw -m u:" + user + ":rw /dev/uinput'\n"
                     "See the oskb documentation for more information.\n"
                 )
             else:

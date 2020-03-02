@@ -1,0 +1,5 @@
+# User Interface design files
+
+These files hold the types and positions of all the elements in the various dialog windows. These files are edited with a program called "Qt Designer" which is normally part of a much bigger package called QT Creator, which is a complete development environment and several gigabytes in size. You can also download it standalone [here](https://build-system.fman.io/qt-designer-download).
+
+Once you have edited a file, you can compile it to its corresponding file starting with `ui_` in the directory above this one by entering (for example) `pyuic5 EditKey.ui > ../ui_editkey.py`. (`pyuic5` comes with PyQt5 that was installed when you installed oskb.) Do not edit these `ui_something.py` files manually, as they will be overwritten next time someone compiles `SomeThing.ui`.
