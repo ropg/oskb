@@ -3,7 +3,7 @@
     "formatversion": 1,
     "description": "US - QWERTY",
     "keymap": "us",
-    "style": ".key {\n    font-size: 65%;\n}\n\n.key.bigger {\n    font-size: 80%;\n}\n\n.key.ctrlalt, .key.smaller {\n    font-size: 55%;\n}\n\n.grey {\n    background-color: #aaaaaa;\n}\n\n.lpsymbol {\n    font-size: 50%;\n    color: blue;\n    qproperty-alignment: 'AlignTop | AlignRight';\n}",
+    "style": ".key {\n    font-size: 65%;\n}\n\n.key.bigger {\n    font-size: 80%;\n}\n\n.key.ctrlalt, .key.smaller {\n    font-size: 45%;\n}\n\n.key.smallest {\n    font-size: 35%;\n}\n\n.grey {\n    background-color: #aaaaaa;\n}\n\n.lpsymbol {\n    font-size: 50%;\n    color: blue;\n    qproperty-alignment: 'AlignTop | AlignRight';\n}",
     "views": {
         "default": {
             "columns": [
@@ -834,7 +834,7 @@
                                     "style": ""
                                 },
                                 {
-                                    "width": 1.2999999999999998,
+                                    "width": 0.9999999999999999,
                                     "style": "",
                                     "caption": "ctrl",
                                     "single": {
@@ -857,7 +857,7 @@
                                     "extracaptions": {}
                                 },
                                 {
-                                    "width": 1.2999999999999998,
+                                    "width": 0.9999999999999999,
                                     "style": "",
                                     "caption": "alt",
                                     "single": {
@@ -880,8 +880,23 @@
                                     "extracaptions": {}
                                 },
                                 {
+                                    "type": "key",
+                                    "caption": "⌘ ❖",
+                                    "single": {
+                                        "send": {
+                                            "keycode": "125",
+                                            "name": "rightmeta",
+                                            "printable": false
+                                        }
+                                    },
+                                    "width": 1.0,
+                                    "class": "",
+                                    "style": "",
+                                    "extracaptions": {}
+                                },
+                                {
                                     "caption": "",
-                                    "width": 5.0000000000000036,
+                                    "width": 7.5,
                                     "single": {
                                         "send": {
                                             "keycode": "57",
@@ -907,17 +922,16 @@
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "ctrl",
+                                    "caption": "⌘ ❖",
                                     "single": {
-                                        "modifier": {
-                                            "keycode": "97",
-                                            "name": "rightctrl",
-                                            "action": "toggle",
+                                        "send": {
+                                            "keycode": "126",
+                                            "name": "rightmeta",
                                             "printable": false
                                         }
                                     },
-                                    "width": 0.9999999999999997,
-                                    "class": "ctrlalt",
+                                    "width": 1.0,
+                                    "class": "",
                                     "style": "",
                                     "extracaptions": {}
                                 },
@@ -938,21 +952,249 @@
                                     "extracaptions": {}
                                 },
                                 {
-                                    "width": 0.9999999999999999,
+                                    "type": "key",
+                                    "caption": "ctrl",
+                                    "single": {
+                                        "modifier": {
+                                            "keycode": "97",
+                                            "name": "rightctrl",
+                                            "action": "toggle",
+                                            "printable": false
+                                        }
+                                    },
+                                    "width": 0.9999999999999997,
+                                    "class": "ctrlalt",
+                                    "style": "",
+                                    "extracaptions": {}
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "rows": [
+                        {
+                            "keys": [
+                                {
+                                    "type": "key",
+                                    "caption": "sysrq\nprtscr",
+                                    "single": {
+                                        "send": {
+                                            "keycode": "99",
+                                            "name": "sysrq",
+                                            "printable": false
+                                        }
+                                    },
+                                    "width": 0.8,
+                                    "class": "smallest",
+                                    "style": "",
+                                    "extracaptions": {}
+                                },
+                                {
+                                    "type": "key",
+                                    "caption": "scroll\nlock",
+                                    "single": {
+                                        "send": {
+                                            "keycode": "70",
+                                            "name": "scrolllock",
+                                            "printable": false
+                                        }
+                                    },
+                                    "width": 0.8,
+                                    "class": "smallest",
+                                    "style": "",
+                                    "extracaptions": {}
+                                },
+                                {
+                                    "type": "key",
+                                    "width": 0.8,
+                                    "caption": "break",
+                                    "class": "smallest",
+                                    "style": "",
+                                    "extracaptions": {}
+                                }
+                            ],
+                            "type": "emptyrow"
+                        },
+                        {
+                            "keys": [
+                                {
+                                    "type": "key",
+                                    "caption": "ins",
+                                    "single": {
+                                        "send": {
+                                            "keycode": "110",
+                                            "name": "insert",
+                                            "printable": false
+                                        }
+                                    },
+                                    "width": 0.8,
+                                    "class": "smaller",
+                                    "style": "",
+                                    "extracaptions": {}
+                                },
+                                {
+                                    "type": "key",
+                                    "caption": "home",
+                                    "single": {
+                                        "send": {
+                                            "keycode": "102",
+                                            "name": "home",
+                                            "printable": false
+                                        }
+                                    },
+                                    "width": 0.8,
+                                    "class": "smaller",
+                                    "style": "",
+                                    "extracaptions": {}
+                                },
+                                {
+                                    "type": "key",
+                                    "caption": "pgup",
+                                    "single": {
+                                        "send": {
+                                            "keycode": "104",
+                                            "name": "pageup",
+                                            "printable": false
+                                        }
+                                    },
+                                    "width": 0.8,
+                                    "class": "smaller",
+                                    "style": "",
+                                    "extracaptions": {}
+                                }
+                            ],
+                            "type": "emptyrow"
+                        },
+                        {
+                            "keys": [
+                                {
+                                    "type": "key",
+                                    "caption": "del",
+                                    "single": {
+                                        "send": {
+                                            "keycode": "111",
+                                            "name": "delete",
+                                            "printable": false
+                                        }
+                                    },
+                                    "width": 0.8,
+                                    "class": "smaller",
+                                    "style": "",
+                                    "extracaptions": {}
+                                },
+                                {
+                                    "type": "key",
+                                    "caption": "end",
+                                    "single": {
+                                        "send": {
+                                            "keycode": "107",
+                                            "name": "end",
+                                            "printable": false
+                                        }
+                                    },
+                                    "width": 0.8,
+                                    "class": "smaller",
+                                    "style": "",
+                                    "extracaptions": {}
+                                },
+                                {
+                                    "type": "key",
+                                    "caption": "pgdn",
+                                    "single": {
+                                        "send": {
+                                            "keycode": "109",
+                                            "name": "pagedown",
+                                            "printable": false
+                                        }
+                                    },
+                                    "width": 0.8,
+                                    "class": "smaller",
+                                    "style": "",
+                                    "extracaptions": {}
+                                }
+                            ],
+                            "type": "emptyrow"
+                        },
+                        {
+                            "keys": [
+                                {
+                                    "type": "key",
+                                    "caption": "◀",
+                                    "single": {
+                                        "send": {
+                                            "keycode": "105",
+                                            "name": "left",
+                                            "printable": false
+                                        }
+                                    },
+                                    "width": 0.8,
+                                    "class": "",
+                                    "style": "",
+                                    "extracaptions": {}
+                                },
+                                {
+                                    "type": "key",
+                                    "caption": "▲",
+                                    "single": {
+                                        "send": {
+                                            "keycode": "103",
+                                            "name": "up",
+                                            "printable": false
+                                        }
+                                    },
+                                    "width": 0.8,
+                                    "class": "",
+                                    "style": "",
+                                    "extracaptions": {}
+                                },
+                                {
+                                    "type": "key",
+                                    "caption": "▶",
+                                    "single": {
+                                        "send": {
+                                            "keycode": "106",
+                                            "name": "right",
+                                            "printable": false
+                                        }
+                                    },
+                                    "width": 0.8,
+                                    "class": "",
+                                    "style": "",
+                                    "extracaptions": {}
+                                }
+                            ],
+                            "type": "emptyrow"
+                        },
+                        {
+                            "keys": [
+                                {
+                                    "width": 0.8,
                                     "caption": "⌨\n▼",
-                                    "class": "grey",
+                                    "class": "grey smaller",
                                     "single": {
                                         "keyboard": {
                                             "name": "_minimized"
                                         }
                                     },
-                                    "long": {
-                                        "keyboard": {
-                                            "name": "_minimized"
-                                        }
-                                    },
+                                    "long": {},
                                     "extracaptions": {},
                                     "style": ""
+                                },
+                                {
+                                    "type": "key",
+                                    "caption": "▼",
+                                    "single": {
+                                        "send": {
+                                            "keycode": "108",
+                                            "name": "down",
+                                            "printable": false
+                                        }
+                                    },
+                                    "width": 0.8,
+                                    "class": "",
+                                    "style": "",
+                                    "extracaptions": {}
                                 },
                                 {
                                     "type": "key",
@@ -962,12 +1204,13 @@
                                             "name": "rightside"
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "grey",
+                                    "width": 0.8,
+                                    "class": "grey smaller",
                                     "style": "",
                                     "extracaptions": {}
                                 }
-                            ]
+                            ],
+                            "type": "emptyrow"
                         }
                     ]
                 }
@@ -979,6 +1222,81 @@
             "columns": [
                 {
                     "rows": [
+                        {
+                            "keys": [
+                                {
+                                    "type": "key",
+                                    "caption": "⏪",
+                                    "single": {
+                                        "send": {
+                                            "keycode": "168",
+                                            "name": "rewind",
+                                            "printable": false
+                                        }
+                                    },
+                                    "width": 1.0,
+                                    "class": "",
+                                    "style": "",
+                                    "extracaptions": {}
+                                },
+                                {
+                                    "type": "key",
+                                    "caption": "⏯",
+                                    "single": {
+                                        "send": {
+                                            "keycode": "164",
+                                            "name": "playpause",
+                                            "printable": false
+                                        }
+                                    },
+                                    "width": 1.0,
+                                    "class": "",
+                                    "style": "",
+                                    "extracaptions": {}
+                                },
+                                {
+                                    "type": "key",
+                                    "width": 1.0,
+                                    "caption": "⏩",
+                                    "class": "",
+                                    "style": "",
+                                    "extracaptions": {}
+                                },
+                                {
+                                    "type": "key",
+                                    "width": 1.0,
+                                    "caption": "🔇",
+                                    "class": "",
+                                    "style": "",
+                                    "extracaptions": {}
+                                },
+                                {
+                                    "type": "key",
+                                    "width": 1.0,
+                                    "caption": "🔉",
+                                    "class": "",
+                                    "style": "",
+                                    "extracaptions": {}
+                                },
+                                {
+                                    "type": "key",
+                                    "width": 1.0,
+                                    "caption": "🔊",
+                                    "class": "",
+                                    "style": "",
+                                    "extracaptions": {}
+                                },
+                                {
+                                    "type": "key",
+                                    "width": 1.0,
+                                    "caption": "⏏",
+                                    "class": "",
+                                    "style": "",
+                                    "extracaptions": {}
+                                }
+                            ],
+                            "type": "emptyrow"
+                        },
                         {
                             "keys": [
                                 {
@@ -1085,12 +1403,7 @@
                                     "class": "smaller",
                                     "style": "",
                                     "extracaptions": {}
-                                }
-                            ],
-                            "type": "emptyrow"
-                        },
-                        {
-                            "keys": [
+                                },
                                 {
                                     "type": "key",
                                     "caption": "F8",
@@ -1135,7 +1448,12 @@
                                     "class": "smaller",
                                     "style": "",
                                     "extracaptions": {}
-                                },
+                                }
+                            ],
+                            "type": "emptyrow"
+                        },
+                        {
+                            "keys": [
                                 {
                                     "type": "key",
                                     "caption": "F11",
@@ -1195,12 +1513,12 @@
                                     "class": "smaller",
                                     "style": "",
                                     "extracaptions": {}
+                                },
+                                {
+                                    "type": "spacer",
+                                    "width": 6.0
                                 }
                             ],
-                            "type": "emptyrow"
-                        },
-                        {
-                            "keys": [],
                             "type": "emptyrow"
                         },
                         {
@@ -1231,11 +1549,7 @@
                                             "name": "_minimized"
                                         }
                                     },
-                                    "long": {
-                                        "keyboard": {
-                                            "name": "_minimized"
-                                        }
-                                    },
+                                    "long": {},
                                     "extracaptions": {},
                                     "style": ""
                                 },
@@ -1316,6 +1630,50 @@
                             "keys": [
                                 {
                                     "type": "key",
+                                    "caption": "sysrq\nprtscr",
+                                    "single": {
+                                        "send": {
+                                            "keycode": "99",
+                                            "name": "sysrq",
+                                            "printable": false
+                                        }
+                                    },
+                                    "width": 1.0,
+                                    "class": "smallest",
+                                    "style": "",
+                                    "extracaptions": {}
+                                },
+                                {
+                                    "type": "key",
+                                    "caption": "scroll\nlock",
+                                    "single": {
+                                        "send": {
+                                            "keycode": "70",
+                                            "name": "scrolllock",
+                                            "printable": false
+                                        }
+                                    },
+                                    "width": 1.0,
+                                    "class": "smallest",
+                                    "style": "",
+                                    "extracaptions": {}
+                                },
+                                {
+                                    "type": "key",
+                                    "width": 1.0,
+                                    "caption": "break",
+                                    "class": "smallest",
+                                    "style": "",
+                                    "extracaptions": {}
+                                }
+                            ],
+                            "type": "emptyrow",
+                            "height": 0.7
+                        },
+                        {
+                            "keys": [
+                                {
+                                    "type": "key",
                                     "caption": "ins",
                                     "single": {
                                         "send": {
@@ -1360,8 +1718,7 @@
                                     "extracaptions": {}
                                 }
                             ],
-                            "type": "emptyrow",
-                            "height": 0.7
+                            "type": "emptyrow"
                         },
                         {
                             "keys": [
@@ -1411,10 +1768,6 @@
                                     "extracaptions": {}
                                 }
                             ],
-                            "type": "emptyrow"
-                        },
-                        {
-                            "keys": [],
                             "type": "emptyrow"
                         },
                         {
@@ -1503,7 +1856,7 @@
                             "keys": [
                                 {
                                     "type": "key",
-                                    "caption": "🔒",
+                                    "caption": "num\nlock",
                                     "single": {
                                         "send": {
                                             "keycode": "69",
@@ -1512,7 +1865,7 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "",
+                                    "class": "smallest",
                                     "style": "",
                                     "extracaptions": {}
                                 },

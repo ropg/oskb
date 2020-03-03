@@ -499,21 +499,24 @@ class OskbEdit(QWidget):
 
     def _insert_key(self, tuple, after=0):
         ci, ri, ki = tuple
+        k = {"type": "key"}
+        rowkeys = self._view["columns"][ci]["rows"][ri]["keys"]
+        rowkeys.insert(ki + after, k)
         wiz = None
         if g_kbdinput:
             wiz = KeyWizard()
-            if not wiz.exec():
-                return
-        k = {"type": "key"}
-        if wiz:
-            k["caption"] = wiz.caption
-            k["single"] = {"send": {}}
-            k["single"]["send"]["name"] = wiz.keyname
-            k["single"]["send"]["keycode"] = wiz.keycode
-            if not wiz.printable:
-                k["single"]["send"]["printable"] = False
-        rowkeys = self._view["columns"][ci]["rows"][ri]["keys"]
-        rowkeys.insert(ki + after, k)
+            if wiz.exec():
+                k["caption"] = wiz.caption
+                k["single"] = {"send": {}}
+                k["single"]["send"]["name"] = wiz.keyname
+                k["single"]["send"]["keycode"] = wiz.keycode
+                if not wiz.printable:
+                    k["single"]["send"]["printable"] = False
+            else:
+                wiz = None
+        if not wiz:
+            g_oskbwidget.initKeyboards()
+            self._edit_key(rowkeys[ki + after]["_QWidget"])
         self._stir("Insert Key")
         self._selectState(False)
         self._selectState(True, rowkeys[ki + after]["_QWidget"])
@@ -845,8 +848,7 @@ class ValueEdit(QDialog):
         self.setStyleSheet("QDoubleSpinBox { border: 1px solid #bcbebf; }")
 
     def _tryItOut(self):
-        # The "+ 0.01) * 10) / 10 " fixes the minute errors float puts in... Sigh...
-        self._dict[self._valkey] = int((self.ui.doubleSpinBox.value() + 0.01) * 10) / 10
+        self._dict[self._valkey] = round(self.ui.doubleSpinBox.value(), 1)
         g_oskbwidget.initKeyboards()
         g_oskbwidget.updateKeyboard()
 

@@ -19,6 +19,8 @@ from PyQt5.QtWidgets import (
 RELEASED = 0
 PRESSED = 1
 
+COLUMN_MARGIN = 0.1
+
 # key detection timings in milliseconds
 LONGPRESS_TIMEOUT = 350
 DOUBLECLICK_TIMEOUT = 200
@@ -195,7 +197,7 @@ class Keyboard(QWidget):
                 self._previouskeyboard = n
             self._previousgeometry = self.geometry()
             self._kbdstack.setCurrentIndex(k.get("_stackindex", 0))
-            self.setView(self._viewname, newgeometry)
+            self.setView("default", newgeometry)
             return True
         return False
 
@@ -345,7 +347,7 @@ class Keyboard(QWidget):
                     if ci > 0:
                         spacercolumn = QHBoxLayout()
                         spacercolumn.addWidget(QWidget(None))
-                        grid.setColumnStretch((ci * 2) - 1, 7)
+                        grid.setColumnStretch((ci * 2) - 1, COLUMN_MARGIN * 10)
                         grid.addLayout(spacercolumn, 0, (ci * 2) - 1)
                 # Create with self as parent, then reparent to prevent startup flicker
                 view["_QWidget"] = QWidget(self)
