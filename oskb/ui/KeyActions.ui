@@ -385,6 +385,26 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>send</tabstop>
+  <tabstop>send_keycode</tabstop>
+  <tabstop>send_wiz</tabstop>
+  <tabstop>send_name</tabstop>
+  <tabstop>send_printable</tabstop>
+  <tabstop>view</tabstop>
+  <tabstop>view_name</tabstop>
+  <tabstop>view_until_checkbox</tabstop>
+  <tabstop>view_thenview</tabstop>
+  <tabstop>view_until</tabstop>
+  <tabstop>modifier</tabstop>
+  <tabstop>modifier_keycode</tabstop>
+  <tabstop>modifier_wiz</tabstop>
+  <tabstop>modifier_name</tabstop>
+  <tabstop>modifier_action</tabstop>
+  <tabstop>modifier_printable</tabstop>
+  <tabstop>keyboard</tabstop>
+  <tabstop>keyboard_name</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

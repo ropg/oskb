@@ -24,7 +24,7 @@ QLabel {
     color: #cccccc;
 }
 
-.key:pressed, .key.pseudomodifier, .key.held {
+.key:not(modifier):pressed, .key.pseudomodifier, .key.held {
     background-color: #999999;
 }
 

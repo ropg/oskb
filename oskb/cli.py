@@ -157,7 +157,7 @@ def main():
             pass
     # set width and height from arguments, defaulting to screen width and quarter of screen height resp.
     w = cmdline.width if cmdline.width else screenwidth
-    h = cmdline.height if cmdline.height else max(250, int(screenheight / 4))
+    h = cmdline.height if cmdline.height else max(250, int(screenheight / 3))
     mw, mh = 70, 70  # Size of minimized keyboard button
     # Vertical position
     if cmdline.y:

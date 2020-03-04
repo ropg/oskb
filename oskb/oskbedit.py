@@ -872,7 +872,9 @@ class EditKey(QDialog):
         # Put in the KeyAction widgets for the three types of keypress
         self.ui.keyactionwidgets = [None, None, None]
         for idx, act in enumerate(["single", "double", "long"]):
-            self.ui.keyactionwidgets[idx] = KeyActions(widget.data.get(act, {}))
+            if not widget.data.get(act):
+                widget.data[act] = {}
+            self.ui.keyactionwidgets[idx] = KeyActions(widget.data[act])
             self.ui.keyactionwidgets[idx].setParent(eval("self.ui." + act))
             # self.ui.keyactionwidgets[idx].setGeometry(10, 10, 560, 290)
         # Stick in the values from the key dictionary
@@ -924,6 +926,7 @@ class EditKey(QDialog):
 
     def reject(self):
         oskb.oskbCopy(self._backup, self._d)
+#        print (self._d)
         g_oskbwidget.initKeyboards()
         g_oskbwidget.updateKeyboard()
         super().reject()
@@ -955,7 +958,7 @@ class KeyActions(QWidget):
                     self._wiz, self.ui.modifier_keycode, self.ui.modifier_name, self.ui.modifier_printable
                 )
             )
-        if a.get("send"):
+        if a.get("send", {}):
             self.ui.send.setChecked(True)
             self.ui.send_keycode.setText(a["send"].get("keycode", ""))
             self.ui.send_name.setText(a["send"].get("name", ""))
@@ -963,20 +966,20 @@ class KeyActions(QWidget):
         for v in g_oskbwidget.getViews():
             self.ui.view_name.addItem(v)
             self.ui.view_thenview.addItem(v)
-        if a.get("view"):
+        if a.get("view", {}):
             self.ui.view.setChecked(True)
             self.ui.view_name.setCurrentText(a["view"].get("name", ""))
             if a["view"].get("thenview"):
                 self.ui.view_until_checkbox.setChecked(True)
                 self.ui.view_thenview.setCurrentText(a["view"].get("thenview", ""))
                 self.ui.view_until.setText(a["view"].get("until", ""))
-        if a.get("modifier"):
+        if a.get("modifier", {}):
             self.ui.modifier.setChecked(True)
             self.ui.modifier_keycode.setText(a["modifier"].get("keycode", ""))
             self.ui.modifier_name.setText(a["modifier"].get("name", ""))
             self.ui.modifier_action.setCurrentText(a["modifier"].get("action", "toggle"))
             self.ui.modifier_printable.setChecked(a["modifier"].get("printable", True))
-        if a.get("keyboard"):
+        if a.get("keyboard", {}):
             self.ui.keyboard.setChecked(True)
             self.ui.keyboard_name.setText(a["keyboard"].get("name", ""))
 
@@ -991,38 +994,26 @@ class KeyActions(QWidget):
     # Called from EditKey.accept()
     def stickBack(self):
         a = self._a
+        a["send"] = {}
         if self.ui.send.isChecked():
-            a["send"] = {}
             a["send"]["keycode"] = self.ui.send_keycode.text()
             a["send"]["name"] = self.ui.send_name.text()
             a["send"]["printable"] = self.ui.send_printable.isChecked()
-        else:
-            if a.get("send"):
-                del a["send"]
+        a["view"] = {}
         if self.ui.view.isChecked():
-            a["view"] = {}
             a["view"]["name"] = self.ui.view_name.currentText()
             if self.ui.view_until_checkbox.isChecked():
                 a["view"]["thenview"] = self.ui.view_thenview.currentText()
                 a["view"]["until"] = self.ui.view_until.text()
-        else:
-            if a.get("view"):
-                del a["view"]
+        a["modifier"] = {}
         if self.ui.modifier.isChecked():
-            a["modifier"] = {}
             a["modifier"]["keycode"] = self.ui.modifier_keycode.text()
             a["modifier"]["name"] = self.ui.modifier_name.text()
             a["modifier"]["action"] = self.ui.modifier_action.currentText()
             a["modifier"]["printable"] = self.ui.modifier_printable.isChecked()
-        else:
-            if a.get("modifier"):
-                del a["modifier"]
+        a["keyboard"] = {}
         if self.ui.keyboard.isChecked():
-            a["keyboard"] = {}
             a["keyboard"]["name"] = self.ui.keyboard_name.text()
-        else:
-            if a.get("keyboard"):
-                del a["keyboard"]
 
 
 if __name__ == "__main__":

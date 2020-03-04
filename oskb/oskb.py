@@ -197,7 +197,10 @@ class Keyboard(QWidget):
                 self._previouskeyboard = n
             self._previousgeometry = self.geometry()
             self._kbdstack.setCurrentIndex(k.get("_stackindex", 0))
-            self.setView("default", newgeometry)
+            if self._kbd["views"].get(self._viewname):
+                self.setView(self._viewname, newgeometry)
+            else:
+                self.setView("default", newgeometry)
             return True
         return False
 
@@ -404,6 +407,8 @@ class Keyboard(QWidget):
                                 classes.append("held")
                             elif modstate == 2:
                                 classes.append("locked")
+                            else:
+                                classes.append("modifier")
                         if keydata.get("_selected", False):
                             classes.append("selected")
                         classes.append("view_" + self._viewname)
@@ -497,6 +502,8 @@ class Keyboard(QWidget):
         if not actiondict:
             return
         for cmd, argdict in actiondict.items():
+            if not argdict:
+                continue
 
             if cmd == "send":
                 keycode = argdict.get("keycode", "")
@@ -534,8 +541,8 @@ class Keyboard(QWidget):
                 modifier = argdict.get("name", "")
                 printable = argdict.get("printable", True)
                 modaction = argdict.get("action", "toggle")
+                m = self._modifiers.get(modifier)
                 if modaction == "toggle":
-                    m = self._modifiers.get(modifier)
                     if not m or m["state"] == 0:
                         self._modifiers[modifier] = {
                             "state": 1,
@@ -553,13 +560,16 @@ class Keyboard(QWidget):
                         if not self._flashmodifiers:
                             self._injectKeys(keycode, RELEASED)
                 if modaction == "lock":
+                    if not m:
+                        self._modifiers[modifier] = {}
+                    s = self._modifiers[modifier].get("state", 0)
                     self._modifiers[modifier] = {
-                        "state": 2,
+                        "state": 0 if s == 2 else 2,
                         "keycode": keycode,
                         "printable": printable,
                     }
                     if not self._flashmodifiers:
-                        self._injectKeys(keycode, PRESSED)
+                        self._injectKeys(keycode, PRESSED if s == 0 else RELEASED)
                 self.updateKeyboard()
 
             if cmd == "keyboard" and direction == RELEASED:
