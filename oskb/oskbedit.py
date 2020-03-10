@@ -925,11 +925,10 @@ class EditKey(QDialog):
         g_oskbwidget.updateKeyboard()
 
     def reject(self):
+        super().reject()
         oskb.oskbCopy(self._backup, self._d)
-#        print (self._d)
         g_oskbwidget.initKeyboards()
         g_oskbwidget.updateKeyboard()
-        super().reject()
 
     def accept(self):
         self._stickBack()

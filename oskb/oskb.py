@@ -32,12 +32,8 @@ KEYBOARDFILE_VERSION = 1
 class Keyboard(QWidget):
     def __init__(self):
         super().__init__()
-
-        self.setWindowTitle("On-Screen Keyboard")
-
         self._modifiers = {}
         self._flashmodifiers = True
-
         # This is all for the key-detection state-machine
         self._longpresswait = False
         self._longtimer = QTimer()
@@ -77,6 +73,7 @@ class Keyboard(QWidget):
         self._kbd = None
         self._sendkeys = None
         self._sendmapchanges = None
+        self._sendscreenstate = None
         self._buttonhandler = self._oskbButtonHandler
         self._minimizerlocation = QRect(0, 0, 70, 70)
 
@@ -85,33 +82,39 @@ class Keyboard(QWidget):
         self._stylesheet = pkg_resources.resource_string("oskb", "default.css").decode("utf-8")
 
     #
-    # Make sure show events also calculate proper sizes and first initialise if that hasn't happened yet.
+    # Reimplemented Qt methods
     #
 
+    # Make sure show events also calculate proper sizes and first initialise if that hasn't happened yet.
     def showEvent(self, event):
         self.updateKeyboard()
         QWidget.showEvent(self, event)
 
-    #
     # Recalculate the fontsize and mrgaing and change the stylesheets when resizing
-    #
-
     def resizeEvent(self, event):
         QWidget.resizeEvent(self, event)
         if self._view and self.isVisible():
             self.updateKeyboard()
 
-    #
-    # We just store the stylesheet, and then only do the real .setStyleSheet() when we've
+    # We just store the stylesheet, and then only do the super().setStyleSheet() when we've
     # recalculated values in updateKeyboard()
-    #
-
     def setStyleSheet(self, stylesheet):
         self._stylesheet = stylesheet
 
+    #
+    # Our own public
+    #
+
+    # specify callback that receives keymap information when user switches keyboards using _chooser
     def sendMapChanges(self, function):
         if callable(function):
             self._sendmapchanges = function
+            return True
+        return False
+
+    def sendScreenState(self, function):
+        if callable(function):
+            self._sendscreenstate = function
             return True
         return False
 
@@ -146,7 +149,7 @@ class Keyboard(QWidget):
         if kbd.get("format") != "oskb keyboard":
             raise RuntimeError("Not an oskb keyboard file")
         if kbd.get("formatversion") > KEYBOARDFILE_VERSION:
-            raise RuntimeError("oskb keyboard file newer than this oskb version. You must upgrade.")
+            raise RuntimeError("oskb keyboard file for newer oskb version. You must upgrade.")
         kbdname = os.path.basename(kbdfile)
         self._kbds[kbdname] = kbd
         self._updateChooser()
@@ -172,6 +175,8 @@ class Keyboard(QWidget):
             )
 
     def setKeyboard(self, kbdname=None):
+        if self._sendscreenstate:
+            self._sendscreenstate(kbdname != "_minimized")
         newgeometry = None
         if kbdname == "_minimized":
             newgeometry = self._minimizerlocation
@@ -370,18 +375,35 @@ class Keyboard(QWidget):
         self.setMinimumSize(1, 1)
 
     def updateKeyboard(self):
+
+        # Helper function to dynamically recalculate some sizes in stylesheets
+        def fixStyle(stylesheet, fontsize, margin, radius):
+            if stylesheet == "":
+                return ""
+            # Replace the main calculated values
+            stylesheet = stylesheet.replace("_OSKB_FONTSIZE_", str(fontsize))
+            stylesheet = stylesheet.replace("_OSKB_MARGIN_", str(margin))
+            stylesheet = stylesheet.replace("_OSKB_RADIUS_", str(radius))
+            # And then all the percentages based thereon (Qt5 doesn't do percentages in fontsizes)
+            r = re.compile(r"font-size\s*:\s*(\d+)\%")
+            i = r.finditer(stylesheet)
+            for m in i:
+                stylesheet = stylesheet.replace(
+                    m.group(0), "font-size: " + str(int((fontsize / 100) * int(m.group(1)))) + "px",
+                )
+            return stylesheet
+
         if not self._view:
             return False
-        #
         # Calculate the font and margin sizes
         kw = self.width() / self._view["_widthInUnits"]
         kh = self.height() / self._view["_heightInUnits"]
         fontsize = min(max(int(min(kw / 1.5, kh / 2)), 5), 50)
-        margin = int(fontsize / 10)
+        margin = int(fontsize / 15)
         radius = margin * 3
-        # Dynamically change the default, per-keyboard and per-view stylesheets
+        # Dynamically change the default and keyboard stylesheets
         all_sheets = self._stylesheet + "\n\n" + self._kbd.get("style", "")
-        QWidget.setStyleSheet(self, self._fixStyle(all_sheets, fontsize, margin, radius))
+        super().setStyleSheet(fixStyle(all_sheets, fontsize, margin, radius))
         # Then adjust the stylesheets and class properties of all keys
         for ci, column in enumerate(self._view.get("columns", [])):
             for ri, row in enumerate(column.get("rows", [])):
@@ -416,23 +438,8 @@ class Keyboard(QWidget):
                         classes.append("col" + str(ci + 1))
                         k.setProperty("class", " ".join(classes).strip())
                         keystyle = keydata.get("style", "")
-                        k.setStyleSheet(self._fixStyle(keystyle, fontsize, margin, radius))
+                        k.setStyleSheet(fixStyle(keystyle, fontsize, margin, radius))
 
-    def _fixStyle(self, stylesheet, fontsize, margin, radius):
-        if stylesheet == "":
-            return stylesheet
-        # Replace the main calculated values
-        stylesheet = stylesheet.replace("_OSKB_FONTSIZE_", str(fontsize))
-        stylesheet = stylesheet.replace("_OSKB_MARGIN_", str(margin))
-        stylesheet = stylesheet.replace("_OSKB_RADIUS_", str(radius))
-        # And then all the percentages based thereon (Qt5 doesn't do percentages in fontsizes)
-        r = re.compile(r"font-size\s*:\s*(\d+)\%")
-        i = r.finditer(stylesheet)
-        for m in i:
-            stylesheet = stylesheet.replace(
-                m.group(0), "font-size: " + str(int((fontsize / 100) * int(m.group(1)))) + "px",
-            )
-        return stylesheet
 
     #
     # The part here is the low-level button handling. It takes care of calling _doAction() with PRESSED and
@@ -576,11 +583,9 @@ class Keyboard(QWidget):
                 kbdname = argdict.get("name", "")
                 self.setKeyboard(kbdname)
 
-    #
     # This is where the strings with keycodes to be pressed or released get turned into actual keypress
     # events. There's two levels here: "42+2;57" (in the US layout) means we're first pressing and then
     # releasing shift 2 (an exclamation point) and then a space.
-    #
 
     def _injectKeys(self, keystr, direction):
         keylist = keystr.split(";")
@@ -634,14 +639,13 @@ class Keyboard(QWidget):
 # variables it will move from one to the other without breaking the reference. If you specify just one,
 # it will return a new copy.
 
-
 def oskbCopy(f, t=None):
     if t == None:
         t = {}
     t.clear()
     if type(f) == dict:
         for fk, fv in f.items():
-            if not fk.startswith("_"):
+            if fv != {} and fv != "" and not fk.startswith("_"):
                 if type(fv) == list or type(fv) == dict:
                     t[fk] = oskbCopy(fv)
                 else:

@@ -29,6 +29,7 @@ setup(
         "pyqt5",
         "psutil",  # killing earlier keyboards in cli.py
         'evdev; platform_system == "Linux"',
+        'ewmh; platform_system == "Linux"',
     ],
     entry_points={
         "console_scripts": [

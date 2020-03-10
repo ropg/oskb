@@ -7,8 +7,15 @@ import pkg_resources
 import oskb
 from oskb import im
 
+linux = sys.platform.startswith("linux")
+
+if linux:
+    from ewmh import EWMH, ewmh
+    wm = EWMH()
+    moved_windows = []
 
 def main():
+    global x, y, w, h
 
     #
     # Parse command line arguments
@@ -42,6 +49,7 @@ def main():
     ap.add_argument(
         "--float", help="floating window instead of docking to top or bottom", action="store_true",
     )
+    ap.add_argument("--nopushaway", help="do not push other windows out of the way", action="store_true")
     modmode = ap.add_mutually_exclusive_group()
     modmode.add_argument("--flashmod", help="modifiers down briefly during keypress", action="store_true")
     modmode.add_argument("--steadymod", help="modifiers down as shown in interface", action="store_true")
@@ -113,24 +121,26 @@ def main():
     timer.timeout.connect(lambda: None)
 
     #
-    # Get our keyboard instance
+    # Get our keyboard widget instance
     #
 
     keyboard = oskb.Keyboard()
-
     if cmdline.float:
+        keyboard.setWindowTitle("On-Screen Keyboard")
         keyboard.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.WindowDoesNotAcceptFocus)
         if not cmdline.steadymod:
             keyboard.setFlashModifiers(True)
     else:
+        if linux and not cmdline.nopushaway:
+            keyboard.sendScreenState(receiveScreenState)
         if not cmdline.flashmod:
             keyboard.setFlashModifiers(False)
         # quickly make sure X doesn't make a window frame etc.
         keyboard.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.X11BypassWindowManagerHint)
         # Qt.X11BypassWindowManagerHint means no WM border or title, no application focus, not in taskbar
 
-        # This alternative also works but creates taskbar entry that will application focus to oskb if pressed
-        # keyboard.setWindowFlags( Qt.WindowStaysOnTopHint | Qt.WindowDoesNotAcceptFocus | Qt.FramelessWindowHint)
+        # also works but creates taskbar entry that will application focus to oskb if pressed
+        # ( Qt.WindowStaysOnTopHint | Qt.WindowDoesNotAcceptFocus | Qt.FramelessWindowHint)
 
     #
     # Figure out where and how big we're going to be on the screen
@@ -143,16 +153,10 @@ def main():
     screentop = 0
     screenwidth = screen.width()
     screenheight = screen.height()
-    # On Linux see if we can improve on that with xprop, giving us the workarea minus taskbar and such.
-    if sys.platform.startswith("linux"):
+    # On Linux see if we can improve on that by asking windowmanager for workarea (minus taskbar etc).
+    if linux:
         try:
-            # See if xprop will give us the workarea minus taskbar and such.
-            out = subprocess.check_output(["xprop", "-root", "_NET_WORKAREA"])
-            workarea = re.split("=|,", out.decode())
-            screenleft = int(workarea[1])
-            screentop = int(workarea[2])
-            screenwidth = int(workarea[3])
-            screenheight = int(workarea[4])
+            screenleft, screentop, screenwidth, screenheight = list(wm.getWorkArea()[0:4])
         except:
             pass
     # set width and height from arguments, defaulting to screen width and quarter of screen height resp.
@@ -198,7 +202,7 @@ def main():
             sys.stderr.write("Could not set up the virtual keyboard.\n")
 
         if not plugged:
-            if sys.platform.startswith("linux"):
+            if linux:
                 import getpass
 
                 user = getpass.getuser()
@@ -244,3 +248,57 @@ def receiveMapChanges(keymap):
         subprocess.run(["setxkbmap"] + keymap.split(" "))
     except:
         pass
+
+
+def receiveScreenState(maximize):
+
+    def get_geometry(window):
+        g = window.get_geometry()
+        return g.x, g.y, g.width, g.height
+
+    def frame(window):
+        frame = window
+        while frame.query_tree().parent != wm.root:
+            frame = frame.query_tree().parent
+        return frame
+
+    global moved_windows
+    if maximize:
+        moved_windows = []
+        for window in wm.getClientList():
+            wn = wm.getWmName(window).decode("utf-8")
+            wx, wy, ww, wh = get_geometry(window)
+            fx, fy, fw, fh = get_geometry(frame(window))
+            bottom = fy + fh
+            if bottom > y and bottom < y + h and fy < y + h:
+                need = bottom - y + (fh - wh)
+                moveby = min(fy, need)
+                shrinkby = need - moveby
+                nx, nw = fx, fw
+                ny = fy - moveby
+                nh = bottom - fy - shrinkby
+                wm.setMoveResizeWindow(
+                    window,
+                    gravity=ewmh.X.SouthWestGravity,
+                    x=nx,
+                    y=ny,
+                    w=nw,
+                    h=nh
+                )
+                moved_windows.append( (window, (fx, fy, fw - (fw - ww), fh - (fh - wh)), (nx, ny, nw, nh)) )
+    else:
+        for w in moved_windows:
+            window = w[0]
+            (nx, ny, nw, nh) = w[1]
+            wm.setMoveResizeWindow(
+                window,
+                gravity=ewmh.X.SouthWestGravity,
+                x=nx,
+                y=ny,
+                w=nw,
+                h=nh
+            )
+    wm.display.flush()
+
+
+

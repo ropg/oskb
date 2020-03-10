@@ -3,7 +3,7 @@
     "formatversion": 1,
     "description": "US - QWERTY",
     "keymap": "us",
-    "style": ".key {\n    font-size: 65%;\n}\n\n.key.bigger {\n    font-size: 80%;\n}\n\n.key.ctrlalt, .key.smaller {\n    font-size: 45%;\n}\n\n.key.smallest {\n    font-size: 35%;\n}\n\n.grey {\n    background-color: #aaaaaa;\n}\n\n.lpsymbol {\n    font-size: 50%;\n    color: blue;\n    qproperty-alignment: 'AlignTop | AlignRight';\n}",
+    "style": ".key {\n    font-size: 65%;\n}\n\n.key.bigger {\n    font-size: 80%;\n}\n\n.key.ctrlalt, .key.smaller {\n    font-size: 45%;\n}\n\n.key.smallest {\n    font-size: 35%;\n}\n\n.grey {\n    background-color: #bbbbbb;\n}\n\n.lpsymbol {\n    font-size: 50%;\n    color: blue;\n    qproperty-alignment: 'AlignTop | AlignRight';\n}",
     "views": {
         "default": {
             "columns": [
@@ -22,9 +22,7 @@
                                         }
                                     },
                                     "width": 0.8,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 },
                                 {
                                     "type": "key",
@@ -36,10 +34,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 0.8,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 0.8
                                 },
                                 {
                                     "type": "key",
@@ -51,10 +46,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "type": "key",
@@ -66,10 +58,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "type": "key",
@@ -81,10 +70,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "type": "key",
@@ -96,10 +82,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "type": "key",
@@ -111,10 +94,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "type": "key",
@@ -126,10 +106,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "type": "key",
@@ -141,10 +118,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "type": "key",
@@ -156,10 +130,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "type": "key",
@@ -171,10 +142,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "type": "key",
@@ -186,10 +154,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "type": "key",
@@ -201,10 +166,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "type": "key",
@@ -216,10 +178,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "type": "key",
@@ -232,9 +191,7 @@
                                         }
                                     },
                                     "width": 1.7,
-                                    "class": "grey",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "grey"
                                 }
                             ],
                             "type": "emptyrow",
@@ -253,9 +210,7 @@
                                         }
                                     },
                                     "width": 1.5,
-                                    "class": "grey",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "grey"
                                 },
                                 {
                                     "caption": "Q",
@@ -266,10 +221,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "caption": "W",
@@ -280,10 +232,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "caption": "E",
@@ -294,10 +243,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "caption": "R",
@@ -308,10 +254,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "caption": "T",
@@ -322,10 +265,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "caption": "Y",
@@ -336,10 +276,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "caption": "U",
@@ -350,10 +287,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "caption": "I",
@@ -364,10 +298,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "caption": "O",
@@ -378,10 +309,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "caption": "P",
@@ -392,10 +320,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "type": "key",
@@ -407,10 +332,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "type": "key",
@@ -422,10 +344,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "type": "key",
@@ -437,10 +356,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 }
                             ]
                         },
@@ -455,27 +371,10 @@
                                             "name": "shift",
                                             "action": "lock",
                                             "printable": true
-                                        },
-                                        "send": {},
-                                        "view": {},
-                                        "keyboard": {}
+                                        }
                                     },
                                     "width": 1.8,
-                                    "class": "grey",
-                                    "style": "",
-                                    "extracaptions": {},
-                                    "double": {
-                                        "send": {},
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
-                                    },
-                                    "long": {
-                                        "send": {},
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
-                                    }
+                                    "class": "grey"
                                 },
                                 {
                                     "caption": "A",
@@ -486,10 +385,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "caption": "S",
@@ -500,10 +396,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "caption": "D",
@@ -514,10 +407,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "caption": "F",
@@ -528,10 +418,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "caption": "G",
@@ -542,10 +429,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "caption": "H",
@@ -556,10 +440,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "caption": "J",
@@ -570,10 +451,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "caption": "K",
@@ -584,10 +462,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "caption": "L",
@@ -598,10 +473,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "type": "key",
@@ -613,10 +485,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "type": "key",
@@ -628,10 +497,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "type": "key",
@@ -644,9 +510,7 @@
                                         }
                                     },
                                     "width": 1.7,
-                                    "class": "grey",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "grey"
                                 }
                             ]
                         },
@@ -660,27 +524,9 @@
                                             "name": "shift",
                                             "action": "toggle",
                                             "printable": true
-                                        },
-                                        "send": {},
-                                        "view": {},
-                                        "keyboard": {}
+                                        }
                                     },
-                                    "long": {
-                                        "send": {},
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
-                                    },
-                                    "width": 2.2,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {},
-                                    "double": {
-                                        "send": {},
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
-                                    }
+                                    "width": 2.2
                                 },
                                 {
                                     "caption": "Z",
@@ -691,10 +537,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "caption": "X",
@@ -705,10 +548,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "caption": "C",
@@ -719,10 +559,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "caption": "V",
@@ -733,10 +570,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "caption": "B",
@@ -747,10 +581,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "caption": "N",
@@ -761,10 +592,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "caption": "M",
@@ -775,10 +603,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "type": "key",
@@ -790,10 +615,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "type": "key",
@@ -805,10 +627,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "type": "key",
@@ -820,10 +639,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "type": "key",
@@ -834,31 +650,16 @@
                                             "name": "rightshift",
                                             "action": "toggle",
                                             "printable": true
-                                        },
-                                        "send": {},
-                                        "view": {},
-                                        "keyboard": {}
+                                        }
                                     },
                                     "width": 2.3,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {},
-                                    "double": {
-                                        "modifier": {},
-                                        "send": {},
-                                        "view": {},
-                                        "keyboard": {}
-                                    },
                                     "long": {
-                                        "send": {},
-                                        "view": {},
                                         "modifier": {
                                             "keycode": "54",
                                             "name": "rightshift",
                                             "action": "lock",
                                             "printable": true
-                                        },
-                                        "keyboard": {}
+                                        }
                                     }
                                 }
                             ]
@@ -873,14 +674,10 @@
                                             "name": "_chooser"
                                         }
                                     },
-                                    "long": {},
-                                    "width": 0.9999999999999999,
-                                    "extracaptions": {},
-                                    "style": ""
+                                    "width": 0.9999999999999999
                                 },
                                 {
                                     "width": 1.0,
-                                    "style": "",
                                     "caption": "ctrl",
                                     "single": {
                                         "modifier": {
@@ -888,34 +685,20 @@
                                             "name": "ctrl",
                                             "action": "toggle",
                                             "printable": false
-                                        },
-                                        "send": {},
-                                        "view": {},
-                                        "keyboard": {}
+                                        }
                                     },
                                     "long": {
-                                        "send": {},
-                                        "view": {},
                                         "modifier": {
                                             "keycode": "29",
                                             "name": "ctrl",
                                             "action": "lock",
                                             "printable": false
-                                        },
-                                        "keyboard": {}
+                                        }
                                     },
-                                    "class": "ctrlalt",
-                                    "extracaptions": {},
-                                    "double": {
-                                        "modifier": {},
-                                        "send": {},
-                                        "view": {},
-                                        "keyboard": {}
-                                    }
+                                    "class": "ctrlalt"
                                 },
                                 {
                                     "width": 1.0,
-                                    "style": "",
                                     "caption": "alt",
                                     "single": {
                                         "modifier": {
@@ -923,63 +706,38 @@
                                             "name": "alt",
                                             "action": "toggle",
                                             "printable": false
-                                        },
-                                        "send": {},
-                                        "view": {},
-                                        "keyboard": {}
+                                        }
                                     },
-                                    "long": {
-                                        "send": {},
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
-                                    },
-                                    "class": "ctrlalt",
-                                    "extracaptions": {},
-                                    "double": {
-                                        "modifier": {},
-                                        "send": {},
-                                        "view": {},
-                                        "keyboard": {}
-                                    }
+                                    "class": "ctrlalt"
                                 },
                                 {
                                     "type": "key",
                                     "caption": "⌘ ❖",
                                     "single": {
-                                        "send": {
+                                        "modifier": {
                                             "keycode": "125",
-                                            "name": "rightmeta",
+                                            "action": "toggle",
                                             "printable": false
-                                        },
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
+                                        }
                                     },
                                     "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {},
                                     "double": {
-                                        "send": {},
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
+                                        "send": {
+                                            "keycode": "125",
+                                            "name": "meta",
+                                            "printable": false
+                                        }
                                     },
                                     "long": {
                                         "modifier": {
                                             "keycode": "125",
                                             "name": "meta",
-                                            "action": "toggle",
+                                            "action": "lock",
                                             "printable": false
-                                        },
-                                        "send": {},
-                                        "view": {},
-                                        "keyboard": {}
+                                        }
                                     }
                                 },
                                 {
-                                    "caption": "",
                                     "width": 7.5,
                                     "single": {
                                         "send": {
@@ -987,22 +745,7 @@
                                             "name": " ",
                                             "printable": true
                                         }
-                                    },
-                                    "double": {
-                                        "send": {
-                                            "keycode": "52;57",
-                                            "name": "1",
-                                            "printable": true
-                                        },
-                                        "view": {
-                                            "name": "default",
-                                            "thenview": "default",
-                                            "until": "."
-                                        }
-                                    },
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    }
                                 },
                                 {
                                     "type": "key",
@@ -1013,31 +756,16 @@
                                             "name": "rightmeta",
                                             "action": "toggle",
                                             "printable": false
-                                        },
-                                        "send": {},
-                                        "view": {},
-                                        "keyboard": {}
+                                        }
                                     },
                                     "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {},
-                                    "double": {
-                                        "modifier": {},
-                                        "send": {},
-                                        "view": {},
-                                        "keyboard": {}
-                                    },
                                     "long": {
-                                        "send": {},
-                                        "view": {},
                                         "modifier": {
                                             "keycode": "126",
                                             "name": "rightmeta",
                                             "action": "lock",
                                             "printable": false
-                                        },
-                                        "keyboard": {}
+                                        }
                                     }
                                 },
                                 {
@@ -1049,31 +777,17 @@
                                             "name": "rightalt",
                                             "action": "toggle",
                                             "printable": false
-                                        },
-                                        "send": {},
-                                        "view": {},
-                                        "keyboard": {}
+                                        }
                                     },
                                     "width": 1.0,
                                     "class": "ctrlalt",
-                                    "style": "",
-                                    "extracaptions": {},
-                                    "double": {
-                                        "modifier": {},
-                                        "send": {},
-                                        "view": {},
-                                        "keyboard": {}
-                                    },
                                     "long": {
-                                        "send": {},
-                                        "view": {},
                                         "modifier": {
                                             "keycode": "100",
                                             "name": "rightalt",
                                             "action": "lock",
                                             "printable": false
-                                        },
-                                        "keyboard": {}
+                                        }
                                     }
                                 },
                                 {
@@ -1085,31 +799,17 @@
                                             "name": "rightctrl",
                                             "action": "toggle",
                                             "printable": false
-                                        },
-                                        "send": {},
-                                        "view": {},
-                                        "keyboard": {}
+                                        }
                                     },
                                     "width": 1.0,
                                     "class": "ctrlalt",
-                                    "style": "",
-                                    "extracaptions": {},
-                                    "double": {
-                                        "modifier": {},
-                                        "send": {},
-                                        "view": {},
-                                        "keyboard": {}
-                                    },
                                     "long": {
-                                        "send": {},
-                                        "view": {},
                                         "modifier": {
                                             "keycode": "97",
                                             "name": "rightctrl",
                                             "action": "lock",
                                             "printable": false
-                                        },
-                                        "keyboard": {}
+                                        }
                                     }
                                 }
                             ]
@@ -1131,9 +831,7 @@
                                         }
                                     },
                                     "width": 0.8,
-                                    "class": "smallest",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smallest"
                                 },
                                 {
                                     "type": "key",
@@ -1146,17 +844,13 @@
                                         }
                                     },
                                     "width": 0.8,
-                                    "class": "smallest",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smallest"
                                 },
                                 {
                                     "type": "key",
                                     "width": 0.8,
                                     "caption": "break",
-                                    "class": "smallest",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smallest"
                                 }
                             ],
                             "type": "emptyrow"
@@ -1174,9 +868,7 @@
                                         }
                                     },
                                     "width": 0.8,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 },
                                 {
                                     "type": "key",
@@ -1189,9 +881,7 @@
                                         }
                                     },
                                     "width": 0.8,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 },
                                 {
                                     "type": "key",
@@ -1204,9 +894,7 @@
                                         }
                                     },
                                     "width": 0.8,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 }
                             ],
                             "type": "emptyrow"
@@ -1224,9 +912,7 @@
                                         }
                                     },
                                     "width": 0.8,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 },
                                 {
                                     "type": "key",
@@ -1239,9 +925,7 @@
                                         }
                                     },
                                     "width": 0.8,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 },
                                 {
                                     "type": "key",
@@ -1254,9 +938,7 @@
                                         }
                                     },
                                     "width": 0.8,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 }
                             ],
                             "type": "emptyrow"
@@ -1273,10 +955,7 @@
                                             "printable": false
                                         }
                                     },
-                                    "width": 0.8,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 0.8
                                 },
                                 {
                                     "type": "key",
@@ -1288,10 +967,7 @@
                                             "printable": false
                                         }
                                     },
-                                    "width": 0.8,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 0.8
                                 },
                                 {
                                     "type": "key",
@@ -1303,10 +979,7 @@
                                             "printable": false
                                         }
                                     },
-                                    "width": 0.8,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 0.8
                                 }
                             ],
                             "type": "emptyrow"
@@ -1321,10 +994,7 @@
                                         "keyboard": {
                                             "name": "_minimized"
                                         }
-                                    },
-                                    "long": {},
-                                    "extracaptions": {},
-                                    "style": ""
+                                    }
                                 },
                                 {
                                     "type": "key",
@@ -1336,10 +1006,7 @@
                                             "printable": false
                                         }
                                     },
-                                    "width": 0.8,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 0.8
                                 },
                                 {
                                     "type": "key",
@@ -1350,9 +1017,7 @@
                                         }
                                     },
                                     "width": 0.8,
-                                    "class": "grey smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "grey smaller"
                                 }
                             ],
                             "type": "emptyrow"
@@ -1373,25 +1038,18 @@
                                     "type": "key",
                                     "width": 1.0,
                                     "caption": "esc",
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 },
                                 {
                                     "type": "key",
                                     "width": 1.0,
-                                    "caption": "🔅",
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "caption": "🔅"
                                 },
                                 {
                                     "type": "key",
                                     "width": 1.0,
                                     "caption": "🔆",
-                                    "class": "",
-                                    "style": "font-size: 100%",
-                                    "extracaptions": {}
+                                    "style": "font-size: 100%"
                                 },
                                 {
                                     "type": "key",
@@ -1403,10 +1061,7 @@
                                             "printable": false
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "type": "key",
@@ -1418,50 +1073,32 @@
                                             "printable": false
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "type": "key",
                                     "width": 1.0,
-                                    "caption": "⏩",
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "caption": "⏩"
                                 },
                                 {
                                     "type": "key",
                                     "width": 1.0,
-                                    "caption": "🔇",
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "caption": "🔇"
                                 },
                                 {
                                     "type": "key",
                                     "width": 1.0,
-                                    "caption": "🔉",
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "caption": "🔉"
                                 },
                                 {
                                     "type": "key",
                                     "width": 1.0,
-                                    "caption": "🔊",
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "caption": "🔊"
                                 },
                                 {
                                     "type": "key",
                                     "width": 1.0,
-                                    "caption": "⏏",
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "caption": "⏏"
                                 }
                             ],
                             "type": "emptyrow"
@@ -1479,9 +1116,7 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 },
                                 {
                                     "type": "key",
@@ -1494,9 +1129,7 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 },
                                 {
                                     "type": "key",
@@ -1509,9 +1142,7 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 },
                                 {
                                     "type": "key",
@@ -1524,9 +1155,7 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 },
                                 {
                                     "type": "key",
@@ -1539,9 +1168,7 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 },
                                 {
                                     "type": "key",
@@ -1554,9 +1181,7 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 },
                                 {
                                     "type": "key",
@@ -1569,9 +1194,7 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 },
                                 {
                                     "type": "key",
@@ -1584,9 +1207,7 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 },
                                 {
                                     "type": "key",
@@ -1599,9 +1220,7 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 },
                                 {
                                     "type": "key",
@@ -1614,9 +1233,7 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 }
                             ],
                             "type": "emptyrow"
@@ -1634,9 +1251,7 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 },
                                 {
                                     "type": "key",
@@ -1649,9 +1264,7 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 },
                                 {
                                     "type": "key",
@@ -1664,9 +1277,7 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 },
                                 {
                                     "type": "key",
@@ -1679,38 +1290,19 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 },
                                 {
                                     "type": "key",
                                     "width": 1.0,
                                     "caption": "F15",
                                     "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {},
                                     "single": {
                                         "send": {
                                             "keycode": "285",
                                             "name": "f15",
                                             "printable": false
-                                        },
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
-                                    },
-                                    "double": {
-                                        "send": {},
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
-                                    },
-                                    "long": {
-                                        "send": {},
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
+                                        }
                                     }
                                 },
                                 {
@@ -1718,29 +1310,12 @@
                                     "width": 1.0,
                                     "caption": "F16",
                                     "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {},
                                     "single": {
                                         "send": {
                                             "keycode": "186",
                                             "name": "f16",
                                             "printable": false
-                                        },
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
-                                    },
-                                    "double": {
-                                        "send": {},
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
-                                    },
-                                    "long": {
-                                        "send": {},
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
+                                        }
                                     }
                                 },
                                 {
@@ -1748,29 +1323,12 @@
                                     "width": 1.0,
                                     "caption": "F17",
                                     "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {},
                                     "single": {
                                         "send": {
                                             "keycode": "187",
                                             "name": "f17",
                                             "printable": false
-                                        },
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
-                                    },
-                                    "double": {
-                                        "send": {},
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
-                                    },
-                                    "long": {
-                                        "send": {},
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
+                                        }
                                     }
                                 },
                                 {
@@ -1778,29 +1336,12 @@
                                     "width": 1.0,
                                     "caption": "F18",
                                     "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {},
                                     "single": {
                                         "send": {
                                             "keycode": "188",
                                             "name": "f18",
                                             "printable": false
-                                        },
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
-                                    },
-                                    "double": {
-                                        "send": {},
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
-                                    },
-                                    "long": {
-                                        "send": {},
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
+                                        }
                                     }
                                 },
                                 {
@@ -1808,29 +1349,12 @@
                                     "width": 1.0,
                                     "caption": "F19",
                                     "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {},
                                     "single": {
                                         "send": {
                                             "keycode": "189",
                                             "name": "f19",
                                             "printable": false
-                                        },
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
-                                    },
-                                    "double": {
-                                        "send": {},
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
-                                    },
-                                    "long": {
-                                        "send": {},
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
+                                        }
                                     }
                                 },
                                 {
@@ -1838,29 +1362,12 @@
                                     "width": 1.0,
                                     "caption": "F20",
                                     "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {},
                                     "single": {
                                         "send": {
                                             "keycode": "190",
                                             "name": "f20",
                                             "printable": false
-                                        },
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
-                                    },
-                                    "double": {
-                                        "send": {},
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
-                                    },
-                                    "long": {
-                                        "send": {},
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
+                                        }
                                     }
                                 }
                             ],
@@ -1876,10 +1383,7 @@
                                         "keyboard": {
                                             "name": "_minimized"
                                         }
-                                    },
-                                    "long": {},
-                                    "extracaptions": {},
-                                    "style": ""
+                                    }
                                 },
                                 {
                                     "caption": "shift",
@@ -1891,11 +1395,8 @@
                                             "printable": true
                                         }
                                     },
-                                    "long": {},
                                     "width": 2.0,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 },
                                 {
                                     "type": "spacer",
@@ -1918,9 +1419,7 @@
                                         }
                                     },
                                     "width": 2.0,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 }
                             ],
                             "type": "emptyrow"
@@ -1936,13 +1435,10 @@
                                         }
                                     },
                                     "width": 0.9999999999999999,
-                                    "class": "grey",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "grey"
                                 },
                                 {
                                     "width": 1.0,
-                                    "style": "",
                                     "caption": "ctrl",
                                     "single": {
                                         "modifier": {
@@ -1950,34 +1446,20 @@
                                             "name": "ctrl",
                                             "action": "toggle",
                                             "printable": false
-                                        },
-                                        "send": {},
-                                        "view": {},
-                                        "keyboard": {}
+                                        }
                                     },
                                     "long": {
-                                        "send": {},
-                                        "view": {},
                                         "modifier": {
                                             "keycode": "29",
                                             "name": "ctrl",
                                             "action": "lock",
                                             "printable": false
-                                        },
-                                        "keyboard": {}
+                                        }
                                     },
-                                    "class": "ctrlalt",
-                                    "extracaptions": {},
-                                    "double": {
-                                        "modifier": {},
-                                        "send": {},
-                                        "view": {},
-                                        "keyboard": {}
-                                    }
+                                    "class": "ctrlalt"
                                 },
                                 {
                                     "width": 1.0,
-                                    "style": "",
                                     "caption": "alt",
                                     "single": {
                                         "modifier": {
@@ -1985,96 +1467,39 @@
                                             "name": "alt",
                                             "action": "toggle",
                                             "printable": false
-                                        },
-                                        "send": {},
-                                        "view": {},
-                                        "keyboard": {}
+                                        }
                                     },
-                                    "long": {
-                                        "send": {},
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
-                                    },
-                                    "class": "ctrlalt",
-                                    "extracaptions": {},
-                                    "double": {
-                                        "modifier": {},
-                                        "send": {},
-                                        "view": {},
-                                        "keyboard": {}
-                                    }
+                                    "class": "ctrlalt"
                                 },
                                 {
                                     "type": "key",
                                     "caption": "⌘ ❖",
                                     "single": {
-                                        "send": {
-                                            "keycode": "125",
-                                            "name": "rightmeta",
-                                            "printable": false
-                                        },
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
-                                    },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {},
-                                    "double": {
-                                        "send": {},
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
-                                    },
-                                    "long": {
                                         "modifier": {
                                             "keycode": "125",
                                             "name": "meta",
                                             "action": "toggle",
                                             "printable": false
-                                        },
-                                        "send": {},
-                                        "view": {},
-                                        "keyboard": {}
+                                        }
+                                    },
+                                    "width": 1.0,
+                                    "long": {
+                                        "modifier": {
+                                            "keycode": "125",
+                                            "name": "meta",
+                                            "action": "lock",
+                                            "printable": false
+                                        }
                                     }
                                 },
                                 {
-                                    "caption": "",
                                     "width": 3.0,
                                     "single": {
                                         "send": {
                                             "keycode": "57",
                                             "name": " ",
                                             "printable": true
-                                        },
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
-                                    },
-                                    "double": {
-                                        "send": {
-                                            "keycode": "52;57",
-                                            "name": "1",
-                                            "printable": true
-                                        },
-                                        "view": {
-                                            "name": "default",
-                                            "thenview": "default",
-                                            "until": "."
-                                        },
-                                        "modifier": {},
-                                        "keyboard": {}
-                                    },
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {},
-                                    "long": {
-                                        "send": {},
-                                        "view": {},
-                                        "modifier": {},
-                                        "keyboard": {}
+                                        }
                                     }
                                 },
                                 {
@@ -2086,31 +1511,16 @@
                                             "name": "rightmeta",
                                             "action": "toggle",
                                             "printable": false
-                                        },
-                                        "send": {},
-                                        "view": {},
-                                        "keyboard": {}
+                                        }
                                     },
                                     "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {},
-                                    "double": {
-                                        "modifier": {},
-                                        "send": {},
-                                        "view": {},
-                                        "keyboard": {}
-                                    },
                                     "long": {
-                                        "send": {},
-                                        "view": {},
                                         "modifier": {
                                             "keycode": "126",
                                             "name": "rightmeta",
                                             "action": "lock",
                                             "printable": false
-                                        },
-                                        "keyboard": {}
+                                        }
                                     }
                                 },
                                 {
@@ -2122,31 +1532,17 @@
                                             "name": "rightalt",
                                             "action": "toggle",
                                             "printable": false
-                                        },
-                                        "send": {},
-                                        "view": {},
-                                        "keyboard": {}
+                                        }
                                     },
                                     "width": 1.0,
                                     "class": "ctrlalt",
-                                    "style": "",
-                                    "extracaptions": {},
-                                    "double": {
-                                        "modifier": {},
-                                        "send": {},
-                                        "view": {},
-                                        "keyboard": {}
-                                    },
                                     "long": {
-                                        "send": {},
-                                        "view": {},
                                         "modifier": {
                                             "keycode": "100",
                                             "name": "rightalt",
                                             "action": "lock",
                                             "printable": false
-                                        },
-                                        "keyboard": {}
+                                        }
                                     }
                                 },
                                 {
@@ -2158,31 +1554,17 @@
                                             "name": "rightctrl",
                                             "action": "toggle",
                                             "printable": false
-                                        },
-                                        "send": {},
-                                        "view": {},
-                                        "keyboard": {}
+                                        }
                                     },
                                     "width": 1.0,
                                     "class": "ctrlalt",
-                                    "style": "",
-                                    "extracaptions": {},
-                                    "double": {
-                                        "modifier": {},
-                                        "send": {},
-                                        "view": {},
-                                        "keyboard": {}
-                                    },
                                     "long": {
-                                        "send": {},
-                                        "view": {},
                                         "modifier": {
                                             "keycode": "97",
                                             "name": "rightctrl",
                                             "action": "lock",
                                             "printable": false
-                                        },
-                                        "keyboard": {}
+                                        }
                                     }
                                 }
                             ],
@@ -2205,9 +1587,7 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smallest",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smallest"
                                 },
                                 {
                                     "type": "key",
@@ -2220,17 +1600,13 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smallest",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smallest"
                                 },
                                 {
                                     "type": "key",
                                     "width": 1.0,
                                     "caption": "break",
-                                    "class": "smallest",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smallest"
                                 }
                             ],
                             "type": "emptyrow",
@@ -2249,9 +1625,7 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 },
                                 {
                                     "type": "key",
@@ -2264,9 +1638,7 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 },
                                 {
                                     "type": "key",
@@ -2279,9 +1651,7 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 }
                             ],
                             "type": "emptyrow"
@@ -2299,9 +1669,7 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 },
                                 {
                                     "type": "key",
@@ -2314,9 +1682,7 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 },
                                 {
                                     "type": "key",
@@ -2329,9 +1695,7 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smaller",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smaller"
                                 }
                             ],
                             "type": "emptyrow"
@@ -2352,10 +1716,7 @@
                                             "printable": false
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "type": "spacer",
@@ -2376,10 +1737,7 @@
                                             "printable": false
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "type": "key",
@@ -2391,10 +1749,7 @@
                                             "printable": false
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 },
                                 {
                                     "type": "key",
@@ -2406,10 +1761,7 @@
                                             "printable": false
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 }
                             ],
                             "type": "emptyrow"
@@ -2431,9 +1783,7 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smallest",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "smallest"
                                 },
                                 {
                                     "type": "key",
@@ -2609,10 +1959,7 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 2.000000000000001,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 2.000000000000001
                                 },
                                 {
                                     "type": "key",
@@ -2634,10 +1981,7 @@
                                             "printable": false
                                         }
                                     },
-                                    "width": 1.0,
-                                    "class": "",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "width": 1.0
                                 }
                             ],
                             "type": "emptyrow"
@@ -2672,10 +2016,7 @@
                                         "keyboard": {
                                             "name": "_minimized"
                                         }
-                                    },
-                                    "long": {},
-                                    "extracaptions": {},
-                                    "style": ""
+                                    }
                                 },
                                 {
                                     "type": "key",
@@ -2686,9 +2027,7 @@
                                         }
                                     },
                                     "width": 0.9999999999999999,
-                                    "class": "grey",
-                                    "style": "",
-                                    "extracaptions": {}
+                                    "class": "grey"
                                 }
                             ],
                             "type": "emptyrow"
