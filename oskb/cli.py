@@ -11,16 +11,12 @@ linux = sys.platform.startswith("linux")
 
 if linux:
     from ewmh import EWMH, ewmh
+
     wm = EWMH()
     moved_windows = []
 
-def main():
-    global x, y, w, h
 
-    #
-    # Parse command line arguments
-    #
-
+def command_line_arguments():
     ap = argparse.ArgumentParser()
     ap.add_argument(
         "keyboards",
@@ -29,23 +25,41 @@ def main():
         nargs="*",
         default=["phoney-us"],
     )
-    ap.add_argument("--start", help="start with keyboard", metavar="<kbdname>")
-    ap.add_argument("--list", help="list built-in keyboards", action="store_true")
-    ap.add_argument("--dump", help="dumps built-in keyboard to stdout", action="store_true")
-    ap.add_argument("--nomap", help="do not remap systemkeyboard", action="store_true")
-    ap.add_argument("-x", help="window absolute position x", metavar="<x>", type=int)
-    ap.add_argument("-y", help="window absolute position y", metavar="<y>", type=int)
-    ap.add_argument("--width", help="window width", metavar="<width>", type=int)
-    ap.add_argument("--height", help="window height", metavar="<height>", type=int)
-    hpos = ap.add_mutually_exclusive_group()
+    ap.add_argument(
+        "--start",
+        metavar="<kbd>",
+        help="""
+Normally the first keyboard specified is shown first. This allows you to specify one of the loaded keyboards
+as the one to start with.""",
+    )
+    ap.add_argument(
+        "--list", action="store_true", help="Lists all built-in keyboards that were shipped with oskb",
+    )
+    ap.add_argument(
+        "--dump",
+        help="Keyboards are JSON files. ``--dump`` will write a built-in keyboard to stdout and exit.",
+        action="store_true",
+    )
+    ap.add_argument("--nomap", help="""
+Normally oskb will change the X-Windows system keyboard to the keymap specified with the keyboard shown
+by oskb. ``--nomap`` inhibits this. """, action="store_true")
+    ap.add_argument("--toggle", help="toggles oskb on and off", action="store_true")
+    ap.add_argument("--off", help="turns oskb off", action="store_true")
+
+
+    loc = ap.add_argument_group(title="Arguments to control position on screen")
+    loc.add_argument("-x", help="window absolute position x", metavar="<x>", type=int)
+    loc.add_argument("-y", help="window absolute position y", metavar="<y>", type=int)
+    loc.add_argument("--width", help="window width", metavar="<width>", type=int)
+    loc.add_argument("--height", help="window height", metavar="<height>", type=int)
+    hpos = loc.add_mutually_exclusive_group()
     hpos.add_argument("--left", help="oksb docks to the left", action="store_true")
     hpos.add_argument("--middle", "--center", help="oksb docks in the middle", action="store_true")
     hpos.add_argument("--right", help="oksb docks to the right", action="store_true")
-    vpos = ap.add_mutually_exclusive_group()
+    vpos = loc.add_mutually_exclusive_group()
     vpos.add_argument("--top", help="oksb docks to the top", action="store_true")
     vpos.add_argument("--bottom", help="oksb docks to the top", action="store_true")
-    ap.add_argument("--toggle", help="toggles oskb on and off", action="store_true")
-    ap.add_argument("--off", help="turns oskb off", action="store_true")
+
     ap.add_argument(
         "--float", help="floating window instead of docking to top or bottom", action="store_true",
     )
@@ -55,6 +69,17 @@ def main():
     modmode.add_argument("--steadymod", help="modifiers down as shown in interface", action="store_true")
     ap.add_argument("--justshow", help="show keyboard, do not send keys to OS", action="store_true")
     ap.add_argument("--version", "-v", help="print version number and exit", action="store_true")
+    return ap
+
+
+def main():
+    global x, y, w, h
+
+    #
+    # Parse command line arguments
+    #
+
+    ap = command_line_arguments()
     cmdline = ap.parse_args()
 
     if cmdline.version:
@@ -251,7 +276,6 @@ def receiveMapChanges(keymap):
 
 
 def receiveScreenState(maximize):
-
     def get_geometry(window):
         g = window.get_geometry()
         return g.x, g.y, g.width, g.height
@@ -277,28 +301,11 @@ def receiveScreenState(maximize):
                 nx, nw = fx, fw
                 ny = fy - moveby
                 nh = bottom - fy - shrinkby
-                wm.setMoveResizeWindow(
-                    window,
-                    gravity=ewmh.X.SouthWestGravity,
-                    x=nx,
-                    y=ny,
-                    w=nw,
-                    h=nh
-                )
-                moved_windows.append( (window, (fx, fy, fw - (fw - ww), fh - (fh - wh)), (nx, ny, nw, nh)) )
+                wm.setMoveResizeWindow(window, gravity=ewmh.X.SouthWestGravity, x=nx, y=ny, w=nw, h=nh)
+                moved_windows.append((window, (fx, fy, fw - (fw - ww), fh - (fh - wh)), (nx, ny, nw, nh)))
     else:
         for w in moved_windows:
             window = w[0]
             (nx, ny, nw, nh) = w[1]
-            wm.setMoveResizeWindow(
-                window,
-                gravity=ewmh.X.SouthWestGravity,
-                x=nx,
-                y=ny,
-                w=nw,
-                h=nh
-            )
+            wm.setMoveResizeWindow(window, gravity=ewmh.X.SouthWestGravity, x=nx, y=ny, w=nw, h=nh)
     wm.display.flush()
-
-
-

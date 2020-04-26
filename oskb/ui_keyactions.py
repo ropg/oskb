@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'KeyActions.ui'
+# Form implementation generated from reading ui file 'ui/KeyActions.ui'
 #
 # Created by: PyQt5 UI code generator 5.14.1
 #

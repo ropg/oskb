@@ -26,7 +26,7 @@ setup(
     python_requires=">=3",
     setup_requires=["wheel"],
     install_requires=[
-        "pyqt5",
+        "pyqt5==5.14.0",
         "psutil",  # killing earlier keyboards in cli.py
         'evdev; platform_system == "Linux"',
         'ewmh; platform_system == "Linux"',

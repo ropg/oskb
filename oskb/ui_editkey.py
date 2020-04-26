@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'EditKey.ui'
+# Form implementation generated from reading ui file 'ui/EditKey.ui'
 #
 # Created by: PyQt5 UI code generator 5.14.1
 #

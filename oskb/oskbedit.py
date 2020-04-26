@@ -61,15 +61,18 @@ if sys.platform.startswith("linux"):
 DOUBLECLICK_TIMEOUT = 350
 MAX_UNDO = 10
 
+def command_line_arguments():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--input", "-i", help="input device for key wizard", metavar="<dev>")
+    ap.add_argument("--inputlist", help="list input devices and exit", action="store_true")
+    ap.add_argument("keyboard", help="a keyboard file", metavar="<kbd>", nargs="?")
+    return ap
 
 def main():
     # A few things are global because the alternative is passing them around
     global g_cmdline, g_kbdinput, g_oskbwidget
     # Parse the command line arguments
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--input", "-i", help="input device for key wizard", metavar="<dev>")
-    ap.add_argument("--inputlist", help="list input devices and exit", action="store_true")
-    ap.add_argument("keyboard", help="a keyboard file", metavar="<kbd>", nargs="?")
+    ap = command_line_arguments()
     g_cmdline = ap.parse_args()
     # Handle --inputlist and create g_kbdinput InputDevice if --input is specified
     g_kbdinput = None
