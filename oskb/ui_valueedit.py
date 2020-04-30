@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ValueEdit.ui'
 #
-# Created by: PyQt5 UI code generator 5.14.1
+# Created by: PyQt5 UI code generator 5.14.0
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -24,7 +24,7 @@ class Ui_ValueEdit(object):
         self.buttonBox = QtWidgets.QDialogButtonBox(ValueEdit)
         self.buttonBox.setGeometry(QtCore.QRect(60, 60, 171, 32))
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel | QtWidgets.QDialogButtonBox.Save)
+        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Save)
         self.buttonBox.setObjectName("buttonBox")
         self.doubleSpinBox = QtWidgets.QDoubleSpinBox(ValueEdit)
         self.doubleSpinBox.setGeometry(QtCore.QRect(130, 20, 81, 24))
@@ -35,7 +35,7 @@ class Ui_ValueEdit(object):
         self.doubleSpinBox.setObjectName("doubleSpinBox")
         self.label = QtWidgets.QLabel(ValueEdit)
         self.label.setGeometry(QtCore.QRect(10, 20, 111, 21))
-        self.label.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.label.setObjectName("label")
 
         self.retranslateUi(ValueEdit)

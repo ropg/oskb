@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'KeyWizard.ui'
 #
-# Created by: PyQt5 UI code generator 5.14.1
+# Created by: PyQt5 UI code generator 5.14.0
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -22,7 +22,7 @@ class Ui_KeyWizard(object):
         KeyWizard.setModal(True)
         self.label = QtWidgets.QLabel(KeyWizard)
         self.label.setGeometry(QtCore.QRect(30, 20, 341, 141))
-        self.label.setAlignment(QtCore.Qt.AlignJustify | QtCore.Qt.AlignTop)
+        self.label.setAlignment(QtCore.Qt.AlignJustify|QtCore.Qt.AlignTop)
         self.label.setWordWrap(True)
         self.label.setObjectName("label")
         self.lineEdit = QtWidgets.QLineEdit(KeyWizard)
@@ -39,9 +39,4 @@ class Ui_KeyWizard(object):
     def retranslateUi(self, KeyWizard):
         _translate = QtCore.QCoreApplication.translate
         KeyWizard.setWindowTitle(_translate("KeyWizard", "Key Wizard"))
-        self.label.setText(
-            _translate(
-                "KeyWizard",
-                "This is the Key Wizard. Simply press the key you would like to assign, and the key caption and keycodes will be set automatically. If you want to add functions for long presses or doubleclicks, or if you would like to add more captions, you can always edit the key manually later by doubleclicking it.",
-            )
-        )
+        self.label.setText(_translate("KeyWizard", "This is the Key Wizard. Simply press the key you would like to assign, and the key caption and keycodes will be set automatically. If you want to add functions for long presses or doubleclicks, or if you would like to add more captions, you can always edit the key manually later by doubleclicking it."))

@@ -1,5 +1,4 @@
 import argparse, sys, os, psutil, subprocess, re, signal
-import logging, logging.handlers
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import Qt, QTimer
 import pkg_resources
@@ -10,6 +9,7 @@ from oskb import im
 linux = sys.platform.startswith("linux")
 
 if linux:
+    import getpass
     from ewmh import EWMH, ewmh
 
     wm = EWMH()
@@ -20,55 +20,93 @@ def command_line_arguments():
     ap = argparse.ArgumentParser()
     ap.add_argument(
         "keyboards",
-        help="one or more keyboard files, either actual files or names of built-in keyboards",
+        help="""Which keyboard(s) to load. These are either files or names of built-in keyboards. If
+multiple keyboards are loaded, the user can switch between them with a menu key. If no keyboards are chosen
+a full keyboard is shown if display is wider than 600 pixels, otherwise a phone-style keyboard is used. If
+oskb comes with a keyboard for the presently set keyboard layout, that keyboard is used. Otherwise oskb
+will show a US keyboard layout and switch the system keyboard layout to that.""",
         metavar="<kbd>",
         nargs="*",
-        default=["phoney-us"],
     )
+    ap.add_argument("--version", "-v", help="Print version number and exit.", action="store_true")
     ap.add_argument(
         "--start",
         metavar="<kbd>",
-        help="""
-Normally the first keyboard specified is shown first. This allows you to specify one of the loaded keyboards
-as the one to start with.""",
+        help="""Normally the first keyboard specified is shown first. This allows you to specify one of the
+loaded keyboards as the one to start with.""",
     )
     ap.add_argument(
-        "--list", action="store_true", help="Lists all built-in keyboards that were shipped with oskb",
+        "--list", action="store_true", help="Lists all built-in keyboards that were shipped with oskb.",
     )
     ap.add_argument(
         "--dump",
-        help="Keyboards are JSON files. ``--dump`` will write a built-in keyboard to stdout and exit.",
+        help="Keyboards are JSON files. This will write the contents of a built-in keyboard to stdout.",
         action="store_true",
     )
-    ap.add_argument("--nomap", help="""
-Normally oskb will change the X-Windows system keyboard to the keymap specified with the keyboard shown
-by oskb. ``--nomap`` inhibits this. """, action="store_true")
-    ap.add_argument("--toggle", help="toggles oskb on and off", action="store_true")
-    ap.add_argument("--off", help="turns oskb off", action="store_true")
-
-
-    loc = ap.add_argument_group(title="Arguments to control position on screen")
-    loc.add_argument("-x", help="window absolute position x", metavar="<x>", type=int)
-    loc.add_argument("-y", help="window absolute position y", metavar="<y>", type=int)
-    loc.add_argument("--width", help="window width", metavar="<width>", type=int)
-    loc.add_argument("--height", help="window height", metavar="<height>", type=int)
-    hpos = loc.add_mutually_exclusive_group()
-    hpos.add_argument("--left", help="oksb docks to the left", action="store_true")
-    hpos.add_argument("--middle", "--center", help="oksb docks in the middle", action="store_true")
-    hpos.add_argument("--right", help="oksb docks to the right", action="store_true")
-    vpos = loc.add_mutually_exclusive_group()
-    vpos.add_argument("--top", help="oksb docks to the top", action="store_true")
-    vpos.add_argument("--bottom", help="oksb docks to the top", action="store_true")
-
     ap.add_argument(
-        "--float", help="floating window instead of docking to top or bottom", action="store_true",
+        "--nomap",
+        help="""Prevent oskb from changing the system keyboard to the keymap specified with the keyboard.""",
+        action="store_true",
     )
-    ap.add_argument("--nopushaway", help="do not push other windows out of the way", action="store_true")
+    ap.add_argument(
+        "--toggle",
+        help="""Will turn the keyboard off if one is already active, otherwise starts the keyboard. This
+allows one shortcut to be used to turn the keyboard on and off.""",
+        action="store_true",
+    )
+    ap.add_argument("--off", help="Turns off a running keyboard.", action="store_true")
+    ap.add_argument(
+        "--nopushaway",
+        help="Do not attempt to push other windows out of the way when showing the keyboard.",
+        action="store_true",
+    )
     modmode = ap.add_mutually_exclusive_group()
-    modmode.add_argument("--flashmod", help="modifiers down briefly during keypress", action="store_true")
-    modmode.add_argument("--steadymod", help="modifiers down as shown in interface", action="store_true")
-    ap.add_argument("--justshow", help="show keyboard, do not send keys to OS", action="store_true")
-    ap.add_argument("--version", "-v", help="print version number and exit", action="store_true")
+    modmode.add_argument(
+        "--flashmod",
+        help="""Only press the modifier keys (Alt, Shift, etc) down briefly during each keypress. This is the
+default when --float is specified.""",
+        action="store_true",
+    )
+    modmode.add_argument(
+        "--steadymod",
+        help="""Modifier keys are pressed down as shown in interface. This is the default unless --float is
+specified.""",
+        action="store_true",
+    )
+    ap.add_argument("--justshow", help="Show keyboard, do not send keys to OS.", action="store_true")
+
+    loc = ap.add_argument_group(title="Controlling position on screen")
+    loc.add_argument("-x", help="Absolute position of left side of keyboard", metavar="<x>", type=int)
+    loc.add_argument("-y", help="Absolute position of top of keyboard", metavar="<y>", type=int)
+    loc.add_argument("--width",
+        help="Keyboard width in pixels. The default is to use the full width of the primary display.",
+        metavar="<width>",
+        type=int,
+    )
+    loc.add_argument(
+        "--height",
+        help="Keyboard height in pixels. The default is a third of the height of the primary display.",
+        metavar="<height>",
+        type=int,
+    )
+    hpos = loc.add_mutually_exclusive_group()
+    hpos.add_argument("--left", help="Keyboard docks to the left side of the screen.", action="store_true")
+    hpos.add_argument(
+        "--middle",
+        "--center",
+        help="Keyboard docks in the middle of the screen. This is the default.",
+        action="store_true",
+    )
+    hpos.add_argument("--right", help="Keyboard docks to the right side of the screen.", action="store_true")
+    vpos = loc.add_mutually_exclusive_group()
+    vpos.add_argument(
+        "--top", help="Keyboard docks to the top of the screen. This is the default.", action="store_true"
+    )
+    vpos.add_argument("--bottom", help="Keyboard docks to the bottom of the screen.", action="store_true")
+    loc.add_argument(
+        "--float", help="Floating keyboard window instead of fixed docked position.", action="store_true",
+    )
+
     return ap
 
 
@@ -202,18 +240,33 @@ def main():
     if cmdline.x:
         x = cmdline.x
     else:
-        if cmdline.middle:
-            x = int(screenleft + (screenwidth / 2) - (w / 2))
-            mx = int(screenleft + (screenwidth / 2) - (mw / 2))
-        elif cmdline.left:
+        if cmdline.left:
             x = screenleft
             mx = screenleft
-        else:
+        elif cmdline.right:
             x = screenleft + screenwidth - w
             mx = screenleft + screenwidth - mw
+        else:
+            x = int(screenleft + (screenwidth / 2) - (w / 2))
+            mx = int(screenleft + (screenwidth / 2) - (mw / 2))
+
     # Set geometry accordingly
     keyboard.setMinimizer(mx, my, mw, mh)
     keyboard.setGeometry(x, y, w, h)
+
+    #
+    # Figure out default keyboard if nothing selected
+    #
+
+    # (Has to be done before plugging in virtual keyboard, bc that switches map to 'us')
+    load_keyboards = cmdline.keyboards
+    if load_keyboards == []:
+        kbname = 'paddy' if screenwidth > 600 else 'phoney'
+        tryfirst = kbname + "-" + querySystemKeymap("layout")
+        if pkg_resources.resource_exists("oskb", "keyboards/" + tryfirst):
+            load_keyboards = [tryfirst]
+        else:
+            load_keyboards = [kbname + "-us"]
 
     #
     # Tell keyboard to send the keypresses to the default handler for OS
@@ -228,11 +281,9 @@ def main():
 
         if not plugged:
             if linux:
-                import getpass
-
                 user = getpass.getuser()
                 sys.stderr.write(
-                    "Try 'sudo setfacl -m m::rw -m u:" + user + ":rw /dev/uinput'\n"
+                    "Try 'sudo setfacl -m m::rw -m u:" + user + ":rw /dev/uinput /dev/input/*'\n"
                     "See the oskb documentation for more information.\n"
                 )
             else:
@@ -253,7 +304,7 @@ def main():
     # Load the keyboard files
     #
 
-    for k in cmdline.keyboards:
+    for k in load_keyboards:
         keyboard.readKeyboard(k)
 
     # Also works if no startup kbd is specified, because None will load first keyboard
@@ -266,6 +317,20 @@ def main():
     keyboard.show()
 
     sys.exit(app.exec_())
+
+
+
+
+def querySystemKeymap(key, default = None):
+    try:
+        output = subprocess.check_output(['setxkbmap', '-query']).decode("utf-8")
+        match = re.search(key + ":\s+(\w+)", output)
+        if match:
+            return match.group(1)
+        else:
+            return default
+    except:
+        return default
 
 
 def receiveMapChanges(keymap):

@@ -1,8 +1,8 @@
 {
     "format": "oskb keyboard",
     "formatversion": 1,
-    "description": "US - QWERTY",
-    "keymap": "us",
+    "description": "DE - QWERTZ",
+    "keymap": "de",
     "style": ".key {\n    font-size: 65%;\n}\n\n.key.bigger {\n    font-size: 80%;\n}\n\n.key.ctrlalt, .key.smaller {\n    font-size: 45%;\n}\n\n.key.smallest {\n    font-size: 35%;\n}\n\n.grey {\n    background-color: #bbbbbb;\n}\n\n.lpsymbol {\n    font-size: 50%;\n    color: blue;\n    qproperty-alignment: 'AlignTop | AlignRight';\n}",
     "views": {
         "default": {
@@ -22,11 +22,13 @@
                                         }
                                     },
                                     "width": 0.8,
-                                    "class": "smaller"
+                                    "class": "smallest",
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "~\n`",
+                                    "caption": "°\n^",
                                     "single": {
                                         "send": {
                                             "keycode": "41",
@@ -34,7 +36,9 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 0.8
+                                    "width": 0.8,
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
@@ -46,11 +50,13 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0
+                                    "width": 1.0,
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "@\n2",
+                                    "caption": "\"\n2",
                                     "single": {
                                         "send": {
                                             "keycode": "3",
@@ -58,11 +64,13 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0
+                                    "width": 1.0,
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "#\n3",
+                                    "caption": "§\n3",
                                     "single": {
                                         "send": {
                                             "keycode": "4",
@@ -70,7 +78,9 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0
+                                    "width": 1.0,
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
@@ -82,7 +92,9 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0
+                                    "width": 1.0,
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
@@ -94,11 +106,13 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0
+                                    "width": 1.0,
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "^\n6",
+                                    "caption": "&&\n6",
                                     "single": {
                                         "send": {
                                             "keycode": "7",
@@ -106,11 +120,13 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0
+                                    "width": 1.0,
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "&&\n7",
+                                    "caption": "/\n7",
                                     "single": {
                                         "send": {
                                             "keycode": "8",
@@ -118,11 +134,13 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0
+                                    "width": 1.0,
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "*\n8",
+                                    "caption": "(\n8",
                                     "single": {
                                         "send": {
                                             "keycode": "9",
@@ -130,11 +148,13 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0
+                                    "width": 1.0,
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "(\n9",
+                                    "caption": ")\n9",
                                     "single": {
                                         "send": {
                                             "keycode": "10",
@@ -142,11 +162,13 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0
+                                    "width": 1.0,
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
-                                    "caption": ")\n0",
+                                    "caption": "=\n0",
                                     "single": {
                                         "send": {
                                             "keycode": "11",
@@ -154,11 +176,13 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0
+                                    "width": 1.0,
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "_\n-",
+                                    "caption": "?\nß",
                                     "single": {
                                         "send": {
                                             "keycode": "12",
@@ -166,11 +190,13 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0
+                                    "width": 1.0,
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "+\n=",
+                                    "caption": "`\n´",
                                     "single": {
                                         "send": {
                                             "keycode": "13",
@@ -178,7 +204,9 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0
+                                    "width": 1.0,
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
@@ -268,7 +296,7 @@
                                     "width": 1.0
                                 },
                                 {
-                                    "caption": "Y",
+                                    "caption": "Z",
                                     "single": {
                                         "send": {
                                             "keycode": "21",
@@ -276,7 +304,9 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0
+                                    "width": 1.0,
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "caption": "U",
@@ -324,7 +354,7 @@
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "{\n[",
+                                    "caption": "Ü",
                                     "single": {
                                         "send": {
                                             "keycode": "26",
@@ -332,11 +362,13 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0
+                                    "width": 1.0,
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "}\n]",
+                                    "caption": "*\n+",
                                     "single": {
                                         "send": {
                                             "keycode": "27",
@@ -344,11 +376,13 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0
+                                    "width": 1.0,
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "|\n\\",
+                                    "caption": "#\n'",
                                     "single": {
                                         "send": {
                                             "keycode": "43",
@@ -356,7 +390,9 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0
+                                    "width": 1.0,
+                                    "double": {},
+                                    "long": {}
                                 }
                             ]
                         },
@@ -477,7 +513,7 @@
                                 },
                                 {
                                     "type": "key",
-                                    "caption": ":\n;",
+                                    "caption": "Ö",
                                     "single": {
                                         "send": {
                                             "keycode": "39",
@@ -485,11 +521,13 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0
+                                    "width": 1.0,
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "\"\n'",
+                                    "caption": "Ä",
                                     "single": {
                                         "send": {
                                             "keycode": "40",
@@ -497,7 +535,9 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0
+                                    "width": 1.0,
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
@@ -607,7 +647,7 @@
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "<\n,",
+                                    "caption": ";\n,",
                                     "single": {
                                         "send": {
                                             "keycode": "51",
@@ -615,11 +655,13 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0
+                                    "width": 1.0,
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
-                                    "caption": ">\n.",
+                                    "caption": ":\n.",
                                     "single": {
                                         "send": {
                                             "keycode": "52",
@@ -627,11 +669,13 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0
+                                    "width": 1.0,
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "?\n/",
+                                    "caption": "_\n-",
                                     "single": {
                                         "send": {
                                             "keycode": "53",
@@ -639,7 +683,9 @@
                                             "printable": true
                                         }
                                     },
-                                    "width": 1.0
+                                    "width": 1.0,
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
@@ -684,13 +730,11 @@
                                         "keyboard": {
                                             "name": "_minimized"
                                         }
-                                    },
-                                    "double": {},
-                                    "long": {}
+                                    }
                                 },
                                 {
                                     "width": 0.9,
-                                    "caption": "ctrl",
+                                    "caption": "Strg",
                                     "single": {
                                         "modifier": {
                                             "keycode": "29",
@@ -707,12 +751,12 @@
                                             "printable": false
                                         }
                                     },
-                                    "class": "ctrlalt",
+                                    "class": "ctrlalt smallest",
                                     "double": {}
                                 },
                                 {
                                     "width": 0.9,
-                                    "caption": "alt",
+                                    "caption": "Alt",
                                     "single": {
                                         "modifier": {
                                             "keycode": "56",
@@ -721,7 +765,7 @@
                                             "printable": false
                                         }
                                     },
-                                    "class": "ctrlalt",
+                                    "class": "ctrlalt smallest",
                                     "double": {},
                                     "long": {}
                                 },
@@ -760,9 +804,7 @@
                                             "name": " ",
                                             "printable": true
                                         }
-                                    },
-                                    "double": {},
-                                    "long": {}
+                                    }
                                 },
                                 {
                                     "type": "key",
@@ -783,12 +825,11 @@
                                             "action": "lock",
                                             "printable": false
                                         }
-                                    },
-                                    "double": {}
+                                    }
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "alt",
+                                    "caption": "AltGr",
                                     "single": {
                                         "modifier": {
                                             "keycode": "100",
@@ -798,7 +839,7 @@
                                         }
                                     },
                                     "width": 0.9,
-                                    "class": "ctrlalt",
+                                    "class": "ctrlalt smallest",
                                     "long": {
                                         "modifier": {
                                             "keycode": "100",
@@ -811,7 +852,7 @@
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "ctrl",
+                                    "caption": "Strg",
                                     "single": {
                                         "modifier": {
                                             "keycode": "97",
@@ -821,7 +862,7 @@
                                         }
                                     },
                                     "width": 0.9,
-                                    "class": "ctrlalt",
+                                    "class": "ctrlalt smallest",
                                     "long": {
                                         "modifier": {
                                             "keycode": "97",
@@ -841,9 +882,7 @@
                                         }
                                     },
                                     "width": 0.9,
-                                    "class": "grey smaller",
-                                    "double": {},
-                                    "long": {}
+                                    "class": "grey smaller"
                                 }
                             ]
                         }
@@ -855,7 +894,7 @@
                             "keys": [
                                 {
                                     "type": "key",
-                                    "caption": "sysrq\nprtscr",
+                                    "caption": "Druck\nS-Abf",
                                     "single": {
                                         "send": {
                                             "keycode": "99",
@@ -864,11 +903,13 @@
                                         }
                                     },
                                     "width": 0.8,
-                                    "class": "smallest"
+                                    "class": "smallest",
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "scroll\nlock",
+                                    "caption": "Rollen\n⇩",
                                     "single": {
                                         "send": {
                                             "keycode": "70",
@@ -877,13 +918,18 @@
                                         }
                                     },
                                     "width": 0.8,
-                                    "class": "smallest"
+                                    "class": "smallest",
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
                                     "width": 0.8,
-                                    "caption": "break",
-                                    "class": "smallest"
+                                    "caption": "pause\nUntbr",
+                                    "class": "smallest",
+                                    "single": {},
+                                    "double": {},
+                                    "long": {}
                                 }
                             ],
                             "type": "emptyrow"
@@ -892,7 +938,7 @@
                             "keys": [
                                 {
                                     "type": "key",
-                                    "caption": "ins",
+                                    "caption": "Einfg",
                                     "single": {
                                         "send": {
                                             "keycode": "110",
@@ -901,11 +947,13 @@
                                         }
                                     },
                                     "width": 0.8,
-                                    "class": "smaller"
+                                    "class": "smallest",
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "home",
+                                    "caption": "Pos 1",
                                     "single": {
                                         "send": {
                                             "keycode": "102",
@@ -914,11 +962,13 @@
                                         }
                                     },
                                     "width": 0.8,
-                                    "class": "smaller"
+                                    "class": "smallest",
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "pgup",
+                                    "caption": "Bild\n⬆",
                                     "single": {
                                         "send": {
                                             "keycode": "104",
@@ -927,7 +977,9 @@
                                         }
                                     },
                                     "width": 0.8,
-                                    "class": "smaller"
+                                    "class": "smallest",
+                                    "double": {},
+                                    "long": {}
                                 }
                             ],
                             "type": "emptyrow"
@@ -936,7 +988,7 @@
                             "keys": [
                                 {
                                     "type": "key",
-                                    "caption": "del",
+                                    "caption": "Entf",
                                     "single": {
                                         "send": {
                                             "keycode": "111",
@@ -945,11 +997,13 @@
                                         }
                                     },
                                     "width": 0.8,
-                                    "class": "smaller"
+                                    "class": "smallest",
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "end",
+                                    "caption": "Ende",
                                     "single": {
                                         "send": {
                                             "keycode": "107",
@@ -958,11 +1012,13 @@
                                         }
                                     },
                                     "width": 0.8,
-                                    "class": "smaller"
+                                    "class": "smallest",
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "pgdn",
+                                    "caption": "Bild\n⬇",
                                     "single": {
                                         "send": {
                                             "keycode": "109",
@@ -971,7 +1027,9 @@
                                         }
                                     },
                                     "width": 0.8,
-                                    "class": "smaller"
+                                    "class": "smallest",
+                                    "double": {},
+                                    "long": {}
                                 }
                             ],
                             "type": "emptyrow"
@@ -1058,7 +1116,10 @@
                                     "type": "key",
                                     "width": 1.0,
                                     "caption": "esc",
-                                    "class": "smaller"
+                                    "class": "smaller",
+                                    "single": {},
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
@@ -1403,12 +1464,10 @@
                                         "keyboard": {
                                             "name": "_minimized"
                                         }
-                                    },
-                                    "double": {},
-                                    "long": {}
+                                    }
                                 },
                                 {
-                                    "caption": "shift",
+                                    "caption": "⇧",
                                     "single": {
                                         "modifier": {
                                             "keycode": "42",
@@ -1418,7 +1477,8 @@
                                         }
                                     },
                                     "width": 2.0,
-                                    "class": "smaller"
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "spacer",
@@ -1426,7 +1486,7 @@
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "shift",
+                                    "caption": "⇧",
                                     "single": {
                                         "send": {
                                             "keycode": "54",
@@ -1441,7 +1501,8 @@
                                         }
                                     },
                                     "width": 2.0,
-                                    "class": "smaller"
+                                    "double": {},
+                                    "long": {}
                                 }
                             ],
                             "type": "emptyrow"
@@ -1457,13 +1518,11 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "grey smaller",
-                                    "double": {},
-                                    "long": {}
+                                    "class": "grey smaller"
                                 },
                                 {
                                     "width": 1.0,
-                                    "caption": "ctrl",
+                                    "caption": "Strg",
                                     "single": {
                                         "modifier": {
                                             "keycode": "29",
@@ -1480,11 +1539,12 @@
                                             "printable": false
                                         }
                                     },
-                                    "class": "ctrlalt"
+                                    "class": "ctrlalt smallest",
+                                    "double": {}
                                 },
                                 {
                                     "width": 1.0,
-                                    "caption": "alt",
+                                    "caption": "Alt",
                                     "single": {
                                         "modifier": {
                                             "keycode": "56",
@@ -1493,7 +1553,9 @@
                                             "printable": false
                                         }
                                     },
-                                    "class": "ctrlalt"
+                                    "class": "ctrlalt smallest",
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
@@ -1549,7 +1611,7 @@
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "alt",
+                                    "caption": "AltGr",
                                     "single": {
                                         "modifier": {
                                             "keycode": "100",
@@ -1559,7 +1621,7 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "ctrlalt",
+                                    "class": "ctrlalt smallest",
                                     "long": {
                                         "modifier": {
                                             "keycode": "100",
@@ -1567,11 +1629,12 @@
                                             "action": "lock",
                                             "printable": false
                                         }
-                                    }
+                                    },
+                                    "double": {}
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "ctrl",
+                                    "caption": "Strg",
                                     "single": {
                                         "modifier": {
                                             "keycode": "97",
@@ -1581,7 +1644,7 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "ctrlalt",
+                                    "class": "ctrlalt smallest",
                                     "long": {
                                         "modifier": {
                                             "keycode": "97",
@@ -1589,7 +1652,8 @@
                                             "action": "lock",
                                             "printable": false
                                         }
-                                    }
+                                    },
+                                    "double": {}
                                 }
                             ],
                             "type": "emptyrow"
@@ -1602,7 +1666,7 @@
                             "keys": [
                                 {
                                     "type": "key",
-                                    "caption": "sysrq\nprtscr",
+                                    "caption": "Druck\nS-Abf",
                                     "single": {
                                         "send": {
                                             "keycode": "99",
@@ -1611,11 +1675,13 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smallest"
+                                    "class": "smallest",
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "scroll\nlock",
+                                    "caption": "Rollen\n⇩",
                                     "single": {
                                         "send": {
                                             "keycode": "70",
@@ -1624,13 +1690,18 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smallest"
+                                    "class": "smallest",
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
                                     "width": 1.0,
-                                    "caption": "break",
-                                    "class": "smallest"
+                                    "caption": "pause\nUntbr",
+                                    "class": "smallest",
+                                    "single": {},
+                                    "double": {},
+                                    "long": {}
                                 }
                             ],
                             "type": "emptyrow",
@@ -1640,7 +1711,7 @@
                             "keys": [
                                 {
                                     "type": "key",
-                                    "caption": "ins",
+                                    "caption": "Einfg",
                                     "single": {
                                         "send": {
                                             "keycode": "110",
@@ -1649,11 +1720,13 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smaller"
+                                    "class": "smallest",
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "home",
+                                    "caption": "Pos 1",
                                     "single": {
                                         "send": {
                                             "keycode": "102",
@@ -1662,11 +1735,13 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smaller"
+                                    "class": "smallest",
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "pgup",
+                                    "caption": "Bild\n⬆",
                                     "single": {
                                         "send": {
                                             "keycode": "104",
@@ -1675,7 +1750,9 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smaller"
+                                    "class": "smallest",
+                                    "double": {},
+                                    "long": {}
                                 }
                             ],
                             "type": "emptyrow"
@@ -1684,7 +1761,7 @@
                             "keys": [
                                 {
                                     "type": "key",
-                                    "caption": "del",
+                                    "caption": "Entf",
                                     "single": {
                                         "send": {
                                             "keycode": "111",
@@ -1693,11 +1770,13 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smaller"
+                                    "class": "smallest",
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "end",
+                                    "caption": "Ende",
                                     "single": {
                                         "send": {
                                             "keycode": "107",
@@ -1706,11 +1785,13 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smaller"
+                                    "class": "smallest",
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",
-                                    "caption": "pgdn",
+                                    "caption": "Bild\n⬇",
                                     "single": {
                                         "send": {
                                             "keycode": "109",
@@ -1719,7 +1800,9 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smaller"
+                                    "class": "smallest",
+                                    "double": {},
+                                    "long": {}
                                 }
                             ],
                             "type": "emptyrow"
@@ -1798,7 +1881,7 @@
                             "keys": [
                                 {
                                     "type": "key",
-                                    "caption": "num\nlock",
+                                    "caption": "Num\n⇩",
                                     "single": {
                                         "send": {
                                             "keycode": "69",
@@ -1807,7 +1890,9 @@
                                         }
                                     },
                                     "width": 1.0,
-                                    "class": "smallest"
+                                    "class": "smallest",
+                                    "double": {},
+                                    "long": {}
                                 },
                                 {
                                     "type": "key",

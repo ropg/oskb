@@ -37,7 +37,6 @@ from PyQt5.QtWidgets import (
     QMessageBox,
     QPushButton,
     QSizePolicy,
-    QSplitter,
     QStackedLayout,
     QStyle,
     QStyleFactory,
@@ -52,7 +51,7 @@ import oskb
 from oskb.ui_keywizard import Ui_KeyWizard
 from oskb.ui_editkey import Ui_EditKey
 from oskb.ui_keyactions import Ui_KeyActions
-from oskb.ui_editcss import Ui_EditCSS
+from oskb.ui_kbdproperties import Ui_KbdProperties
 from oskb.ui_valueedit import Ui_ValueEdit
 
 if sys.platform.startswith("linux"):
@@ -97,7 +96,7 @@ def main():
                 user = getpass.getuser()
                 sys.stderr.write(
                     "Do you have permission to read the input devices?\n\n"
-                    "Try 'sudo setfacl -m m::rw -m u:" + user + ":rw /dev/input/*'\n"
+                    "Try 'sudo setfacl -m m::rw -m u:" + user + ":rw /dev/uinput /dev/input/*'\n"
                     "See the oskb documentation for more information.\n"
                 )
                 sys.exit(-1)
@@ -369,9 +368,9 @@ class OskbEdit(QWidget):
             # heights are only stored in first column
             editrowitem.triggered.connect(partial(self._edit_row, ri))
         editmenu.addAction(editrowitem)
-        cssitem = QAction("&Edit Keyboard CSS", self)
-        cssitem.triggered.connect(self._edit_css)
-        editmenu.addAction(cssitem)
+        propitem = QAction("&Keyboard Properties", self)
+        propitem.triggered.connect(self._edit_properties)
+        editmenu.addAction(propitem)
 
     def _edit_undo(self):
         actionname, actionview, kbd = self._undo.pop(0)
@@ -428,9 +427,9 @@ class OskbEdit(QWidget):
                     del self._view["columns"][ci]["rows"][ri]["keys"][ki]
         return buffer
 
-    def _edit_css(self):
-        if EditCSS(self._kbd).exec():
-            self._stir("Edit CSS")
+    def _edit_properties(self):
+        if KbdProperties(self._kbd).exec():
+            self._stir("Edit Properties")
 
     def _edit_spacer(self, widget):
         if ValueEdit(widget.data, "width", 0.5).exec():
@@ -823,16 +822,20 @@ class KeyWizard(QDialog):
         self.accept()
 
 
-class EditCSS(QDialog):
+class KbdProperties(QDialog):
     def __init__(self, kbd):
         super().__init__()
-        self.ui = Ui_EditCSS()
+        self.ui = Ui_KbdProperties()
         self.ui.setupUi(self)
         self._kbd = kbd
+        self.ui.description.setText(kbd.get("description"))
+        self.ui.layout.setText(kbd.get("keymap"))
         self.ui.defaultcss.setPlainText(pkg_resources.resource_string("oskb", "default.css").decode("utf-8"))
         self.ui.keyboardcss.setPlainText(self._kbd.get("style", ""))
 
     def accept(self):
+        self._kbd["description"] = self.ui.description.text()
+        self._kbd["keymap"] = self.ui.layout.text()
         self._kbd["style"] = self.ui.keyboardcss.toPlainText()
         super().accept()
 
